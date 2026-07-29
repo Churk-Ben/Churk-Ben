@@ -1,7 +1,6 @@
 ---
 title: LevOJ - 第三期
 date: 2024-11-10
-order: 9
 tags: ["OJ题解", "LevOJ", "C语言"]
 ---
 

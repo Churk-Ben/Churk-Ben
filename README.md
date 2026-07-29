@@ -1,8 +1,3 @@
----
-title: 关于
-order: 2
----
-
 # 👋 Hello! world~
 
 > _Aurore est le billet-doux de Polaris._

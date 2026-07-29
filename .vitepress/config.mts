@@ -8,7 +8,7 @@ export default defineConfig({
   lang: "zh-CN",
   cleanUrls: true,
   lastUpdated: true,
-  srcExclude: [],
+  srcExclude: ["README.md"],
 
   head: [
     ["link", { rel: "icon", href: "/img/icon.png" }],
@@ -35,8 +35,9 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: "首页", link: "/" },
-      { text: "博文", link: "/posts/" },
-      { text: "关于", link: "/readme" },
+      { text: "文章", link: "/posts/" },
+      { text: "导航站", link: "/nav" },
+      { text: "关于我", link: "/about" },
       { text: "友链", link: "/links" },
     ],
 
@@ -45,11 +46,13 @@ export default defineConfig({
         documentRootPath: ".",
         scanStartPath: ".",
         resolvePath: "/",
-        useTitleFromFileHeading: true,
+        useTitleFromFileHeading: false,
+        useTitleFromFrontmatter: true,
         useFolderTitleFromIndexFile: true,
         includeFolderIndexFile: false,
-        sortMenusByFrontmatterOrder: true,
-        frontmatterOrderDefaultValue: 99,
+        sortMenusByFrontmatterDate: true,
+        sortMenusOrderByDescending: true,
+        useFolderLinkFromIndexFile: true,
         collapsed: false,
         excludeByGlobPattern: [],
       });
@@ -69,6 +72,7 @@ export default defineConfig({
     },
 
     socialLinks: [
+      { icon: "bilibili", link: "https://space.bilibili.com/319391312" },
       { icon: "github", link: "https://github.com/Churk-Ben" },
     ],
 
@@ -91,7 +95,7 @@ export default defineConfig({
 
     footer: {
       message: "萌ICP备 20250835 号",
-      copyright: "Copyright © 2024-present Churk Ben",
+      copyright: "Copyright © 2026 Churk Ben",
     },
   },
 });
