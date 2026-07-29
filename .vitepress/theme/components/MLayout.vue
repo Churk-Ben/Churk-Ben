@@ -1,66 +1,66 @@
 <script setup lang="ts">
-import { useData, inBrowser } from 'vitepress'
-import DefaultTheme from 'vitepress/theme'
-import { nextTick, provide } from 'vue'
-import Giscus from '@giscus/vue'
+import { useData, inBrowser } from "vitepress";
+import DefaultTheme from "vitepress/theme";
+import { nextTick, provide } from "vue";
+import Giscus from "@giscus/vue";
 
-import { usePageId } from '../composables'
+import { usePageId } from "../composables";
 
-import MNavVisitor from './MNavVisitor.vue'
-import MDocFooter from './MDocFooter.vue'
+import MNavVisitor from "./MNavVisitor.vue";
+import MDocFooter from "./MDocFooter.vue";
+import {
+  NolebaseEnhancedReadabilitiesMenu,
+  NolebaseEnhancedReadabilitiesScreenMenu,
+} from "@nolebase/vitepress-plugin-enhanced-readabilities/client";
 
-const { Layout } = DefaultTheme
-const { isDark, theme, frontmatter } = useData()
-const pageId = usePageId()
+const { Layout } = DefaultTheme;
+const { isDark, theme, frontmatter } = useData();
+const pageId = usePageId();
 
-const { comment } = theme.value
+const { comment } = theme.value;
 
 const enableTransitions = () =>
-  'startViewTransition' in document &&
-  window.matchMedia('(prefers-reduced-motion: no-preference)').matches
+  "startViewTransition" in document && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
 
 function updateMetaThemeColor() {
   if (inBrowser) {
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', isDark.value ? '#1b1b1f' : '#3eaf7c')
+      metaThemeColor.setAttribute("content", isDark.value ? "#1b1b1f" : "#3eaf7c");
     }
   }
 }
 
-updateMetaThemeColor()
+updateMetaThemeColor();
 
-provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
+provide("toggle-appearance", async ({ clientX: x, clientY: y }: MouseEvent) => {
   if (!enableTransitions()) {
-    isDark.value = !isDark.value
-    updateMetaThemeColor()
-    return
+    isDark.value = !isDark.value;
+    updateMetaThemeColor();
+    return;
   }
 
   const clipPath = [
     `circle(0px at ${x}px ${y}px)`,
-    `circle(${Math.hypot(
-      Math.max(x, innerWidth - x),
-      Math.max(y, innerHeight - y),
-    )}px at ${x}px ${y}px)`,
-  ]
+    `circle(${Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))}px at ${x}px ${y}px)`,
+  ];
 
   // @ts-ignore
   await document.startViewTransition(async () => {
-    isDark.value = !isDark.value
-    updateMetaThemeColor()
-    await nextTick()
-  }).ready
+    isDark.value = !isDark.value;
+    updateMetaThemeColor();
+    await nextTick();
+  }).ready;
 
   document.documentElement.animate(
     { clipPath: isDark.value ? clipPath.reverse() : clipPath },
     {
       duration: 300,
-      easing: 'ease-in',
-      pseudoElement: `::view-transition-${isDark.value ? 'old' : 'new'}(root)`,
+      easing: "ease-in",
+      pseudoElement: `::view-transition-${isDark.value ? "old" : "new"}(root)`,
     },
-  )
-})
+  );
+});
 </script>
 
 <template>
@@ -70,6 +70,14 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
       https://vitepress.dev/zh/guide/extending-default-theme#layout-slots
       https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/Layout.vue
     -->
+    <template #nav-bar-content-after>
+      <NolebaseEnhancedReadabilitiesMenu />
+    </template>
+
+    <template #nav-screen-content-after>
+      <NolebaseEnhancedReadabilitiesScreenMenu />
+    </template>
+
     <template #nav-bar-title-after>
       <MNavVisitor />
     </template>
@@ -95,8 +103,6 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
     <template #doc-after>
       <MDocFooter />
     </template>
-
-
   </Layout>
 </template>
 

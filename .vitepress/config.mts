@@ -97,10 +97,29 @@ export default defineConfig({
     footer: {
       message: "萌ICP备 20250835 号",
       copyright: "Copyright © 2026 Churk Ben",
-    },
+    }
+  },
 
-    visitor: {
-      badgeId: 'Churk-Ben.notes',
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        },
+      },
+    },
+    optimizeDeps: {
+      exclude: [
+        '@nolebase/vitepress-plugin-enhanced-readabilities/client',
+        'vitepress',
+        '@nolebase/ui',
+      ],
+    },
+    ssr: {
+      noExternal: [
+        '@nolebase/vitepress-plugin-enhanced-readabilities',
+        '@nolebase/ui',
+      ],
     },
   },
 });

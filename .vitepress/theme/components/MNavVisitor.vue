@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useData } from 'vitepress'
-import { inject, Ref } from 'vue'
+import { useData } from "vitepress";
+import { inject, Ref } from "vue";
 
-const DEV = inject<Ref<boolean>>('DEV')
-const { theme } = useData()
-const { visitor } = theme.value
+const DEV = inject<Ref<boolean>>("DEV");
+const { theme } = useData();
+const { visitor } = theme.value;
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const { visitor } = theme.value
     v-if="!DEV"
     class="visitor"
     :src="`https://visitor-badge.laobi.icu/badge?page_id=${visitor.badgeId}`"
-    onerror="this.style.display='none'"
+    onerror="this.style.display = 'none'"
   />
 </template>
 

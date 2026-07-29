@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import type { Router } from 'vitepress'
 import type { App, InjectionKey } from 'vue'
 import type { Zoom } from 'medium-zoom'

@@ -173,14 +173,15 @@ $$
 $$
 \qquad x^n=
 \begin{cases}
-    x * x^{n-1}  &n为奇数;\\
-    (x^2)^{\frac n2}&n为偶数;\\
-    1&n=0.
+    x * x^{n-1}  & n\text{为奇数};\\
+    (x^2)^{\frac n2}& n\text{为偶数};\\
+    1& n=0.
 \end{cases}
 $$
+
 <br>
 
-__关于MarkDown[LaTeX语法](https://blog.csdn.net/m0_37769093/article/details/107732606#:~:text=begin{array}{ccc|c}end{array})__
+**关于MarkDown[LaTeX语法](https://blog.csdn.net/m0_37769093/article/details/107732606#:~:text=begin{array}{ccc|c}end{array})**
 
 # 任务四
 
@@ -230,7 +231,7 @@ int main()
 
 ### 源码
 
-__法一__
+**法一**
 
 ```c
 #include <stdio.h>
@@ -267,7 +268,7 @@ int main()
 }
 ```
 
-__法二__
+**法二**
 
 ```c
 //从AI那里拿的，有空修修把它搞懂
@@ -352,7 +353,7 @@ int main()
             printf("n = %d, m = %d, ans = 0\n\n", n, m);
             continue;// n > m 的检查在这里
         }
-        
+
         ans = func(n, m); // 函数调用
         printf("n = %d, m = %d, ans = %d\n\n", n, m, ans);
     }
@@ -361,7 +362,7 @@ int main()
 }
 ```
 
-__迭代__
+**迭代**
 
 ```c
 // 函数定义
@@ -380,7 +381,7 @@ int func(int n, int m)
 }
 ```
 
-__递归一__
+**递归一**
 
 ```c
 // 函数定义
@@ -398,7 +399,7 @@ int func(int n, int m)
 }
 ```
 
-__递归二__
+**递归二**
 
 ```c
 // 函数定义

@@ -4,11 +4,11 @@ export interface NavLink {
   icon?: string | { svg: string }
   /** 站点徽章 */
   badge?:
-    | string
-    | {
-        text?: string
-        type?: 'info' | 'tip' | 'warning' | 'danger'
-      }
+  | string
+  | {
+    text?: string
+    type?: 'info' | 'tip' | 'warning' | 'danger'
+  }
   /** 站点名称 */
   title: string
   /** 站点名称 */

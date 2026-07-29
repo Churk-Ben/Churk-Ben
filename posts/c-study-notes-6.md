@@ -6,7 +6,8 @@ tags: ["学习笔记", "C语言"]
 
 # 任务一 至 任务三
 
-__验证性实验略__
+**验证性实验略**
+
 > 终于优化了（）
 
 # 任务四
@@ -610,7 +611,7 @@ int main()
 
 ### 任务三
 
-__Task1__
+**Task1**
 
 ```c
 #include <stdio.h>
@@ -682,7 +683,7 @@ void output(Film *head)
 }
 ```
 
-__Task2__
+**Task2**
 
 ```c
 #include <stdio.h>

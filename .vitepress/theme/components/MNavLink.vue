@@ -1,54 +1,47 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { withBase } from 'vitepress'
-import { slugify } from '@mdit-vue/shared'
+import { computed } from "vue";
+import { withBase } from "vitepress";
+import { slugify } from "@mdit-vue/shared";
 
-import { NavLink } from '../types'
+import { NavLink } from "../types";
 
 const props = defineProps<{
-  noIcon?: NavLink['noIcon']
-  icon?: NavLink['icon']
-  badge?: NavLink['badge']
-  title?: NavLink['title']
-  desc?: NavLink['desc']
-  link: NavLink['link']
-}>()
+  noIcon?: NavLink["noIcon"];
+  icon?: NavLink["icon"];
+  badge?: NavLink["badge"];
+  title?: NavLink["title"];
+  desc?: NavLink["desc"];
+  link: NavLink["link"];
+}>();
 
 const emits = defineEmits<{
-  (event: 'nav-click', data: Partial<NavLink>): void
-}>()
+  (event: "nav-click", data: Partial<NavLink>): void;
+}>();
 
 const formatTitle = computed(() => {
   if (!props.title) {
-    return ''
+    return "";
   }
-  return slugify(props.title)
-})
+  return slugify(props.title);
+});
 
 const svg = computed(() => {
-  if (typeof props.icon === 'object') return props.icon.svg
-  return ''
-})
+  if (typeof props.icon === "object") return props.icon.svg;
+  return "";
+});
 
 const formatBadge = computed(() => {
-  if (typeof props.badge === 'string') {
-    return { text: props.badge, type: 'info' }
+  if (typeof props.badge === "string") {
+    return { text: props.badge, type: "info" };
   }
-  return props.badge
-})
+  return props.badge;
+});
 
-const handleClick = () => emits('nav-click', props)
+const handleClick = () => emits("nav-click", props);
 </script>
 
 <template>
-  <a
-    v-if="link"
-    class="m-nav-link"
-    :href="link"
-    target="_blank"
-    rel="noreferrer"
-    @click="handleClick"
-  >
+  <a v-if="link" class="m-nav-link" :href="link" target="_blank" rel="noreferrer" @click="handleClick">
     <article class="box" :class="{ 'has-badge': formatBadge }">
       <div class="box-header">
         <template v-if="!noIcon">
@@ -58,7 +51,7 @@ const handleClick = () => emits('nav-click', props)
               :src="withBase(icon)"
               :alt="title"
               loading="lazy"
-              onerror="this.parentElement.style.display='none'"
+              onerror="this.parentElement.style.display = 'none'"
             />
           </div>
         </template>
@@ -151,6 +144,7 @@ const handleClick = () => emits('nav-click', props)
   .desc {
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
