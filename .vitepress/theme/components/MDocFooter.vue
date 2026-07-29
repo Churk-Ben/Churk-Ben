@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { inject, Ref, computed } from 'vue'
+import { inject, computed } from 'vue'
 import { useData } from 'vitepress'
 import { useSidebar } from 'vitepress/theme'
 
 import { usePageId } from '../composables'
 
-const DEV = inject<Ref<boolean>>('DEV')
+const DEV = inject<boolean>('DEV', false)
 const { theme } = useData()
-const { footer, visitor } = theme.value
+const footer = computed(() => theme.value.footer)
+const visitor = computed(() => theme.value.visitor)
 
 const { hasSidebar } = useSidebar()
 const pageId = usePageId()
 
 const isDocFooterVisible = computed(() => {
-  return !DEV || footer.message || footer.copyright || visitor.badgeId
+  return Boolean(footer.value?.message || footer.value?.copyright || visitor.value?.badgeId)
 })
 </script>
 
@@ -21,7 +22,7 @@ const isDocFooterVisible = computed(() => {
   <div v-if="isDocFooterVisible" v-show="hasSidebar" class="m-doc-footer">
     <div class="m-doc-footer-message">
       <img
-        v-if="!DEV"
+        v-if="!DEV && visitor?.badgeId"
         class="visitor"
         :src="`https://visitor-badge.laobi.icu/badge?page_id=${visitor.badgeId}.${pageId}`"
         title="当前页面累计访问数"
