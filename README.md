@@ -1,6 +1,4 @@
-<div align="center">
-
-# 👋 Hi, I'm Churk-Ben
+# 👋 Hi~
 
 > _"Aurore est le billet-doux de Polaris."_
 
@@ -9,11 +7,9 @@
 [![Blog](https://img.shields.io/badge/Blog-www.churk.top-blue?style=flat-square)](https://www.churk.top)
 [![GitHub Followers](https://img.shields.io/github/followers/Churk-Ben?style=flat-square&logo=github)](https://github.com/Churk-Ben)
 
-</div>
-
 ---
 
-### 🛠 Tech Stack
+## 🛠 Tech Stack
 
 ![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white)
 ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
@@ -25,7 +21,7 @@
 
 ---
 
-### 📊 GitHub Stats
+## 📊 GitHub Stats
 
 [![GitHub Stats](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent&hide_title=true)](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent)
 
@@ -33,10 +29,8 @@
 
 ---
 
-### 📫 Contact
+## 📫 Contact
 
 - Blog: [www.churk.top](https://www.churk.top)
 - GitHub: [@Churk-Ben](https://github.com/Churk-Ben)
 - Email: [churkben0@gmail.com](mailto:churkben0@gmail.com)
-
-</div>
