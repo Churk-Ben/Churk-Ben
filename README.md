@@ -1,20 +1,42 @@
-## Hi there 👋
+<div align="center">
 
-<!--
-**Churk-Ben/Churk-Ben** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+# 👋 Hi, I'm Churk-Ben
 
-Here are some ideas to get you started:
+> _"Aurore est le billet-doux de Polaris."_
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+🔭 独立开发者 | 🏠 南京 | 🏢 [爝火工作室](https://github.com/JuFireX)
 
-![Metrics](https://metrics.lecoq.io/Churk-Ben?template=classic&isocalendar=1&languages=1&lines=1&calendar=1&projects=1&base=header%2C%20activity%2C%20community%2C%20repositories%2C%20metadata&base.indepth=false&base.hireable=false&base.skip=false&isocalendar=false&isocalendar.duration=full-year&languages=false&languages.limit=8&languages.threshold=0%25&languages.other=false&languages.colors=github&languages.sections=most-used&languages.indepth=false&languages.analysis.timeout=15&languages.analysis.timeout.repositories=7.5&languages.categories=markup%2C%20programming&languages.recent.categories=markup%2C%20programming&languages.recent.load=300&languages.recent.days=14&lines=false&lines.sections=base&lines.repositories.limit=4&lines.history.limit=1&lines.delay=0&calendar=false&calendar.limit=1&projects=false&projects.limit=4&projects.descriptions=false&config.timezone=Asia%2FShanghai)
+[![Blog](https://img.shields.io/badge/Blog-www.churk.top-blue?style=flat-square)](https://www.churk.top)
+[![GitHub Followers](https://img.shields.io/github/followers/Churk-Ben?style=flat-square&logo=github)](https://github.com/Churk-Ben)
 
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=Churk-Ben&bg_color=000000&color=8b949e&line=26a641&point=8b949e&area=true&hide_border=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
+</div>
+
+---
+
+### 🛠 Tech Stack
+
+![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white)
+![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Vue](https://img.shields.io/badge/-Vue.js-4FC08D?style=flat-square&logo=vue.js&logoColor=white)
+![Qt](https://img.shields.io/badge/-Qt-41CD52?style=flat-square&logo=qt&logoColor=white)
+![Java](https://img.shields.io/badge/-Java-007396?style=flat-square&logo=java&logoColor=white)
+
+---
+
+### 📊 GitHub Stats
+
+[![GitHub Stats](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent&hide_title=true)](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent)
+
+[![Top Langs](https://github-stats-extended.vercel.app/api/top-langs/?username=Churk-Ben&layout=compact&theme=transparent)](https://github-stats-extended.vercel.app/api/top-langs/?username=Churk-Ben&layout=compact&theme=transparent)
+
+---
+
+### 📫 Contact
+
+- Blog: [www.churk.top](https://www.churk.top)
+- GitHub: [@Churk-Ben](https://github.com/Churk-Ben)
+- Email: [churkben0@gmail.com](mailto:churkben0@gmail.com)
+
+</div>
