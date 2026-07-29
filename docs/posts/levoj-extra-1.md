@@ -1,0 +1,84 @@
+---
+title: LevOJ - 番外一
+date: 2024-10-12
+tags: ["OJ题解", "LevOJ", "C语言"]
+---
+
+# LevOJ.sln - problems
+
+## B1682 [Usaco2005 Mar]Out of Hay 干草危机
+
+### 问题描述
+
+![](/img/blog/2024/10/12/01/01.png)
+
+### 解决方法
+
+```c
+// 未完成
+```
+
+## P1033 简单排序
+
+### 问题描述
+
+![](/img/blog/2024/10/12/01/02.png)
+
+### 解决方法
+
+__法一 冒泡排序__
+
+```c
+#include <stdio.h>
+
+void bubble_sort(int n, int arr[])
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    int nums[n];
+
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &nums[i]);
+    }
+
+    bubble_sort(n, nums);
+
+    for (int i = 0; i < n; i++)
+    {
+        if (i == n - 1)
+        {
+            printf("%d\n", nums[i]);
+        }
+        else
+        {
+            printf("%d ", nums[i]);
+        }
+    }
+
+    return 0;
+}
+
+```
+
+>好烦 py超时
+
+<br><br><br>
+$$ \_\_EOF\_\_ $$
+<br>
