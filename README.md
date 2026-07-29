@@ -1,13 +1,11 @@
-# 👋 Hi~
+# 👋 Hello! world~
 
-> _"Aurore est le billet-doux de Polaris."_
+> _Aurore est le billet-doux de Polaris._
 
-🔭 独立开发者 | 🏠 南京 | 🏢 [爝火工作室](https://github.com/JuFireX)
+🔭 独立开发者 | 🏠 Nanjing | 🏢 [JuFire Studio](https://github.com/JuFireX)
 
 [![Blog](https://img.shields.io/badge/Blog-www.churk.top-blue?style=flat-square)](https://www.churk.top)
 [![GitHub Followers](https://img.shields.io/github/followers/Churk-Ben?style=flat-square&logo=github)](https://github.com/Churk-Ben)
-
----
 
 ### 🛠 Tech Stack
 
@@ -19,15 +17,22 @@
 ![Qt](https://img.shields.io/badge/-Qt-41CD52?style=flat-square&logo=qt&logoColor=white)
 ![Java](https://img.shields.io/badge/-Java-007396?style=flat-square&logo=java&logoColor=white)
 
----
-
 ### 📊 GitHub Stats
+
+<table>
+<tr>
+<td>
 
 [![GitHub Stats](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent&hide_title=true)](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent)
 
 [![Top Langs](https://github-stats-extended.vercel.app/api/top-langs/?username=Churk-Ben&layout=compact&theme=transparent)](https://github-stats-extended.vercel.app/api/top-langs/?username=Churk-Ben&layout=compact&theme=transparent)
 
----
+</td>
+<td align="right" valign="bottom">
+  <img src="assets/星野日向.png" width="200" />
+</td>
+</tr>
+</table>
 
 ### 📫 Contact
 
