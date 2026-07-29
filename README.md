@@ -19,16 +19,16 @@
 
 ### 📊 GitHub Stats
 
-<img align="right" src="assets/星野日向.png" width="200" />
-
 [![GitHub Stats](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent&hide_title=true)](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent)
 
 [![Top Langs](https://github-stats-extended.vercel.app/api/top-langs/?username=Churk-Ben&layout=compact&theme=transparent)](https://github-stats-extended.vercel.app/api/top-langs/?username=Churk-Ben&layout=compact&theme=transparent)
 
-<br clear="both" />
-
 ### 📫 Contact
+
+<img align="right" src="assets/星野日向.png" width="200" />
 
 - Blog: [www.churk.top](https://www.churk.top)
 - GitHub: [@Churk-Ben](https://github.com/Churk-Ben)
 - Email: [churkben0@gmail.com](mailto:churkben0@gmail.com)
+
+<br clear="both" />
