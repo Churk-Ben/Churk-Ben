@@ -19,20 +19,13 @@
 
 ### 📊 GitHub Stats
 
-<table>
-<tr>
-<td>
+<img align="right" src="assets/星野日向.png" width="200" />
 
 [![GitHub Stats](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent&hide_title=true)](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent)
 
 [![Top Langs](https://github-stats-extended.vercel.app/api/top-langs/?username=Churk-Ben&layout=compact&theme=transparent)](https://github-stats-extended.vercel.app/api/top-langs/?username=Churk-Ben&layout=compact&theme=transparent)
 
-</td>
-<td align="right" valign="bottom">
-  <img src="assets/星野日向.png" width="200" />
-</td>
-</tr>
-</table>
+<br clear="both" />
 
 ### 📫 Contact
 
