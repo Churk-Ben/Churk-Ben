@@ -26,8 +26,14 @@
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
+    "@giscus/vue": "^3.1.1",
+    "@mdit-vue/shared": "^3.0.2",
     "@mdit/plugin-katex": "^1.0.1",
+    "medium-zoom": "^1.1.0",
     "vitepress": "^1.6.4",
     "vitepress-sidebar": "^1.36.1"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.100.0"
   }
 }

@@ -98,5 +98,9 @@ export default defineConfig({
       message: "萌ICP备 20250835 号",
       copyright: "Copyright © 2026 Churk Ben",
     },
+
+    visitor: {
+      badgeId: 'Churk-Ben.notes',
+    },
   },
 });
