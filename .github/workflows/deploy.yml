@@ -62,6 +62,10 @@ jobs:
           # version: 9
           run_install: false
 
+      # 批准需要运行构建脚本的包
+      - name: Approve builds
+        run: pnpm approve-builds @parcel/watcher
+
         # 安装依赖
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
