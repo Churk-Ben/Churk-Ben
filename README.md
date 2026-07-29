@@ -9,7 +9,7 @@
 
 ---
 
-## 🛠 Tech Stack
+### 🛠 Tech Stack
 
 ![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white)
 ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
@@ -21,7 +21,7 @@
 
 ---
 
-## 📊 GitHub Stats
+### 📊 GitHub Stats
 
 [![GitHub Stats](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent&hide_title=true)](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent)
 
@@ -29,7 +29,7 @@
 
 ---
 
-## 📫 Contact
+### 📫 Contact
 
 - Blog: [www.churk.top](https://www.churk.top)
 - GitHub: [@Churk-Ben](https://github.com/Churk-Ben)
