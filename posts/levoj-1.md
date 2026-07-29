@@ -1,6 +1,7 @@
 ---
 title: LevOJ - 第一期
 date: 2024-10-02
+order: 2
 tags: ["OJ题解", "LevOJ", "C语言"]
 ---
 

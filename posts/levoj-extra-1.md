@@ -1,6 +1,7 @@
 ---
 title: LevOJ - 番外一
 date: 2024-10-12
+order: 5
 tags: ["OJ题解", "LevOJ", "C语言"]
 ---
 

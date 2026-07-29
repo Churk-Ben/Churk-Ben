@@ -1,3 +1,8 @@
+---
+title: 关于
+order: 2
+---
+
 # 👋 Hello! world~
 
 > _Aurore est le billet-doux de Polaris._
@@ -25,7 +30,7 @@
 
 ### 📫 Contact
 
-<img align="right" src="assets/星野日向.png" width="200" />
+<img align="right" src="/assets/星野日向.png" width="200" />
 
 - Blog: [www.churk.top](https://www.churk.top)
 - GitHub: [@Churk-Ben](https://github.com/Churk-Ben)
