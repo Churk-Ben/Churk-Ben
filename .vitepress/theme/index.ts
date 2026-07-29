@@ -18,12 +18,12 @@ export default {
     app.component('MNavLinks', MNavLinks)
     // 关闭布局切换动画
 
-    app.provide(InjectionKey, {
-      layoutSwitch: {
-        disableAnimation: true,
-      },
-    })
-    //- 
+    // app.provide(InjectionKey, {
+    //   layoutSwitch: {
+    //     disableAnimation: true,
+    //   },
+    // })
+    //
     app.provide('DEV', process.env.NODE_ENV === 'development')
   },
 } satisfies Theme
