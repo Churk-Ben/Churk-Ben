@@ -22,6 +22,10 @@
   },
   "homepage": "https://github.com/Churk-Ben/Churk-Ben#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.3.1",
+    "@fortawesome/fontawesome-svg-core": "^7.3.1",
+    "@fortawesome/free-brands-svg-icons": "^7.3.1",
+    "@fortawesome/free-solid-svg-icons": "^7.3.1",
     "@mdit/plugin-katex": "^1.0.1",
     "vitepress": "^1.6.4",
     "vitepress-sidebar": "^1.36.1"

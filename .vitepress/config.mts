@@ -1,6 +1,7 @@
 import { defineConfig } from "vitepress";
 import { generateSidebar } from "vitepress-sidebar";
 import { katex } from "@mdit/plugin-katex";
+import { githubSvg, bilibiliSvg } from "./theme/icons";
 
 export default defineConfig({
   title: "Churk's Blog",
@@ -72,8 +73,8 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: "bilibili", link: "https://space.bilibili.com/319391312" },
-      { icon: "github", link: "https://github.com/Churk-Ben" },
+      { icon: { svg: bilibiliSvg }, link: "https://space.bilibili.com/319391312" },
+      { icon: { svg: githubSvg }, link: "https://github.com/Churk-Ben" },
     ],
 
     outline: {

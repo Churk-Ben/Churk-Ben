@@ -1,7 +1,6 @@
 ---
 title: 关于
 order: 2
-sidebar: false
 ---
 
 # 👋 Hello! world~
