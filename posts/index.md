@@ -1,16 +1,20 @@
 ---
 title: 文章
+description: 学习笔记、OJ 题解与开发记录，按时间整理。
+sidebar: false
+aside: false
+outline: false
+lastUpdated: false
+prev: false
+next: false
 ---
 
 <script setup>
-import { data as posts } from './posts.data.ts'
+import MPostArchive from '../.vitepress/theme/components/MPostArchive.vue'
 </script>
 
 # 文章
 
-<ul>
-  <li v-for="p in posts" style="margin-bottom: 0.75rem">
-    <a :href="p.url">{{ p.frontmatter.title }}</a>
-    <span style="color: var(--vp-c-text-3); font-size: 0.85rem; margin-left: 0.5rem">{{ p.frontmatter.date }}</span>
-  </li>
-</ul>
+<p class="page-intro">学习笔记、题解与开发记录。把走过的路，慢慢整理在这里。</p>
+
+<MPostArchive />

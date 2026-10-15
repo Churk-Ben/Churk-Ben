@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { withBase } from "vitepress";
 import { slugify } from "@mdit-vue/shared";
 
-import { NavLink } from "../types";
+import type { NavLink } from "../types";
 
 const props = defineProps<{
   noIcon?: NavLink["noIcon"];
@@ -38,6 +38,7 @@ const formatBadge = computed(() => {
 });
 
 const handleClick = () => emits("nav-click", props);
+const iconFailed = ref(false);
 </script>
 
 <template>
@@ -45,14 +46,16 @@ const handleClick = () => emits("nav-click", props);
     <article class="box" :class="{ 'has-badge': formatBadge }">
       <div class="box-header">
         <template v-if="!noIcon">
-          <div v-if="svg" class="icon" v-html="svg"></div>
-          <div v-else-if="icon && typeof icon === 'string'" class="icon">
+          <div v-if="svg" class="icon" aria-hidden="true" v-html="svg"></div>
+          <div v-else class="icon" aria-hidden="true">
             <img
+              v-if="icon && typeof icon === 'string' && !iconFailed"
               :src="withBase(icon)"
-              :alt="title"
+              alt=""
               loading="lazy"
-              onerror="this.parentElement.style.display = 'none'"
+              @error="iconFailed = true"
             />
+            <span v-else class="icon-fallback">{{ title?.charAt(0).toUpperCase() }}</span>
           </div>
         </template>
         <h5 v-if="title" :id="formatTitle" class="title" :class="{ 'no-icon': noIcon }">
@@ -77,10 +80,9 @@ const handleClick = () => emits("nav-click", props);
   height: 100%;
   text-decoration: inherit;
   background-color: var(--vp-c-bg-alt);
-  transition: all 0.25s;
+  transition: border-color 0.2s, background-color 0.2s;
   &:hover {
-    box-shadow: var(--vp-shadow-2);
-    border-color: var(--vp-c-brand);
+    border-color: var(--vp-c-brand-1);
     text-decoration: initial;
     background-color: var(--vp-c-bg);
   }
@@ -105,6 +107,7 @@ const handleClick = () => emits("nav-click", props);
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
     margin-right: calc(var(--m-nav-box-gap) - 2px);
     border-radius: 6px;
     width: var(--m-nav-icon-box-size);
@@ -120,6 +123,12 @@ const handleClick = () => emits("nav-click", props);
       border-radius: 4px;
       width: var(--m-nav-icon-size);
     }
+  }
+
+  .icon-fallback {
+    color: var(--vp-c-text-2);
+    font-size: 16px;
+    font-weight: 600;
   }
 
   .title {

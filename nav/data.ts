@@ -23,13 +23,11 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://tinypng.com'
             },
             {
-                icon: '/icons/carbon.png',
                 title: 'Carbon',
                 desc: '代码图片生成',
                 link: 'https://carbon.now.sh'
             },
             {
-                icon: '/icons/npmtrends.svg',
                 title: 'npm trends',
                 desc: '比较 npm package 的大小、下载数据、github 数据等',
                 link: 'https://npmtrends.com'
@@ -53,7 +51,6 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://tool.lu'
             },
             {
-                icon: '/icons/json-cn.ico',
                 title: 'Json 中文网',
                 desc: 'JSON 在线解析及格式化验证',
                 link: 'https://www.json.cn'
@@ -65,7 +62,6 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://transform.tools/json-schema-to-typescript'
             },
             {
-                icon: '/icons/excalidraw.ico',
                 title: 'Excalidraw',
                 desc: '手绘风格流程图',
                 link: 'https://excalidraw.com'
@@ -77,13 +73,11 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://www.processon.com'
             },
             {
-                icon: '/icons/shieldsio.svg',
                 title: 'Shields.io',
                 desc: '制作简洁、一致、易读的徽章',
                 link: 'https://shields.io'
             },
             {
-                icon: '/icons/lanrenexcel.svg',
                 title: '懒人 Excel',
                 desc: 'Excel 函数公式、操作技巧、数据分析、图表模板、VBA、数据透视表教程',
                 link: 'https://www.lanrenexcel.com'
@@ -101,14 +95,12 @@ export const NAV_DATA: NavData[] = [
         items: [
             {
                 badge: '周一更新',
-                icon: '/icons/frontender-ua.png',
                 title: 'Frontend Weekly',
                 desc: '前端周刊',
                 link: 'https://frontender-ua.medium.com'
             },
             {
                 badge: '周五更新',
-                icon: '/icons/ruanyifeng.jpeg',
                 title: '科技爱好者周刊',
                 desc: '阮一峰的科技爱好者周刊',
                 link: 'https://www.ruanyifeng.com/blog/archives.html'
@@ -129,7 +121,6 @@ export const NAV_DATA: NavData[] = [
             },
             {
                 badge: '每周更新',
-                icon: '/icons/geekhyt-weekly.png',
                 title: '前端食堂技术周刊',
                 desc: '周周尝鲜，人工筛选前端圈每周最新资讯',
                 link: 'https://hungryturbo.zhubai.love'
@@ -160,13 +151,11 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://www.zhangxinxu.com/wordpress'
             },
             {
-                icon: '/icons/ascoders.png',
                 title: '前端精读周刊',
                 desc: '帮你理解最前沿、实用的技术',
                 link: 'https://github.com/ascoders/weekly'
             },
             {
-                icon: '/icons/mqyqingfeng.jpeg',
                 title: '冴羽博客',
                 desc: '四个系列：JavaScript深入系列、JavaScript专题系列、ES6系列、React系列',
                 link: 'https://github.com/mqyqingfeng/Blog'
@@ -178,7 +167,6 @@ export const NAV_DATA: NavData[] = [
         items: [
             {
                 badge: '对话',
-                icon: '/icons/chatgpt.png',
                 title: 'ChatGPT（最强）',
                 link: 'https://chat.openai.com/chat'
             },
@@ -204,7 +192,6 @@ export const NAV_DATA: NavData[] = [
             },
             {
                 badge: '对话',
-                icon: '/icons/doubao.ico',
                 title: '豆包',
                 link: 'https://www.doubao.com'
             },
@@ -215,7 +202,6 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://tongyi.aliyun.com'
             },
             {
-                icon: '/icons/chatgpt.png',
                 title: 'ChatGPT 镜像站点列表',
                 link: 'https://github.com/xx025/carrot'
             },
@@ -308,13 +294,11 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://mobile.ant.design'
             },
             {
-                icon: '/icons/mui.svg',
                 title: 'Material UI',
                 desc: '基于 Google Material Design 设计语言的 React 组件库',
                 link: 'https://mui.com'
             },
             {
-                icon: '/icons/mantine.svg',
                 title: 'Mantine UI',
                 desc: '一套功能齐全的 React 组件库',
                 link: 'https://mantine.dev'
@@ -439,7 +423,6 @@ export const NAV_DATA: NavData[] = [
             },
             {
                 // icon: 'https://simpleicons.org/icons/jquery.svg',
-                icon: '/icons/jquery.svg',
                 title: 'jQuery API 中文文档',
                 desc: '一个兼容多浏览器的 JavaScript 框架',
                 link: 'https://jquery.cuishifeng.cn'
@@ -456,13 +439,11 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://postcss.org'
             },
             {
-                icon: '/icons/sass.svg',
                 title: 'Sass',
                 desc: '一个成熟，稳定，功能强大的专业级 CSS 扩展语言',
                 link: 'https://sass-lang.com'
             },
             {
-                icon: '/icons/tailwindcss.png',
                 title: 'TailwindCSS 中文网',
                 desc: '一个功能类优先的 CSS 框架',
                 link: 'https://www.tailwindcss.cn'
@@ -474,13 +455,11 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://unocss.dev'
             },
             {
-                icon: '/icons/you-need-to-know-css.ico',
                 title: 'You-need-to-know-css',
                 desc: 'Web开发者应该掌握的CSS tricks',
                 link: 'https://lhammer.cn/You-need-to-know-css/#/zh-cn/'
             },
             {
-                icon: '/icons/qishaoxuan-css-tricks.png',
                 title: 'CSS 常用样式',
                 desc: 'CSS 常用样式和奇技淫巧总结',
                 link: 'https://qishaoxuan.github.io/css_tricks/'
@@ -508,7 +487,6 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://developers.weixin.qq.com/miniprogram/dev/framework/'
             },
             {
-                icon: '/icons/alipay.svg',
                 title: '支付宝小程序文档',
                 desc: '支付宝小程序官方开发者文档',
                 link: 'https://opendoc.alipay.com/mini/'
@@ -519,19 +497,16 @@ export const NAV_DATA: NavData[] = [
         title: '跨平台',
         items: [
             {
-                icon: '/icons/electron.svg',
                 title: 'Electron',
                 desc: '使用 Web 技术构建跨平台桌面应用程序',
                 link: 'https://www.electronjs.org/zh/'
             },
             {
-                icon: '/icons/tauri.png',
                 title: 'Tauri',
                 desc: '使用 Web 技术构建更小、更快、更安全的桌面应用程序',
                 link: 'https://tauri.app/zh-cn/'
             },
             {
-                icon: '/icons/taro.svg',
                 title: 'Taro',
                 desc: '多端统一开发解决方案',
                 link: 'https://taro.jd.com'
@@ -549,7 +524,6 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://mpxjs.cn'
             },
             {
-                icon: '/icons/tmui.svg',
                 title: 'tmui',
                 desc: 'Uni App通用组件库跨端组件库',
                 link: 'https://tmui.design'
@@ -560,7 +534,6 @@ export const NAV_DATA: NavData[] = [
         title: 'Node 相关',
         items: [
             {
-                icon: '/icons/nodejs.svg',
                 title: 'Node.js',
                 desc: 'Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境',
                 link: 'https://nodejs.org/zh-cn'
@@ -572,7 +545,6 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://www.npmjs.com'
             },
             {
-                icon: '/icons/pnpm.svg',
                 title: 'pnpm',
                 desc: '快速的、节省磁盘空间的包管理工具',
                 link: 'https://pnpm.io'
@@ -584,7 +556,6 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://expressjs.com'
             },
             {
-                icon: '/icons/koa.svg',
                 title: 'Koa',
                 desc: '基于 Node.js 平台的下一代 web 开发框架',
                 link: 'https://koajs.com'
@@ -607,13 +578,11 @@ export const NAV_DATA: NavData[] = [
         title: '可视化',
         items: [
             {
-                icon: '/icons/echarts.png',
                 title: 'ECharts',
                 desc: '一个基于 JavaScript 的开源可视化图表库',
                 link: 'https://echarts.apache.org/zh/index.html'
             },
             {
-                icon: '/icons/antv.png',
                 title: 'AntV',
                 desc: '蚂蚁集团全新一代数据可视化解决方案，致力于提供一套简单方便、专业可靠、无限可能的数据可视化最佳实践。',
                 link: 'https://antv.vision/zh/'
@@ -708,7 +677,6 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://iconpark.oceanengine.com/official'
             },
             {
-                icon: '/icons/iconify.png',
                 title: 'Iconify',
                 desc: '一个开源的图标集合和图标工具',
                 link: 'https://iconify.design'
@@ -720,7 +688,6 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://icones.js.org'
             },
             {
-                icon: '/icons/simpleicons.svg',
                 title: 'Simple Icons',
                 desc: '包含 2457 种流行品牌的免费 SVG 图标库',
                 link: 'https://simpleicons.org'
@@ -767,7 +734,6 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://www.runoob.com'
             },
             {
-                icon: '/icons/es6.svg',
                 title: 'ES6 入门教程',
                 desc: '阮一峰的网络日志',
                 link: 'http://es6.ruanyifeng.com'
@@ -823,7 +789,6 @@ export const NAV_DATA: NavData[] = [
             {
                 title: '博客园',
                 // icon: 'https://common.cnblogs.com/favicon.ico',
-                icon: '/icons/cnblogs.svg',
                 desc: '博客园是一个面向开发者的知识分享社区',
                 link: 'https://www.cnblogs.com'
             },
@@ -863,13 +828,11 @@ export const NAV_DATA: NavData[] = [
                 link: 'https://www.youtube.com'
             },
             {
-                icon: '/icons/twitter.svg',
                 title: 'Twitter',
                 // desc: '',
                 link: 'https://twitter.com'
             },
             {
-                icon: '/icons/pixiv.png',
                 title: 'Pixiv',
                 // desc: '',
                 link: 'https://www.pixiv.net'

@@ -1,9 +1,15 @@
 ---
 title: 友链
 order: 3
+sidebar: false
+aside: false
+prev: false
+next: false
 ---
 
 # 友链
+
+<p class="page-intro">一些朋友，一些值得常去的小站。</p>
 
 <script setup>
 import { VPTeamMembers } from 'vitepress/theme'

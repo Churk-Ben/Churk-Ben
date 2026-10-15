@@ -14,3 +14,9 @@ hero:
       text: 让我看看
       link: /posts/
 ---
+
+<script setup>
+import MHomeContent from './.vitepress/theme/components/MHomeContent.vue'
+</script>
+
+<MHomeContent />
