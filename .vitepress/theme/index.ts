@@ -5,7 +5,7 @@ import "@nolebase/vitepress-plugin-enhanced-readabilities/client/style.css";
 
 import MLayout from "./components/layout/MLayout.vue";
 import MPageIntro from "./components/common/MPageIntro.vue";
-import "./custom.css";
+import "./custom.scss";
 
 const components = {
   MPageIntro,

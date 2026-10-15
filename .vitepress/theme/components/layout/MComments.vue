@@ -25,7 +25,7 @@ const pageId = usePageId();
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .doc-comments {
   margin: 24px 0 48px;
   border-top: 1px solid var(--vp-c-divider);

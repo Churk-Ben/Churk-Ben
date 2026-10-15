@@ -20,7 +20,7 @@ defineProps<{ posts: Post[] }>();
   </ul>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .post-list {
   margin: 0;
   padding: 0;

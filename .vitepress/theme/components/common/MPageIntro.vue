@@ -2,7 +2,7 @@
   <p class="page-intro"><slot /></p>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 p.page-intro {
   margin: 16px 0 28px;
   color: var(--vp-c-text-2);

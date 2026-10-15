@@ -4,7 +4,7 @@
 
 ## 本地命令
 
-使用 Node.js 24 和项目声明的 pnpm 版本，在仓库根目录运行：
+使用 `.node-version` 声明的 Node.js 24 和 `package.json` 固定的 pnpm 12.11.2，在仓库根目录运行：
 
 ```sh
 pnpm install --frozen-lockfile
@@ -17,6 +17,8 @@ pnpm preview
 ```
 
 `pnpm check` 检查文章元数据、本地图片引用、重复或未引用的资源，以及 Vue 组件中的内联样式。`pnpm build` 同时检查站内页面链接。
+
+工具链使用 VitePress `2.0.0-alpha.20`、Vite 8、Vue 3 和 Dart Sass Embedded。VitePress 2 当前属于预发布版本，固定版本号以避免自动跳到其他 alpha；升级时同步调整阅读增强插件的兼容版本。数学插件固定在与 VitePress 内置 MarkdownIt 14 兼容的版本。
 
 ## 目录职责
 
@@ -41,7 +43,8 @@ docs/
     features/posts/           # 首页文章区、归档、列表、阅读入口与类型
     features/navigation/      # 导航数据、卡片、最近使用记录
     features/friends/         # 友链数据、组件与专属头像
-    styles/                   # 主题变量、全局规则、首页与个人页样式
+    custom.scss               # 全局 SCSS 入口
+    styles/                   # 主题变量、全局规则、首页与个人页 SCSS 模块
 scripts/check-content.mjs    # 内容与资源一致性检查
 ```
 
@@ -75,6 +78,8 @@ tags: [学习笔记, C语言]
 
 Markdown 负责内容，主题负责展示。页面可以直接使用已注册的 `MPageIntro`、`MHomeContent`、`MPostArchive`、`MNav`、`MFriendLinks`，无需导入主题内部路径。
 
-组件自身样式放在 `<style scoped>`；跨组件规则放在 `theme/styles/`，颜色统一引用 VitePress 变量。不要使用 `style="..."`、`:style` 或通过 DOM 的 `.style` 修改布局；图片失败和条件显示使用 Vue 状态与 `v-if`。外观切换的圆形过渡通过 Web Animations API 实现，保留系统的减少动态效果设置。
+组件自身样式统一放在 `<style lang="scss" scoped>`；跨组件规则放在 `theme/styles/_*.scss`，由 `custom.scss` 使用 Sass 的 `@use` 加载，不使用已弃用的 Sass `@import`。颜色继续引用 VitePress 的 CSS 自定义属性，以支持明暗主题切换；第三方依赖的 CSS 直接导入，不复制或改写。Vite 通过 `sass-embedded` 的现代编译器 API 编译 SCSS。
+
+不要使用 `style="..."`、`:style` 或通过 DOM 的 `.style` 修改布局；图片失败和条件显示使用 Vue 状态与 `v-if`。外观切换的圆形过渡通过 Web Animations API 实现，保留系统的减少动态效果设置。
 
 全仓 Prettier 使用 `.prettierrc` 中的 `printWidth: 120`，其余选项沿用默认值。`pnpm format` 执行格式化，`pnpm format:check` 只检查；依赖和构建缓存由 `.prettierignore` 排除。Markdown 中的 C / C++ 代码样例仍属于文章内容，格式化器不会编译或修正它们。

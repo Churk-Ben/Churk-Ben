@@ -36,7 +36,7 @@ const groups = computed(() => groupPostsByYear(filteredPosts.value));
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .archive-toolbar {
   display: flex;
   flex-wrap: wrap;

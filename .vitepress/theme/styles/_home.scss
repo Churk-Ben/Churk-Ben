@@ -1,0 +1,18 @@
+.VPHomeHero {
+  .text {
+    max-width: 520px;
+    font-size: 28px;
+    line-height: 1.35;
+    font-weight: 500;
+    text-wrap: balance;
+
+    @media (min-width: 640px) {
+      font-size: 40px;
+    }
+  }
+
+  .tagline {
+    padding-top: 16px;
+    font-size: 18px;
+  }
+}

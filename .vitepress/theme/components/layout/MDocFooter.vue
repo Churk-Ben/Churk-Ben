@@ -30,7 +30,7 @@ const isDocFooterVisible = computed(() => {
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .m-doc-footer {
   display: flex;
   flex-direction: column;

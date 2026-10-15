@@ -28,7 +28,7 @@ import MPostList from "./MPostList.vue";
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .home-content {
   display: grid;
   gap: 40px;

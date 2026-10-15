@@ -35,7 +35,7 @@ useMediumZoom();
   </Layout>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .nav-visitor {
   margin-left: 8px;
 }
