@@ -1,0 +1,25 @@
+.vp-doc .profile-badges > p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.vp-doc .profile-badges a,
+.vp-doc .profile-badges img {
+  display: block;
+}
+
+.vp-doc .profile-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.profile-contact > img {
+  width: 144px;
+  max-width: 40%;
+  height: auto;
+}

@@ -1,50 +1,19 @@
-/// <reference types="vite/client" />
+import { onMounted, onUnmounted } from "vue";
+import { onContentUpdated } from "vitepress";
+import mediumZoom from "medium-zoom";
 
-import type { Router } from 'vitepress'
-import type { App, InjectionKey } from 'vue'
-import type { Zoom } from 'medium-zoom'
+const selector = ".vp-doc :not(a) > img:not(.visitor, .avatar-img, .vp-sponsor-grid-image)";
 
-import { inject, watch, nextTick } from 'vue'
-import mediumZoom from 'medium-zoom'
+export function useMediumZoom() {
+  if (import.meta.env.SSR) return;
 
-declare module 'medium-zoom' {
-  interface Zoom {
-    refresh: (selector?: string) => void
-  }
-}
+  const zoom = mediumZoom();
+  const refresh = () => {
+    zoom.detach();
+    zoom.attach(selector);
+  };
 
-const defaultSelector = ':not(a) > img:not(.image-src, .visitor, .vp-sponsor-grid-image)'
-
-export const mediumZoomSymbol: InjectionKey<Zoom> = Symbol('medium-zoom')
-
-export const createMediumZoomProvider = (app: App, router: Router) => {
-  if (import.meta.env.SSR) {
-    return
-  }
-
-  const zoom = mediumZoom()
-  // 扩展 zoom.refresh 方法
-  zoom.refresh = (selector = defaultSelector) => {
-    zoom.detach()
-    zoom.attach(selector)
-  }
-
-  app.provide(mediumZoomSymbol, zoom)
-
-  watch(
-    () => router.route.path,
-    () => nextTick(() => zoom.refresh())
-  )
-}
-
-export function useMediumZoom(): Zoom | null {
-  if (import.meta.env.SSR) {
-    return null
-  }
-
-  const zoom = inject(mediumZoomSymbol)
-  if (!zoom) {
-    throw new Error('useMediumZoom() is called without provider.')
-  }
-  return zoom
+  onMounted(refresh);
+  onContentUpdated(refresh);
+  onUnmounted(() => zoom.detach());
 }

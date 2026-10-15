@@ -12,7 +12,10 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
-    "preview": "vitepress preview"
+    "preview": "vitepress preview",
+    "check": "node scripts/check-content.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -26,7 +29,6 @@
   },
   "homepage": "https://github.com/Churk-Ben/Churk-Ben#readme",
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^7.3.1",
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
@@ -35,11 +37,12 @@
     "@mdit/plugin-katex": "^1.0.1",
     "@nolebase/vitepress-plugin-enhanced-readabilities": "^2.18.2",
     "@types/node": "^24.13.3",
+    "gray-matter": "^4.0.3",
     "medium-zoom": "^1.1.0",
+    "prettier": "3.9.10",
     "sass-embedded": "^1.100.0",
     "vite": "^5.4.21",
     "vitepress": "^1.6.4",
-    "vitepress-sidebar": "^1.36.1",
     "vue": "^3.5.40"
   }
 }

@@ -25,10 +25,14 @@
 
 ### 📫 Contact
 
-<img align="right" src="/assets/星野日向.png" width="200" />
+<img align="right" src="docs/public/img/icon.png" width="200" />
 
 - Blog: [www.churk.top](https://www.churk.top)
 - GitHub: [@Churk-Ben](https://github.com/Churk-Ben)
 - Email: [churkben0@gmail.com](mailto:churkben0@gmail.com)
 
 <br clear="both" />
+
+## 博客维护
+
+目录组织、稿件与图片的存放约定、组件复用和开发命令见 [维护指南](CONTRIBUTING.md)。
