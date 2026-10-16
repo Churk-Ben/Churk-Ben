@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { withBase } from "vitepress";
-import type { Post } from "./posts";
+import type { Post } from "../../features/posts/types.ts";
 
 defineProps<{ posts: Post[] }>();
 </script>

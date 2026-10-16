@@ -1,6 +1,6 @@
 import { onMounted, ref } from "vue";
-import { NAV_DATA } from "./data";
-import type { NavLink } from "./types";
+import { NAV_DATA } from "../features/navigation/data.ts";
+import type { NavLink } from "../features/navigation/types.ts";
 
 const storageKey = "churk-ben-recent-links";
 const linksByUrl = new Map(NAV_DATA.flatMap((group) => group.items).map((item) => [item.link, item]));

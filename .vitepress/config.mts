@@ -1,7 +1,9 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, loadEnv } from "vitepress";
+import type { DefaultTheme, UserConfigExport } from "vitepress";
 import { head } from "./configs/head.ts";
 import { markdown } from "./configs/markdown.ts";
-import { themeConfig } from "./configs/theme.ts";
+import { site } from "./configs/site.ts";
+import { buildThemeConfig } from "./configs/theme.ts";
 
 /**
  * `@nolebase/ui` ships Google-hosted `@font-face` declarations that this theme never
@@ -24,31 +26,32 @@ function stripRemoteFonts() {
   };
 }
 
-export default defineConfig({
-  title: "Churk's Blog",
-  description: "Aurore est le billet-doux de Polaris.",
-  lang: "zh-CN",
-  srcDir: "docs",
-  srcExclude: ["drafts/**"],
-  cleanUrls: true,
-  lastUpdated: true,
-  // Article folders keep their original published URLs.
-  rewrites: { "posts/:slug/index.md": "posts/:slug.md" },
-  head,
-  markdown,
-  themeConfig,
-  vite: {
-    css: {
-      postcss: { plugins: [stripRemoteFonts()] },
-      preprocessorOptions: {
-        scss: { api: "modern-compiler" },
+const config: UserConfigExport<DefaultTheme.Config> = ({ mode }) =>
+  defineConfig({
+    ...site,
+    srcDir: "docs",
+    srcExclude: ["drafts/**"],
+    cleanUrls: true,
+    lastUpdated: true,
+    // Article folders keep their original published URLs.
+    rewrites: { "posts/:slug/index.md": "posts/:slug.md" },
+    head,
+    markdown,
+    themeConfig: buildThemeConfig(loadEnv(mode, process.cwd(), "")),
+    vite: {
+      css: {
+        postcss: { plugins: [stripRemoteFonts()] },
+        preprocessorOptions: {
+          scss: { api: "modern-compiler" },
+        },
+      },
+      optimizeDeps: {
+        exclude: ["@nolebase/vitepress-plugin-enhanced-readabilities/client", "vitepress", "@nolebase/ui"],
+      },
+      ssr: {
+        noExternal: ["@nolebase/vitepress-plugin-enhanced-readabilities", "@nolebase/ui"],
       },
     },
-    optimizeDeps: {
-      exclude: ["@nolebase/vitepress-plugin-enhanced-readabilities/client", "vitepress", "@nolebase/ui"],
-    },
-    ssr: {
-      noExternal: ["@nolebase/vitepress-plugin-enhanced-readabilities", "@nolebase/ui"],
-    },
-  },
-});
+  });
+
+export default config;

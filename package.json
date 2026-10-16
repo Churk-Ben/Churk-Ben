@@ -14,6 +14,11 @@
     "build": "vitepress build",
     "preview": "vitepress preview",
     "check": "node scripts/check-content.mjs",
+    "check:assets": "node scripts/check-content.mjs assets",
+    "check:resources": "node scripts/check-content.mjs resources",
+    "check:styles": "node scripts/check-content.mjs styles",
+    "check:posts": "node scripts/check-content.mjs posts",
+    "new-post": "node scripts/new-post.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

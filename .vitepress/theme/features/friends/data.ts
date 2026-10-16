@@ -1,6 +1,6 @@
 import type { DefaultTheme } from "vitepress";
-import { githubSvg, linkSvg } from "../../icons";
-import erhjiuAvatar from "./erhjiu.jpg";
+import { githubSvg, linkSvg } from "../../assets/icons.ts";
+import erhjiuAvatar from "./assets/erhjiu.jpg";
 
 export const friends: DefaultTheme.TeamMember[] = [
   {

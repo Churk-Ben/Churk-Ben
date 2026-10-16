@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { withBase } from "vitepress";
-import { data as posts } from "./posts.data";
-import { readingPaths } from "./posts";
+import { data as posts } from "../../features/posts/posts.data.ts";
+import { readingPaths } from "../../features/posts/data.ts";
 import MPostList from "./MPostList.vue";
 </script>
 

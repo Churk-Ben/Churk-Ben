@@ -2,7 +2,7 @@
 import { computed, ref } from "vue";
 import { withBase } from "vitepress";
 
-import type { NavLink } from "./types";
+import type { NavLink } from "../../features/navigation/types.ts";
 
 const props = defineProps<{
   noIcon?: NavLink["noIcon"];

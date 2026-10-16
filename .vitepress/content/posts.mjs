@@ -7,7 +7,7 @@ export const postsPattern = `${postsDirectory.replaceAll("\\", "/")}*/index.md`;
 
 /**
  * Share the same metadata pipeline between the sidebar and the client content loader.
- * @returns {import('../theme/features/posts/posts').Post[]}
+ * @returns {import('../theme/features/posts/types').Post[]}
  */
 export function loadPosts() {
   return readdirSync(postsDirectory, { withFileTypes: true })

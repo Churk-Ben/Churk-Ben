@@ -1,8 +1,20 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { data as posts } from "./posts.data";
-import { groupPostsByYear, postFilters } from "./posts";
+import { data as posts } from "../../features/posts/posts.data.ts";
+import { postFilters } from "../../features/posts/data.ts";
 import MPostList from "./MPostList.vue";
+import type { Post } from "../../features/posts/types.ts";
+
+function groupPostsByYear(items: Post[]) {
+  const years = new Map<string, Post[]>();
+  for (const post of items) {
+    const year = post.date.slice(0, 4);
+    const group = years.get(year) ?? [];
+    group.push(post);
+    years.set(year, group);
+  }
+  return [...years].map(([year, posts]) => ({ year, posts }));
+}
 
 const selectedTag = ref("全部");
 const filteredPosts = computed(() =>

@@ -10,10 +10,10 @@ import "./custom.scss";
 
 const components = {
   MPageIntro,
-  MHomeContent: defineAsyncComponent(() => import("./features/posts/MHomeContent.vue")),
-  MPostArchive: defineAsyncComponent(() => import("./features/posts/MPostArchive.vue")),
-  MNav: defineAsyncComponent(() => import("./features/navigation/MNav.vue")),
-  MFriendLinks: defineAsyncComponent(() => import("./features/friends/MFriendLinks.vue")),
+  MHomeContent: defineAsyncComponent(() => import("./components/posts/MHomeContent.vue")),
+  MPostArchive: defineAsyncComponent(() => import("./components/posts/MPostArchive.vue")),
+  MNav: defineAsyncComponent(() => import("./components/navigation/MNav.vue")),
+  MFriendLinks: defineAsyncComponent(() => import("./components/friends/MFriendLinks.vue")),
 };
 
 export default {

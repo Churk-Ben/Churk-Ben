@@ -9,14 +9,16 @@
 ```sh
 pnpm install --frozen-lockfile
 pnpm dev
-pnpm check
+pnpm check                 # 全部校验，可传 assets / resources / styles / posts 跑子集
+pnpm check:posts           # 也可用 pnpm check:assets / check:resources / check:styles
+pnpm new-post <slug> "标题" # 按规范生成新文章骨架
 pnpm format
 pnpm format:check
 pnpm build
 pnpm preview
 ```
 
-`pnpm check` 检查文章元数据、本地图片引用、重复或未引用的资源，以及 Vue 组件中的内联样式。`pnpm build` 同时检查站内页面链接。
+`pnpm check` 由 `scripts/check-content.mjs` 编排：`check-assets` 校验文章与主题源码引用的本地图片、`check-resources` 校验未引用或重复的资源、`check-styles` 校验 Vue 组件不使用内联样式、`check-posts` 校验文章元数据与 slug 命名。`pnpm build` 同时检查站内页面链接。CI 在构建前会执行 `pnpm check` 与 `pnpm format:check`。
 
 工具链使用 VitePress `2.0.0-alpha.20`、Vite 8、Vue 3 和 Dart Sass Embedded。VitePress 2 当前属于预发布版本，固定版本号以避免自动跳到其他 alpha；升级时同步调整阅读增强插件的兼容版本。数学插件固定在与 VitePress 内置 MarkdownIt 14 兼容的版本。
 
@@ -32,23 +34,52 @@ docs/
       images/                 # 该稿件专用的截图
   drafts/                     # 可选草稿目录，不参与站点构建
   public/img/icon.png         # 需固定 URL 的公共站点头像与 favicon
+.env.example                  # 环境变量示例（复制为 .env.local 后填写）
 .vitepress/
-  config.mts                  # VitePress 入口与 URL 映射
-  configs/                    # 实际使用的 head、Markdown、主题配置
+  config.mts                  # VitePress 入口、URL 映射与 env 加载
+  configs/
+    site.ts                   # 站点标识与文档页文案（数据）
+    nav.ts / social.ts        # 顶栏导航与社交链接（数据）
+    footer.ts                 # 页脚文案（数据）
+    integrations.ts           # 由环境变量解析访客徽章与评论配置
+    head.ts / markdown.ts     # head 标签与 Markdown 渲染配置
+    theme.ts                  # 组装 buildThemeConfig(env)
   content/posts.mjs           # 侧栏与文章列表共用的元数据读取逻辑
   theme/
-    components/common/        # 页面引言、访问徽章等共用组件
-    components/layout/        # 布局、评论、页脚
-    composables/              # 外观切换、图片放大、页面标识
-    features/posts/           # 首页文章区、归档、列表、阅读入口与类型
-    features/navigation/      # 导航数据、卡片、最近使用记录
-    features/friends/         # 友链数据、组件与专属头像
+    assets/icons.ts           # 跨配置与功能复用的内联 SVG 图标
+    components/               # 全部 Vue 组件
+      common/                 # 页面引言、访问徽章
+      layout/                 # 布局、评论、页脚
+      posts/                  # 首页文章区、归档、列表
+      navigation/             # 导航分组与卡片
+      friends/                # 友链展示
+    composables/              # 外观切换、图片放大、页面标识、最近使用记录
+    features/                 # 各功能的数据与类型
+      posts/                  # 文章数据、Post 类型、VitePress 加载器 posts.data.ts
+      navigation/             # 导航数据与类型
+      friends/                # 友链数据与 assets/ 头像
     custom.scss               # 全局 SCSS 入口
     styles/                   # 主题变量、全局规则、首页与个人页 SCSS 模块
-scripts/check-content.mjs    # 内容与资源一致性检查
+scripts/
+  check-content.mjs           # 校验编排入口（可传 assets/resources/styles/posts 子集）
+  check-assets.mjs            # 文章与主题源码的图片引用校验
+  check-resources.mjs         # 未引用 / 重复资源校验
+  check-styles.mjs            # Vue 内联样式校验
+  check-posts.mjs             # 文章元数据、URL 唯一性与 slug 校验
+  fs-utils.mjs                # 递归列文件等公共工具
+  new-post.mjs                # 新建文章脚手架
 ```
 
-`configs/sidebar.ts` 是工作区原有的独立配置草稿，保留已有内容，当前入口未使用它；生效的侧栏由 `configs/theme.ts` 读取文章元数据生成。
+配置层为数据驱动：`configs/` 下的数据文件只存放站点标识、导航、社交、页脚等数据，`theme.ts` 的 `buildThemeConfig(env)` 把它们与 `content/posts.mjs` 的文章元数据组装成主题配置，`config.mts` 通过 `loadEnv` 读取环境变量后传入。主题按类型分层：`components/` 存放全部 Vue 组件（`common`、`layout` 为通用组件，`posts`、`navigation`、`friends` 按功能分目录），`composables/` 存放组合式函数，`features/` 存放各功能的数据与类型（`data.ts`、`types.ts`，文章另有 VitePress 加载器 `posts.data.ts`），功能本地资源放在 `features/<name>/assets/`。相对导入保留 `.ts` 扩展名，`.vue`、`.mjs` 与资源文件保留原扩展名。
+
+## 环境变量
+
+需要配置集成（访问徽章、Giscus 评论）时，复制 `.env.example` 为 `.env.local` 并填写；`.env.local` 已被 `.gitignore` 忽略。变量在构建时由 `config.mts` 的 `loadEnv` 读取，经 `configs/integrations.ts` 解析进主题配置，未填写时对应组件不渲染：
+
+- `VISITOR_BADGE_ID`：访问统计徽章，填入即启用。
+- `GISCUS_REPO`、`GISCUS_REPO_ID`、`GISCUS_CATEGORY`、`GISCUS_CATEGORY_ID`：四项齐全才启用评论。
+
+这些值会写入站点产物，属于公开信息，不要放置密钥。CI 构建同样通过环境变量注入，仓库不保存真实值。
 
 ## 新增文章
 
@@ -72,7 +103,7 @@ tags: [学习笔记, C语言]
 
 图片放进同一稿件的 `images/`，使用相对路径。Vite 负责生成带内容哈希的产物，避免源码图片又被 `public` 整目录复制一遍。多个页面共用且必须保持固定 URL 的资源才放进 `docs/public/`；组件专用资源随功能目录保存，并通过 `import` 引入。
 
-新增稿件会进入首页与归档；侧栏在启动或构建时读取同一套元数据，开发时新增文章或修改侧栏标题后重启开发服务器。阅读入口和归档筛选标签统一维护在 `theme/features/posts/posts.ts`。
+新增稿件会进入首页与归档；侧栏在启动或构建时读取同一套元数据，开发时新增文章或修改侧栏标题后重启开发服务器。阅读入口和归档筛选标签统一维护在 `theme/features/posts/data.ts`，`Post` 类型在 `theme/features/posts/types.ts`。也可用 `pnpm new-post <slug> "标题"` 生成骨架。
 
 ## 组件与样式
 
