@@ -24,7 +24,7 @@ const svg = computed(() => {
 
 const formatBadge = computed(() => {
   if (typeof props.badge === "string") {
-    return { text: props.badge, type: "info" };
+    return { text: props.badge, type: "info" as const };
   }
   return props.badge;
 });

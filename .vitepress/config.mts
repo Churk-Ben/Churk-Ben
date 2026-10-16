@@ -41,9 +41,6 @@ const config: UserConfigExport<DefaultTheme.Config> = ({ mode }) =>
     vite: {
       css: {
         postcss: { plugins: [stripRemoteFonts()] },
-        preprocessorOptions: {
-          scss: { api: "modern-compiler" },
-        },
       },
       optimizeDeps: {
         exclude: ["@nolebase/vitepress-plugin-enhanced-readabilities/client", "vitepress", "@nolebase/ui"],

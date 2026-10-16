@@ -14,13 +14,14 @@ pnpm check:posts           # 也可用 pnpm check:assets / check:resources / che
 pnpm new-post <slug> "标题" # 按规范生成新文章骨架
 pnpm format
 pnpm format:check
+pnpm typecheck             # vue-tsc 静态类型检查
 pnpm build
 pnpm preview
 ```
 
-`pnpm check` 由 `scripts/check-content.mjs` 编排：`check-assets` 校验文章与主题源码引用的本地图片、`check-resources` 校验未引用或重复的资源、`check-styles` 校验 Vue 组件不使用内联样式、`check-posts` 校验文章元数据与 slug 命名。`pnpm build` 同时检查站内页面链接。CI 在构建前会执行 `pnpm check` 与 `pnpm format:check`。
+`pnpm check` 由 `scripts/check-content.mjs` 编排：`check-assets` 校验文章与主题源码引用的本地图片、`check-resources` 校验未引用或重复的资源、`check-styles` 校验 Vue 组件不使用内联样式、`check-posts` 校验文章元数据与 slug 命名。`pnpm typecheck` 依据根目录 `tsconfig.json` 用 `vue-tsc` 检查 `.vitepress/**` 的 TypeScript 与 Vue 组件。`pnpm build` 同时检查站内页面链接。CI 在构建前会执行 `pnpm check`、`pnpm format:check` 与 `pnpm typecheck`。
 
-工具链使用 VitePress `2.0.0-alpha.20`、Vite 8、Vue 3 和 Dart Sass Embedded。VitePress 2 当前属于预发布版本，固定版本号以避免自动跳到其他 alpha；升级时同步调整阅读增强插件的兼容版本。数学插件固定在与 VitePress 内置 MarkdownIt 14 兼容的版本。
+工具链使用 VitePress `2.0.0-alpha.20`、Vite 8、Vue 3、TypeScript 5.9、`vue-tsc` 和 Dart Sass Embedded。Vite 8 默认使用 Sass 现代编译器 API，无需再显式配置。VitePress 2 当前属于预发布版本，固定版本号以避免自动跳到其他 alpha；升级时同步调整阅读增强插件的兼容版本。数学插件固定在与 VitePress 内置 MarkdownIt 14 兼容的版本。
 
 ## 目录职责
 
