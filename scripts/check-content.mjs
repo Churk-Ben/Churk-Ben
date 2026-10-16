@@ -48,7 +48,9 @@ for (const file of documents) {
 const sourceFiles = filesIn(theme);
 for (const file of sourceFiles.filter((file) => /\.(vue|ts)$/.test(file))) {
   const source = readFileSync(file, "utf8");
-  for (const [, asset] of source.matchAll(/from\s+['"]([^'"]+\.(?:png|jpe?g|svg|gif|webp|avif))['"]/g))
+  for (const [, asset] of source.matchAll(/from\s+['"]([^'"]+\.(?:png|jpe?g|svg|gif|webp|avif|ico))['"]/g))
+    checkImage(asset, file);
+  for (const [, asset] of source.matchAll(/["'](\/[\w./-]+\.(?:png|jpe?g|svg|gif|webp|avif|ico))["']/g))
     checkImage(asset, file);
   if (file.endsWith(".vue")) {
     assert(
@@ -59,7 +61,7 @@ for (const file of sourceFiles.filter((file) => /\.(vue|ts)$/.test(file))) {
 }
 
 const resources = [...filesIn(docs), ...sourceFiles].filter((file) =>
-  /\.(png|jpe?g|svg|gif|webp|avif)$/.test(extname(file)),
+  /\.(png|jpe?g|svg|gif|webp|avif|ico)$/.test(extname(file)),
 );
 const hashes = new Map();
 for (const file of resources) {

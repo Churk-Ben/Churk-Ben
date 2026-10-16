@@ -1,6 +1,6 @@
 import type { DefaultTheme } from "vitepress";
 import { loadPosts } from "../content/posts.mjs";
-import { bilibiliSvg, githubSvg } from "../theme/icons";
+import { bilibiliSvg, githubSvg } from "../theme/icons.ts";
 
 export const themeConfig: DefaultTheme.Config = {
   nav: [

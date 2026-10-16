@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useData } from "vitepress";
-import { useSidebar } from "vitepress/theme";
+import { useLayout } from "vitepress/theme";
 
 import { usePageId } from "../../composables/usePageId";
 import MVisitorBadge from "../common/MVisitorBadge.vue";
@@ -10,7 +10,7 @@ const { theme } = useData();
 const footer = computed(() => theme.value.footer);
 const visitor = computed(() => theme.value.visitor);
 
-const { hasSidebar } = useSidebar();
+const { hasSidebar } = useLayout();
 const pageId = usePageId();
 
 const isDocFooterVisible = computed(() => {

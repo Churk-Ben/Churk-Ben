@@ -2,6 +2,7 @@ import type { EnhanceAppContext, Theme } from "vitepress";
 import { defineAsyncComponent } from "vue";
 import DefaultTheme from "vitepress/theme";
 import "@nolebase/vitepress-plugin-enhanced-readabilities/client/style.css";
+import "katex/dist/katex.min.css";
 
 import MLayout from "./components/layout/MLayout.vue";
 import MPageIntro from "./components/common/MPageIntro.vue";

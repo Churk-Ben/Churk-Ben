@@ -1,5 +1,5 @@
 import { loadPosts, postsPattern } from "../../../content/posts.mjs";
-import type { Post } from "./posts";
+import type { Post } from "./posts.ts";
 
 export declare const data: Post[];
 

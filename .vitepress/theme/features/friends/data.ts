@@ -12,7 +12,7 @@ export const friends: DefaultTheme.TeamMember[] = [
     ],
   },
   {
-    avatar: "https://notes.fe-mm.com/logo.png",
+    avatar: "/img/fe-mm.png",
     name: "茂茂物语",
     links: [{ icon: { svg: linkSvg }, link: "https://notes.fe-mm.com" }],
   },

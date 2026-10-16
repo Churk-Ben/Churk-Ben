@@ -38,6 +38,7 @@
     "@nolebase/vitepress-plugin-enhanced-readabilities": "^2.21.1",
     "@types/node": "^24.13.3",
     "gray-matter": "^4.0.3",
+    "katex": "^0.17.0",
     "medium-zoom": "^1.1.0",
     "prettier": "3.9.10",
     "sass-embedded": "^1.105.1",
