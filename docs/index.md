@@ -11,8 +11,12 @@ hero:
 
   actions:
     - theme: brand
-      text: 让我看看
+      text: 让我看看!
       link: /posts/
+
+    - theme: alt
+      text: 导航站
+      link: /nav
 ---
 
 <MHomeContent />
