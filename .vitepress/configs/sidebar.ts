@@ -1,14 +1,14 @@
 import type { DefaultTheme } from "vitepress";
 import { slugify } from "@mdit-vue/shared";
 import { loadPosts } from "../content/posts.mjs";
-import { NAV_DATA } from "../theme/features/nav/data.ts";
+import { navData } from "../theme/features/nav/data.ts";
 
 const postItems: DefaultTheme.SidebarItem[] = loadPosts().map((post) => ({
   text: post.title,
   link: post.url,
 }));
 
-const navSectionItems: DefaultTheme.SidebarItem[] = NAV_DATA.map((group) => ({
+const navSectionItems: DefaultTheme.SidebarItem[] = navData.map((group) => ({
   text: group.title,
   link: `/nav#${slugify(group.title)}`,
 }));

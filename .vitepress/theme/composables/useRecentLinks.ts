@@ -1,9 +1,9 @@
 import { onMounted, ref } from "vue";
-import { NAV_DATA } from "../features/nav/data.ts";
+import { navData } from "../features/nav/data.ts";
 import type { NavLink } from "../features/nav/types.ts";
 
 const storageKey = "churk-ben-recent-links";
-const linksByUrl = new Map(NAV_DATA.flatMap((group) => group.items).map((item) => [item.link, item]));
+const linksByUrl = new Map(navData.flatMap((group) => group.items).map((item) => [item.link, item]));
 
 export function useRecentLinks() {
   const items = ref<NavLink[]>([]);
@@ -12,7 +12,7 @@ export function useRecentLinks() {
     try {
       const saved = JSON.parse(localStorage.getItem(storageKey) ?? "[]");
       if (Array.isArray(saved)) {
-        // Read the old object format too; canonical labels and icons always come from NAV_DATA.
+        // Read the old object format too; canonical labels and icons always come from navData.
         items.value = saved
           .map((value) => linksByUrl.get(typeof value === "string" ? value : value?.link))
           .filter((item): item is NavLink => Boolean(item))

@@ -42,7 +42,9 @@ export async function checkAssets({ root, docs, theme }) {
     checkImage(data.hero?.image?.src, file);
   }
 
-  const sources = filesIn(theme).filter((file) => /\.(vue|ts)$/.test(file));
+  // 数据文件中的封面、头像等本地资源也要参与引用校验。
+  const dataSources = filesIn(join(root, "data")).filter((file) => file.endsWith(".json"));
+  const sources = [...filesIn(theme).filter((file) => /\.(vue|ts)$/.test(file)), ...dataSources];
   for (const file of sources) {
     const source = readFileSync(file, "utf8");
     for (const [, asset] of source.matchAll(IMPORT_PATTERN)) checkImage(asset, file);
