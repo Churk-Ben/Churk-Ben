@@ -14,7 +14,12 @@ const next = computed(() => (index.value >= 0 ? posts[index.value + 1] : undefin
 </script>
 
 <template>
-  <nav v-if="index >= 0" class="m-post-pager" aria-label="文章翻页">
+  <nav
+    v-if="previous || next"
+    class="m-post-pager"
+    :class="{ 'm-post-pager--next-only': next && !previous }"
+    aria-label="文章翻页"
+  >
     <a v-if="previous" class="m-post-pager-link" :href="withBase(previous.url)">
       <span class="m-post-pager-label">上一篇</span>
       <span class="m-post-pager-title">{{ previous.title }}</span>
@@ -65,6 +70,10 @@ const next = computed(() => (index.value >= 0 ? posts[index.value + 1] : undefin
 @media (min-width: 640px) {
   .m-post-pager {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .m-post-pager--next-only .m-post-pager-link--next {
+    grid-column: 2;
   }
 }
 </style>
