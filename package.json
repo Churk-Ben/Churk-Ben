@@ -23,6 +23,7 @@
     "new:nav": "node scripts/new.mjs nav",
     "new:link": "node scripts/new.mjs link",
     "new:home": "node scripts/new.mjs home",
+    "pub": "node scripts/pub.mjs",
     "typecheck": "vue-tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

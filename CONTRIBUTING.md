@@ -17,6 +17,7 @@ pnpm new:post [slug] ["标题"] # 新建文章骨架，省略参数时逐项询�
 pnpm new:nav               # 添加导航项，可选择已有分组或新建分组
 pnpm new:link              # 添加友链，或给已有友链追加链接
 pnpm new:home              # 添加首页推荐阅读
+pnpm pub [说明]           # 只提交并推送 docs/ 与 data/ 的内容改动
 pnpm format
 pnpm format:check
 pnpm typecheck             # vue-tsc 静态类型检查
@@ -27,6 +28,8 @@ pnpm preview
 `pnpm check` 由 `scripts/check.mjs` 编排：`check-assets` 校验文章、主题源码与 `data/` 数据里引用的本地图片，`check-resources` 校验未引用或重复的资源，`check-styles` 校验 Vue 组件不使用内联样式，`check-posts` 校验文章元数据与 slug 命名。`resources` 依赖 `assets` 收集的引用集合，单独运行时入口会自动先执行 `assets`。`pnpm typecheck` 依据根目录 `tsconfig.json` 用 `vue-tsc` 检查 `.vitepress/**` 的 TypeScript 与 Vue 组件。`pnpm build` 同时检查站内页面链接。CI 在构建前会执行 `pnpm check`、`pnpm format:check` 与 `pnpm typecheck`。
 
 `pnpm new` 由 `scripts/new.mjs` 统一分发，具体创建逻辑按类型拆在 `new-post.mjs`、`new-nav.mjs`、`new-link.mjs`、`new-home.mjs`，共用路径、JSON 读写与校验放在 `new-utils.mjs`，交互逻辑在 `prompt.mjs`。交互命令需要终端；`pnpm new:post <slug> "标题"` 在传齐参数时不会询问，可直接用于脚本。
+
+`pnpm pub` 由 `scripts/pub.mjs` 提供：只把 `docs/` 与 `data/` 下的内容改动加入暂存区，提交后推送当前分支；暂存区已有代码改动时会中止，未暂存的代码改动不会进入本次提交。可用 `--no-push` 只提交不推送。`pnpm publish` 是 pnpm 自带的 registry 发布命令，所以博客内容发布使用更短的 `pnpm pub`。
 
 工具链使用 VitePress `2.0.0-alpha.20`、Vite 8、Vue 3、TypeScript 5.9、`vue-tsc` 和 Dart Sass Embedded。Vite 8 默认使用 Sass 现代编译器 API，无需再显式配置。VitePress 2 当前属于预发布版本，固定版本号以避免自动跳到其他 alpha；升级时同步调整阅读增强插件的兼容版本。数学插件固定在与 VitePress 内置 MarkdownIt 14 兼容的版本。
 
@@ -91,6 +94,7 @@ scripts/
   new-link.mjs                # 添加友链或追加链接
   new-home.mjs                # 添加首页推荐
   new-utils.mjs               # 新建脚本共用的路径、JSON 读写与校验
+  pub.mjs                     # 只提交并推送 docs/ 与 data/ 内容改动
   prompt.mjs                  # 无依赖的交互式输入与方向键选择
 ```
 
