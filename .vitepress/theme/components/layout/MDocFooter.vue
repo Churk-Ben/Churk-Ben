@@ -40,9 +40,6 @@ const isDocFooterVisible = computed(() => {
   margin-top: 24px;
   border-top: 1px solid var(--vp-c-gutter);
   padding: 32px 24px 0;
-  line-height: 24px;
-  font-size: 14px;
-  font-weight: 500;
   color: var(--vp-c-text-2);
 }
 

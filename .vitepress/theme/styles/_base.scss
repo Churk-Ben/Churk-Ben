@@ -11,14 +11,6 @@
   z-index: calc(var(--medium-zoom-z-index) + 1);
 }
 
-.VPSocialLinks.VPNavBarSocialLinks.social-links {
-  margin-right: 0;
-}
-
-.prev-next.prev-next {
-  border-top: none;
-}
-
 :where(.post-link, .series-link, .all-posts, .archive-filters button, .m-nav-link):focus-visible {
   outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 4px;

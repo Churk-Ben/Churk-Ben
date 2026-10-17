@@ -108,7 +108,6 @@ const iconFailed = ref(false);
     border-radius: 6px;
     width: var(--m-nav-icon-box-size);
     height: var(--m-nav-icon-box-size);
-    font-size: var(--m-nav-icon-size);
     background-color: var(--vp-c-default-soft);
     transition: background-color 0.25s;
     :deep(svg) {
@@ -123,8 +122,6 @@ const iconFailed = ref(false);
 
   .icon-fallback {
     color: var(--vp-c-text-2);
-    font-size: 16px;
-    font-weight: 600;
   }
 
   .title {
@@ -132,11 +129,6 @@ const iconFailed = ref(false);
     flex-grow: 1;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-size: 16px;
-    font-weight: 600;
-    &:not(.no-icon) {
-      line-height: var(--m-nav-icon-box-size);
-    }
   }
 
   .badge {
@@ -155,8 +147,6 @@ const iconFailed = ref(false);
     text-overflow: ellipsis;
     flex-grow: 1;
     margin: calc(var(--m-nav-box-gap) - 2px) 0 0;
-    line-height: 1.5;
-    font-size: 12px;
     color: var(--vp-c-text-2);
   }
 }
@@ -166,10 +156,6 @@ const iconFailed = ref(false);
     --m-nav-icon-box-size: 36px;
     --m-nav-icon-size: 20px;
     --m-nav-box-gap: 8px;
-
-    .title {
-      font-size: 14px;
-    }
   }
 }
 </style>

@@ -47,13 +47,9 @@ defineProps<{ posts: Post[] }>();
 .post-date,
 .post-tags {
   color: var(--vp-c-text-2);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 22px;
 }
 
 .post-date {
-  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
@@ -63,15 +59,11 @@ defineProps<{ posts: Post[] }>();
 }
 
 .post-title {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 26px;
   overflow-wrap: anywhere;
 }
 
 .post-arrow {
   color: var(--vp-c-text-3);
-  font-size: 14px;
 }
 
 .post-link:hover .post-title,

@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { withBase } from "vitepress";
 import { data as posts } from "../../features/posts/posts.data.ts";
-import { readingPaths } from "../../features/home/data.ts";
+import { recommendations } from "../../features/home/data.ts";
 import MPostList from "../posts/MPostList.vue";
 </script>
 
@@ -22,7 +22,7 @@ import MPostList from "../posts/MPostList.vue";
     <section class="reading-paths" aria-labelledby="reading-paths">
       <h2 id="reading-paths">从这里开始</h2>
       <p class="section-note">沿着一个主题，慢慢读。</p>
-      <a v-for="item in readingPaths" :key="item.url" class="series-link" :href="withBase(item.url)">
+      <a v-for="item in recommendations" :key="item.url" class="series-link" :href="withBase(item.url)">
         <span class="series-title">{{ item.title }} <span aria-hidden="true">→</span></span>
         <span class="series-desc">{{ item.desc }}</span>
       </a>
@@ -51,22 +51,16 @@ import MPostList from "../posts/MPostList.vue";
   margin: 0;
   border: 0;
   padding: 0;
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: 0;
 }
 
 .all-posts {
   flex-shrink: 0;
-  font-size: 13px;
-  font-weight: 400;
   text-decoration: none;
 }
 
 .home-content .section-note {
   margin: 8px 0 20px;
   color: var(--vp-c-text-2);
-  font-size: 13px;
 }
 
 .series-link {
@@ -85,8 +79,6 @@ import MPostList from "../posts/MPostList.vue";
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  font-size: 14px;
-  line-height: 24px;
 }
 
 .series-title > span {
@@ -99,9 +91,6 @@ import MPostList from "../posts/MPostList.vue";
 
 .series-desc {
   color: var(--vp-c-text-2);
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 24px;
 }
 
 @media (min-width: 960px) {

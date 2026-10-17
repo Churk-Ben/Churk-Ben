@@ -72,8 +72,6 @@ const groups = computed(() => groupPostsByYear(filteredPosts.value));
   border-radius: 6px;
   padding: 5px 12px;
   color: var(--vp-c-text-2);
-  font-size: 13px;
-  line-height: 24px;
 }
 
 .archive-filters button:hover {
@@ -88,8 +86,6 @@ const groups = computed(() => groupPostsByYear(filteredPosts.value));
 .archive-count,
 .archive-year h2 span {
   color: var(--vp-c-text-2);
-  font-size: 12px;
-  font-weight: 400;
 }
 
 .archive-year + .archive-year {
@@ -103,8 +99,5 @@ const groups = computed(() => groupPostsByYear(filteredPosts.value));
   margin: 0 0 8px;
   border: 0;
   padding: 0;
-  font-size: 24px;
-  line-height: 32px;
-  font-variant-numeric: tabular-nums;
 }
 </style>

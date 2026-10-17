@@ -10,6 +10,7 @@ import "./custom.scss";
 
 const components = {
   MPageIntro,
+  MAbout: defineAsyncComponent(() => import("./components/about/MAbout.vue")),
   MHomeContent: defineAsyncComponent(() => import("./components/home/MHomeContent.vue")),
   MPostArchive: defineAsyncComponent(() => import("./components/posts/MPostArchive.vue")),
   MNav: defineAsyncComponent(() => import("./components/nav/MNav.vue")),

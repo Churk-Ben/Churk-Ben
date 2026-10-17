@@ -52,6 +52,7 @@ docs/
     components/               # 全部 Vue 组件
       common/                 # 页面引言、访问徽章
       layout/                 # 布局、评论、页脚
+      about/                  # 关于页内容
       home/                   # 首页文章区
       posts/                  # 归档、列表
       nav/                    # 导航分组与卡片
@@ -64,7 +65,7 @@ docs/
       nav/                    # 导航数据与类型
       links/                  # 友链数据
     custom.scss               # 全局 SCSS 入口
-    styles/                   # 主题变量、全局规则、首页与个人页 SCSS 模块
+    styles/                   # 品牌色变量与少量功能性规则
 scripts/
   check-content.mjs           # 校验编排入口（可传 assets/resources/styles/posts 子集）
   check-assets.mjs            # 文章与主题源码的图片引用校验
@@ -124,9 +125,9 @@ tags: [学习笔记, C语言]
 
 ## 组件与样式
 
-Markdown 负责内容，主题负责展示。页面可以直接使用已注册的 `MPageIntro`、`MHomeContent`、`MPostArchive`、`MNav`、`MLinks`，无需导入主题内部路径。
+Markdown 负责内容，主题负责展示。页面可以直接使用已注册的 `MPageIntro`、`MAbout`、`MHomeContent`、`MPostArchive`、`MNav`、`MLinks`，无需导入主题内部路径。
 
-组件自身样式统一放在 `<style lang="scss" scoped>`；跨组件规则放在 `theme/styles/_*.scss`，由 `custom.scss` 使用 Sass 的 `@use` 加载，不使用已弃用的 Sass `@import`。颜色继续引用 VitePress 的 CSS 自定义属性，以支持明暗主题切换；第三方依赖的 CSS 直接导入，不复制或改写。Vite 通过 `sass-embedded` 的现代编译器 API 编译 SCSS。
+组件自身样式统一放在 `<style lang="scss" scoped>`，只保留布局、间距、边框与颜色；字号、行高、字重等排版交给 VitePress 默认值。`theme/styles/` 只放品牌色变量（`_tokens.scss`）与少量功能性规则（`_base.scss`，如 katex 横向滚动、medium-zoom、焦点轮廓），由 `custom.scss` 使用 Sass 的 `@use` 加载，不使用已弃用的 Sass `@import`。颜色继续引用 VitePress 的 CSS 自定义属性，以支持明暗主题切换；第三方依赖的 CSS 直接导入，不复制或改写。Vite 通过 `sass-embedded` 的现代编译器 API 编译 SCSS。
 
 不要使用 `style="..."`、`:style` 或通过 DOM 的 `.style` 修改布局；图片失败和条件显示使用 Vue 状态与 `v-if`。外观切换的圆形过渡通过 Web Animations API 实现，保留系统的减少动态效果设置。
 
