@@ -229,13 +229,13 @@ export const NAV_DATA: NavData[] = [
     title: "茂茂的站点导航",
     items: [
       {
-        icon: "/img/fe-mm.png",
+        icon: "/icons/nav/fe-mm.png",
         title: "前端日常笔记",
         desc: "日常笔记记录（零零散散啥都记系列）",
         link: "https://github.com/maomao1996/daily-notes",
       },
       {
-        icon: "/img/fe-mm.png",
+        icon: "/icons/nav/fe-mm.png",
         title: "前端思维导图",
         desc: "用思维导图的方式总结个人所学知识",
         link: "https://mindmap.fe-mm.com",
@@ -247,7 +247,7 @@ export const NAV_DATA: NavData[] = [
         link: "https://qwerty.fe-mm.com",
       },
       {
-        icon: "/img/fe-mm.png",
+        icon: "/icons/nav/fe-mm.png",
         title: "mmPlayer",
         desc: "mmPlayer 在线音乐播放器",
         link: "https://netease-music.fe-mm.com",

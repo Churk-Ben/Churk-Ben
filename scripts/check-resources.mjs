@@ -1,12 +1,15 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { extname, relative } from "node:path";
+import { basename, extname, relative } from "node:path";
 import { filesIn } from "./fs-utils.mjs";
 
 const RESOURCE_PATTERN = /\.(png|jpe?g|svg|gif|webp|avif|ico)$/;
 
-/** 确保每个资源都被引用，且没有内容重复的副本。 */
+// 有意保留的多份副本：同一头像分别用于友链头像与导航图标。
+const INTENTIONAL_DUPLICATES = new Set(["fe-mm.png"]);
+
+/** 确保每个资源都被引用，且没有意外的内容重复副本。 */
 export function checkResources({ root, docs, theme, referenced }) {
   const resources = [...filesIn(docs), ...filesIn(theme)].filter((file) => RESOURCE_PATTERN.test(extname(file)));
 
@@ -14,7 +17,10 @@ export function checkResources({ root, docs, theme, referenced }) {
   for (const file of resources) {
     assert(referenced.has(file), `Unreferenced resource: ${relative(root, file)}`);
     const hash = createHash("sha256").update(readFileSync(file)).digest("hex");
-    assert(!hashes.has(hash), `Duplicate resource: ${relative(root, file)} and ${hashes.get(hash)}`);
+    const duplicate = hashes.get(hash);
+    if (duplicate && !INTENTIONAL_DUPLICATES.has(basename(file))) {
+      assert.fail(`Duplicate resource: ${relative(root, file)} and ${duplicate}`);
+    }
     hashes.set(hash, relative(root, file));
   }
 
