@@ -20,10 +20,9 @@ const pageId = usePageId();
         strict="1"
         reactions-enabled="1"
         emit-metadata="0"
-        input-position="bottom"
+        input-position="top"
         :theme="isDark ? 'noborder_dark' : 'noborder_light'"
         lang="zh-CN"
-        loading="lazy"
       />
     </div>
   </section>
