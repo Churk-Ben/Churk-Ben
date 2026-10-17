@@ -6,7 +6,7 @@ hero:
   text: Aurore est le billet-doux de Polaris.
   tagline: Hello! world~
   image:
-    src: /img/icon.png
+    src: /shared/icon.png
     alt: "Churk's Blog"
 
   actions:

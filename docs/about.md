@@ -41,6 +41,6 @@ next: false
 - GitHub: [@Churk-Ben](https://github.com/Churk-Ben)
 - Email: [churkben0@gmail.com](mailto:churkben0@gmail.com)
 
-<img src="/img/icon.png" alt="星野日向" width="144" loading="lazy" />
+<img src="/shared/icon.png" alt="星野日向" width="144" loading="lazy" />
 
 </div>

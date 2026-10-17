@@ -25,7 +25,7 @@
 
 ### 📫 Contact
 
-<img align="right" src="docs/public/img/icon.png" width="200" />
+<img align="right" src="docs/public/shared/icon.png" width="200" />
 
 - Blog: [www.churk.top](https://www.churk.top)
 - GitHub: [@Churk-Ben](https://github.com/Churk-Ben)

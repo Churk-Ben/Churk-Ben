@@ -10,4 +10,4 @@ next: false
 
 <MPageIntro>一些朋友，一些值得常去的小站。</MPageIntro>
 
-<MFriendLinks />
+<MLinks />
