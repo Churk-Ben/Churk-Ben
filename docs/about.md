@@ -1,12 +1,11 @@
 ---
 aside: false
 outline: false
-prev: false
-next: false
+comment: false
 ---
 
 # 关于
 
-<MPageIntro>关于我</MPageIntro>
+<MPageIntro>---</MPageIntro>
 
 <MAbout />

@@ -9,6 +9,7 @@ import {
 import { useAppearance } from "../../composables/useAppearance";
 import { useMediumZoom } from "../../composables/useMediumZoom";
 import MVisitorBadge from "../common/MVisitorBadge.vue";
+import MPostPager from "../posts/MPostPager.vue";
 import MSidebarWidgets from "../sidebar/MSidebarWidgets.vue";
 import MDocFooter from "./MDocFooter.vue";
 import MComments from "./MComments.vue";
@@ -42,10 +43,9 @@ useMediumZoom();
         <!-- <MMusicPlayer /> -->
       </MSidebarWidgets>
     </template>
-    <template #doc-footer-before>
-      <MComments />
-    </template>
     <template #doc-after>
+      <MPostPager />
+      <MComments />
       <MDocFooter />
     </template>
   </Layout>

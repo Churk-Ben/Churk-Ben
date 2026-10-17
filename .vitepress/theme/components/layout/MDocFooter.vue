@@ -1,34 +1,23 @@
-<!-- 文档页脚：在带侧栏的文档页显示访客徽章、页脚公告与版权。 -->
+<!-- 文档页脚：在带侧栏的文档页显示页脚公告与版权。 -->
 
 <script setup lang="ts">
 import { computed } from "vue";
 import { useData } from "vitepress";
 import { useLayout } from "vitepress/theme";
 
-import { usePageId } from "../../composables/usePageId";
-import MVisitorBadge from "../common/MVisitorBadge.vue";
-
 const { theme } = useData();
 const footer = computed(() => theme.value.footer);
-const visitor = computed(() => theme.value.visitor);
-
 const { hasSidebar } = useLayout();
-const pageId = usePageId();
 
 const isDocFooterVisible = computed(() => {
-  return hasSidebar.value && Boolean(footer.value?.message || footer.value?.copyright || visitor.value?.badgeId);
+  return hasSidebar.value && Boolean(footer.value?.message || footer.value?.copyright);
 });
 </script>
 
 <template>
   <div v-if="isDocFooterVisible" class="m-doc-footer">
-    <div class="m-doc-footer-message">
-      <MVisitorBadge :page-id="pageId" />
-      <p v-if="footer?.message">{{ footer.message }}</p>
-    </div>
-    <p class="m-doc-footer-copyright" v-if="footer?.copyright">
-      {{ footer.copyright }}
-    </p>
+    <p v-if="footer?.message" class="m-doc-footer-message">{{ footer.message }}</p>
+    <p v-if="footer?.copyright" class="m-doc-footer-copyright">{{ footer.copyright }}</p>
   </div>
 </template>
 
@@ -47,15 +36,5 @@ const isDocFooterVisible = computed(() => {
 .m-doc-footer-copyright {
   display: flex;
   align-items: center;
-}
-
-.visitor {
-  margin-right: 8px;
-}
-
-@media (max-width: 414px) {
-  .visitor {
-    display: none;
-  }
 }
 </style>

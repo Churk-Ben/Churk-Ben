@@ -10,27 +10,40 @@ const pageId = usePageId();
 </script>
 
 <template>
-  <div v-if="theme.comment && frontmatter.comment !== false" class="doc-comments">
-    <Giscus
-      id="comments"
-      v-bind="theme.comment"
-      mapping="specific"
-      :term="pageId"
-      strict="1"
-      reactions-enabled="1"
-      emit-metadata="0"
-      input-position="top"
-      :theme="isDark ? 'dark' : 'light'"
-      lang="zh-CN"
-      loading="lazy"
-    />
-  </div>
+  <section v-if="theme.comment && frontmatter.comment !== false" class="doc-comments">
+    <div class="doc-comments-body">
+      <Giscus
+        id="comments"
+        v-bind="theme.comment"
+        mapping="specific"
+        :term="pageId"
+        strict="1"
+        reactions-enabled="1"
+        emit-metadata="0"
+        input-position="bottom"
+        :theme="isDark ? 'noborder_dark' : 'noborder_light'"
+        lang="zh-CN"
+        loading="lazy"
+      />
+    </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>
 .doc-comments {
-  margin: 24px 0 48px;
+  margin: 40px 0 32px;
   border-top: 1px solid var(--vp-c-divider);
   padding-top: 24px;
+}
+
+.doc-comments-body :deep(giscus-widget) {
+  display: block;
+  width: 100%;
+}
+
+.doc-comments-body :deep(iframe) {
+  display: block;
+  width: 100%;
+  border: 0;
 }
 </style>

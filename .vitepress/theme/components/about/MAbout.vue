@@ -44,7 +44,7 @@ function shake() {
   <div class="about">
     <header class="about-hero">
       <p class="about-eyebrow">About</p>
-      <h1>👋 Hello! world~</h1>
+      <h2>👋 Hello! world~</h2>
       <p class="about-tagline"><em>Aurore est le billet-doux de Polaris.</em></p>
       <p class="about-meta">🔭 独立开发者 · 🏠 Nanjing · 🏢 <a href="https://github.com/JuFireX">JuFire Studio</a></p>
       <div class="about-links">
@@ -104,7 +104,7 @@ function shake() {
   text-transform: uppercase;
 }
 
-.about-hero h1 {
+.about-hero h2 {
   margin: 0;
 }
 
