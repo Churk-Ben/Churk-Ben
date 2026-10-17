@@ -1,15 +1,11 @@
 import type { DefaultTheme } from "vitepress";
-import { githubSvg, linkSvg } from "../../assets/icons.ts";
+import { resolveSiteIcon } from "../../assets/icons.ts";
+import linksData from "../../../../data/links.json" with { type: "json" };
+import type { FriendLink } from "./types.ts";
 
-export const friendLinks: DefaultTheme.TeamMember[] = [
-  {
-    avatar: "/links/erhjiu.jpg",
-    name: "Erhjiu",
-    links: [{ icon: { svg: githubSvg }, link: "https://github.com/erhjiu" }],
-  },
-  {
-    avatar: "/links/fe-mm.png",
-    name: "茂茂物语",
-    links: [{ icon: { svg: linkSvg }, link: "https://notes.fe-mm.com" }],
-  },
-];
+/** 友链数据维护在 data/links.json，这里把图标名映射为内联 SVG。 */
+export const friendLinks: DefaultTheme.TeamMember[] = (linksData as FriendLink[]).map(({ avatar, name, links }) => ({
+  avatar,
+  name,
+  links: links.map(({ icon, url }) => ({ icon: { svg: resolveSiteIcon(icon) }, link: url })),
+}));

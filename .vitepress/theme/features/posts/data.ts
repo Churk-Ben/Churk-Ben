@@ -1,2 +1,4 @@
-/** 筛选标签 **/
-export const postFilters = ["全部", "学习笔记", "OJ题解", "教程", "算法"];
+import filters from "../../../../data/posts.json" with { type: "json" };
+
+/** 归档筛选标签，维护在 data/posts.json。 */
+export const postFilters: string[] = filters;

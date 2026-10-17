@@ -9,12 +9,13 @@
 ```sh
 pnpm install --frozen-lockfile
 pnpm dev
-pnpm check                 # 全部校验，可传 assets / resources / styles / posts 跑子集
-pnpm check:posts           # 也可用 pnpm check:assets / check:resources / check:styles
+pnpm check                 # 全部内容校验
+pnpm check assets posts    # 只跑指定子集（assets / resources / styles / posts）
+pnpm check:posts           # 单项快捷命令，也可用 check:assets / check:resources / check:styles
 pnpm new                   # 交互选择要创建的内容
 pnpm new:post [slug] ["标题"] # 新建文章骨架，省略参数时逐项询问
 pnpm new:nav               # 添加导航项，可选择已有分组或新建分组
-pnpm new:link              # 添加友链
+pnpm new:link              # 添加友链，或给已有友链追加链接
 pnpm new:home              # 添加首页推荐阅读
 pnpm format
 pnpm format:check
@@ -23,9 +24,9 @@ pnpm build
 pnpm preview
 ```
 
-`pnpm check` 由 `scripts/check-content.mjs` 编排：`check-assets` 校验文章、主题源码与 `data/` 数据里引用的本地图片，`check-resources` 校验未引用或重复的资源，`check-styles` 校验 Vue 组件不使用内联样式，`check-posts` 校验文章元数据与 slug 命名。`pnpm typecheck` 依据根目录 `tsconfig.json` 用 `vue-tsc` 检查 `.vitepress/**` 的 TypeScript 与 Vue 组件。`pnpm build` 同时检查站内页面链接。CI 在构建前会执行 `pnpm check`、`pnpm format:check` 与 `pnpm typecheck`。
+`pnpm check` 由 `scripts/check.mjs` 编排：`check-assets` 校验文章、主题源码与 `data/` 数据里引用的本地图片，`check-resources` 校验未引用或重复的资源，`check-styles` 校验 Vue 组件不使用内联样式，`check-posts` 校验文章元数据与 slug 命名。`resources` 依赖 `assets` 收集的引用集合，单独运行时入口会自动先执行 `assets`。`pnpm typecheck` 依据根目录 `tsconfig.json` 用 `vue-tsc` 检查 `.vitepress/**` 的 TypeScript 与 Vue 组件。`pnpm build` 同时检查站内页面链接。CI 在构建前会执行 `pnpm check`、`pnpm format:check` 与 `pnpm typecheck`。
 
-`pnpm new` 由 `scripts/new.mjs` 提供，交互逻辑在 `scripts/prompt.mjs`。`pnpm new-post` 保留为 `pnpm new:post` 的兼容别名。交互命令需要终端；`pnpm new:post <slug> "标题"` 在传齐参数时不会询问，可直接用于脚本。
+`pnpm new` 由 `scripts/new.mjs` 统一分发，具体创建逻辑按类型拆在 `new-post.mjs`、`new-nav.mjs`、`new-link.mjs`、`new-home.mjs`，共用路径、JSON 读写与校验放在 `new-utils.mjs`，交互逻辑在 `prompt.mjs`。交互命令需要终端；`pnpm new:post <slug> "标题"` 在传齐参数时不会询问，可直接用于脚本。
 
 工具链使用 VitePress `2.0.0-alpha.20`、Vite 8、Vue 3、TypeScript 5.9、`vue-tsc` 和 Dart Sass Embedded。Vite 8 默认使用 Sass 现代编译器 API，无需再显式配置。VitePress 2 当前属于预发布版本，固定版本号以避免自动跳到其他 alpha；升级时同步调整阅读增强插件的兼容版本。数学插件固定在与 VitePress 内置 MarkdownIt 14 兼容的版本。
 
@@ -34,7 +35,7 @@ pnpm preview
 ```text
 data/                         # 构建时读取的站点数据，不复制到产物
   nav.json                    # 导航站分组与链接
-  links.json                  # 友链名称、头像与链接
+  links.json                  # 友链名称、头像与多个入口链接
   home.json                   # 首页推荐阅读
   posts.json                  # 归档筛选标签
 docs/
@@ -78,13 +79,18 @@ docs/
     custom.scss               # 全局 SCSS 入口
     styles/                   # 品牌色变量、功能性规则与第三方兼容修正
 scripts/
-  check-content.mjs           # 校验编排入口（可传 assets/resources/styles/posts 子集）
+  check.mjs                   # 校验统一入口（可传 assets/resources/styles/posts 子集）
   check-assets.mjs            # 文章、主题源码与 data/ 的图片引用校验
   check-resources.mjs         # 未引用 / 重复资源校验
   check-styles.mjs            # Vue 内联样式校验
   check-posts.mjs             # 文章元数据、URL 唯一性与 slug 校验
   fs-utils.mjs                # 递归列文件等公共工具
-  new.mjs                     # 新建内容入口（文章 / 导航 / 友链 / 首页推荐）
+  new.mjs                     # 新建内容统一入口
+  new-post.mjs                # 新建文章
+  new-nav.mjs                 # 添加导航项
+  new-link.mjs                # 添加友链或追加链接
+  new-home.mjs                # 添加首页推荐
+  new-utils.mjs               # 新建脚本共用的路径、JSON 读写与校验
   prompt.mjs                  # 无依赖的交互式输入与方向键选择
 ```
 
@@ -102,9 +108,9 @@ scripts/
 
 `docs/public/` 只放需要原样发布的静态文件，不放站点数据。`public/` 下的内容会被整目录复制并可通过 URL 直接访问，不参与打包，也不受 TypeScript 与内容校验约束；而导航、友链、首页推荐、归档标签都是构建期数据，应该放在根目录 `data/`，由 `features/*/data.ts` 导入。除非将来要在浏览器运行时 `fetch` 数据，否则不需要把它们放进 `public/`。
 
-导航站图标直接使用各站点的远程 URL，维护在 `data/nav.json`，不再随仓库保存本地副本。浏览器与 CDN 会按响应头缓存，避免重复下载；图标加载失败时 `MNavLink` 会回退为站点名称首字母。友链头像属于静态资源，仍放在 `docs/public/links/`，在 `data/links.json` 中填写 `/links/<文件名>`。新增导航、友链或首页推荐时优先使用 `pnpm new:nav`、`pnpm new:link`、`pnpm new:home`，脚本会写入对应 JSON 并做重复链接等基础校验。
+导航站图标直接使用各站点的远程 URL，维护在 `data/nav.json`，不再随仓库保存本地副本。浏览器与 CDN 会按响应头缓存，避免重复下载；图标加载失败时 `MNavLink` 会回退为站点名称首字母。友链头像属于静态资源，仍放在 `docs/public/links/`，在 `data/links.json` 中填写 `/links/<文件名>`。每条友链包含 `avatar`、`name` 和 `links` 数组，`links` 里可以放 GitHub、博客、RSS 等多个入口，每项写成 `{ "icon": "github", "url": "https://..." }`。新增导航、友链或首页推荐时优先使用 `pnpm new:nav`、`pnpm new:link`、`pnpm new:home`，脚本会写入对应 JSON 并做重复链接等基础校验；`pnpm new:link` 会在添加完一个链接后询问是否继续，也支持给已有友链追加链接。
 
-常用内联 SVG 图标统一从 `theme/assets/icons.ts` 导出，包括 GitHub、哔哩哔哩、知乎、QQ、微信、微博、X、YouTube、Discord、Telegram、Gitee、Steam、Mastodon、Reddit、npm、Node、Vue、React、Python、Java、Linux、Apple、Windows、Android、HTML5、CSS3、JavaScript，以及 link、globe、rss、mail、blog、book、code、star、home、user、heart、rocket 等通用图标。`siteIcons` 提供名称到 SVG 的映射，`resolveSiteIcon(name)` 会在名称未知时回退到通用链接图标；友链的 `icon` 字段直接使用这些名称。
+常用内联 SVG 图标统一从 `theme/assets/icons.ts` 导出，包括 GitHub、哔哩哔哩、知乎、QQ、微信、微博、X、YouTube、Discord、Telegram、Gitee、Steam、Mastodon、Reddit、npm、Node、Vue、React、Python、Java、Linux、Apple、Windows、Android、HTML5、CSS3、JavaScript，以及 link、globe、rss、mail、blog、book、code、star、home、user、heart、rocket 等通用图标。`siteIcons` 提供名称到 SVG 的映射，`resolveSiteIcon(name)` 会在名称未知时回退到通用链接图标；友链 `links[].icon` 直接使用这些名称。
 
 ## 环境变量
 

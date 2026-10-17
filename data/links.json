@@ -1,0 +1,32 @@
+[
+  {
+    "avatar": "/links/erhjiu.jpg",
+    "name": "Erhjiu",
+    "links": [
+      {
+        "icon": "github",
+        "url": "https://github.com/erhjiu"
+      }
+    ]
+  },
+  {
+    "avatar": "/links/fe-mm.png",
+    "name": "茂茂物语",
+    "links": [
+      {
+        "icon": "link",
+        "url": "https://notes.fe-mm.com"
+      }
+    ]
+  },
+  {
+    "avatar": "https://img-cdn.dustella.net/markdown/avtr-layer.png",
+    "name": "Dustella 的自留地",
+    "links": [
+      {
+        "icon": "link",
+        "url": "https://www.dustella.net/"
+      }
+    ]
+  }
+]
