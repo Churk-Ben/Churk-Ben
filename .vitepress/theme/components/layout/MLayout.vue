@@ -30,18 +30,9 @@ useMediumZoom();
     <template #nav-bar-title-after>
       <MVisitorBadge class="nav-visitor" />
     </template>
-    <template #sidebar-nav-before>
-      <!-- 侧栏顶部扩展区：搜索、公告等 -->
-      <MSidebarWidgets>
-        <!-- <MYourWidget /> -->
-      </MSidebarWidgets>
-    </template>
     <template #sidebar-nav-after>
-      <!-- 侧栏底部扩展区：个人卡片、音乐播放器等 -->
-      <MSidebarWidgets>
-        <!-- <MProfileCard /> -->
-        <!-- <MMusicPlayer /> -->
-      </MSidebarWidgets>
+      <!-- 侧栏底部扩展区：可在此放置挂件 -->
+      <MSidebarWidgets />
     </template>
     <template #doc-after>
       <MPostPager />

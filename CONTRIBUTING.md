@@ -80,9 +80,9 @@ scripts/
 
 ## 侧栏与顶栏
 
-除首页外，所有页面都显示全局侧栏，条目维护在 `configs/sidebar.ts`（与顶栏同源并补充个人页面，不逐篇列出文章）。顶栏只保留主要内容入口，配置在 `configs/navbar.ts`。
+除首页外，所有页面显示同一套侧栏，配置在 `configs/sidebar.ts`：文章与导航都是可折叠列表，文章子项来自文章元数据，导航子项来自 `NAV_DATA` 分组标题对应的页面锚点；关于和友链保持单页入口。顶栏只保留主要内容入口，配置在 `configs/navbar.ts`。
 
-需要在侧栏放个人卡片、音乐播放器等组件时，在 `theme/components/layout/MLayout.vue` 的 `#sidebar-nav-before` / `#sidebar-nav-after` 插槽中，把组件放进 `MSidebarWidgets` 容器即可；容器为空时自动隐藏，`MSidebarWidgets` 已预留较高空间。
+需要新增侧栏挂件时，在 `theme/components/layout/MLayout.vue` 的 `#sidebar-nav-before` / `#sidebar-nav-after` 插槽中，把组件放进 `MSidebarWidgets` 容器即可，容器为空时自动隐藏。
 
 ## 公共资源与导航图标
 
