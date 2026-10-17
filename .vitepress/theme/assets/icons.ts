@@ -4,6 +4,9 @@ import {
   faAndroid,
   faApple,
   faBilibili,
+  faCreativeCommons,
+  faCreativeCommonsBy,
+  faCreativeCommonsSa,
   faCss3Alt,
   faDiscord,
   faGitee,
@@ -76,6 +79,11 @@ export const androidSvg = toSvg(faAndroid);
 export const html5Svg = toSvg(faHtml5);
 export const css3Svg = toSvg(faCss3Alt);
 export const javascriptSvg = toSvg(faJs);
+
+/* 协议图标 */
+export const ccSvg = toSvg(faCreativeCommons);
+export const ccBySvg = toSvg(faCreativeCommonsBy);
+export const ccSaSvg = toSvg(faCreativeCommonsSa);
 
 /* 通用图标 */
 export const linkSvg = toSvg(faLink);

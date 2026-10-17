@@ -9,6 +9,7 @@ import {
 import { useAppearance } from "../../composables/useAppearance";
 import { useMediumZoom } from "../../composables/useMediumZoom";
 import MVisitorBadge from "../common/MVisitorBadge.vue";
+import MPostLicense from "../posts/MPostLicense.vue";
 import MPostPager from "../posts/MPostPager.vue";
 import MSidebarWidgets from "../sidebar/MSidebarWidgets.vue";
 import MDocFooter from "./MDocFooter.vue";
@@ -31,10 +32,10 @@ useMediumZoom();
       <MVisitorBadge class="nav-visitor" />
     </template>
     <template #sidebar-nav-after>
-      <!-- 侧栏底部扩展区：可在此放置挂件 -->
       <MSidebarWidgets />
     </template>
     <template #doc-after>
+      <MPostLicense />
       <MPostPager />
       <MComments />
       <MDocFooter />
