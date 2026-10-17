@@ -1,9 +1,5 @@
 ---
 title: 关于
-order: 2
-aside: false
-prev: false
-next: false
 ---
 
 # 👋 Hello! world~

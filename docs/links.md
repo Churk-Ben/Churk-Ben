@@ -1,9 +1,6 @@
 ---
-title: 友链
-order: 3
 aside: false
-prev: false
-next: false
+outline: false
 ---
 
 # 友链
