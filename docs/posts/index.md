@@ -1,7 +1,6 @@
 ---
 title: 文章
 description: 学习笔记、OJ 题解与开发记录，按时间整理。
-sidebar: false
 aside: false
 outline: false
 lastUpdated: false

@@ -1,7 +1,6 @@
 ---
 title: 友链
 order: 3
-sidebar: false
 aside: false
 prev: false
 next: false

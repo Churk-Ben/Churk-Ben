@@ -1,7 +1,6 @@
 ---
 title: 关于
 order: 2
-sidebar: false
 aside: false
 prev: false
 next: false
