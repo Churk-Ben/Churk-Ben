@@ -1,0 +1,38 @@
+/*
+ * 第三方兼容修正（无奈之举）
+ *
+ * 阅读增强插件的布局切换样式仍按 VitePress 1 的顶栏结构编写，
+ * 未同步 VitePress 2 的 --vp-nav-col-offset，导致切换布局后顶栏左侧背景
+ * 和侧栏顶部分割线停留在原布局位置。这里用与插件相同的侧栏宽度公式补齐。
+ *
+ * 上游适配 VitePress 2 后即可删除本文件及 custom.scss 中的 @use。
+ */
+@media (min-width: 1280px) {
+  body:is(
+      .VPNolebaseEnhancedReadabilitiesLayoutSwitchSidebarWidthAdjustableOnly,
+      .VPNolebaseEnhancedReadabilitiesLayoutSwitchBothWidthAdjustable
+    )
+    .VPNavBar.has-sidebar {
+    --vp-nav-col-offset: calc(
+      (100% - (var(--vp-nolebase-enhanced-readabilities-page-max-width) - 64px)) / 2 + var(--vp-sidebar-width) - 32px
+    );
+  }
+
+  body.VPNolebaseEnhancedReadabilitiesLayoutSwitchFullWidth .VPNavBar.has-sidebar {
+    --vp-nav-col-offset: calc(
+      (100% - (var(--vp-nolebase-enhanced-readabilities-full-width-max-width) - 64px)) / 2 + var(--vp-sidebar-width) -
+        32px
+    );
+  }
+
+  body:is(
+      .VPNolebaseEnhancedReadabilitiesLayoutSwitchFullWidth,
+      .VPNolebaseEnhancedReadabilitiesLayoutSwitchSidebarWidthAdjustableOnly,
+      .VPNolebaseEnhancedReadabilitiesLayoutSwitchBothWidthAdjustable
+    )
+    #app
+    .VPNavBar.has-sidebar
+    > .divider {
+    padding-left: var(--vp-nav-col-offset) !important;
+  }
+}
