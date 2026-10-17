@@ -1,3 +1,5 @@
+<!-- 导航卡片：渲染单个外链站点的图标、标题、徽章与描述，点击时触发 nav-click。 -->
+
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { withBase } from "vitepress";

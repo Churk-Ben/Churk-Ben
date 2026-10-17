@@ -1,3 +1,5 @@
+<!-- 文档页脚：在带侧栏的文档页显示访客徽章、页脚公告与版权。 -->
+
 <script setup lang="ts">
 import { computed } from "vue";
 import { useData } from "vitepress";

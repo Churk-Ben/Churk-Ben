@@ -57,7 +57,7 @@ docs/
       sidebar/                # 侧栏扩展容器
     composables/              # 外观切换、图片放大、页面标识、最近使用记录
     features/                 # 各功能的数据与类型
-      posts/                  # 文章数据、Post 类型、VitePress 加载器 posts.data.ts
+      posts/                  # 文章数据 data.ts、Post 类型、VitePress 加载器 posts.data.ts
       navigation/             # 导航数据与类型
       friends/                # 友链数据与 assets/ 头像
     custom.scss               # 全局 SCSS 入口

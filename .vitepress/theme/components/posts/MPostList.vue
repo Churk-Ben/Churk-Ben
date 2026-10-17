@@ -1,3 +1,5 @@
+<!-- 文章列表：渲染日期、标题与标签，供首页和归档复用。 -->
+
 <script setup lang="ts">
 import { withBase } from "vitepress";
 import type { Post } from "../../features/posts/types.ts";

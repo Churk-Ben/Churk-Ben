@@ -1,3 +1,5 @@
+<!-- 首页文章区：展示最近 4 篇文章与“从这里开始”的阅读路径。 -->
+
 <script setup lang="ts">
 import { withBase } from "vitepress";
 import { data as posts } from "../../features/posts/posts.data.ts";

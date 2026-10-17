@@ -1,3 +1,5 @@
+<!-- 访问统计徽章：按主题配置的 badgeId 渲染访问数图片，开发环境不请求，加载失败时隐藏。 -->
+
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import { useData } from "vitepress";

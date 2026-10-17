@@ -1,3 +1,5 @@
+<!-- 导航站容器：渲染最近使用与导航数据中的全部分组。 -->
+
 <script setup lang="ts">
 import MNavSection from "./MNavSection.vue";
 import { NAV_DATA } from "../../features/navigation/data.ts";

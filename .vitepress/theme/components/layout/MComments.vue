@@ -1,3 +1,5 @@
+<!-- 评论区：主题启用评论且页面未关闭时，用 Giscus 按 pageId 渲染。 -->
+
 <script setup lang="ts">
 import { useData } from "vitepress";
 import Giscus from "@giscus/vue";

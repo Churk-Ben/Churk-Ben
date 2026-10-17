@@ -1,3 +1,5 @@
+<!-- 导航分组：渲染可锚点的分组标题与一组导航卡片。 -->
+
 <script setup lang="ts">
 import { computed } from "vue";
 import { slugify } from "@mdit-vue/shared";

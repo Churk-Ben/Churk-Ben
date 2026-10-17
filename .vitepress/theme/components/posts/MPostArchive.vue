@@ -1,3 +1,5 @@
+<!-- 文章归档：按标签筛选并按年份分组展示全部文章。 -->
+
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { data as posts } from "../../features/posts/posts.data.ts";
