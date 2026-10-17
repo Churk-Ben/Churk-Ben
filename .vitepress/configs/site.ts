@@ -1,13 +1,13 @@
 import type { DefaultTheme } from "vitepress";
 
-/** 站点标识，供 VitePress 顶层配置使用。 */
+/** 站点标识 **/
 export const site = {
   title: "Churk's Blog",
   description: "Aurore est le billet-doux de Polaris.",
   lang: "zh-CN",
 } as const;
 
-/** 文档页通用行为与文案。 */
+/** 通用文案 **/
 export const docOptions = {
   search: { provider: "local" },
   outline: { label: "本页目录" },
