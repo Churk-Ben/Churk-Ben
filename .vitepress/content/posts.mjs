@@ -6,7 +6,7 @@ export const postsDirectory = fileURLToPath(new URL("../../docs/posts/", import.
 export const postsPattern = `${postsDirectory.replaceAll("\\", "/")}*/index.md`;
 
 /**
- * Share the same metadata pipeline between the sidebar and the client content loader.
+ * 为每篇文章生成一个对象，包含其 URL、标题、日期和标签。
  * @returns {import('../theme/features/posts/types').Post[]}
  */
 export function loadPosts() {
