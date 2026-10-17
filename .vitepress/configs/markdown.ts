@@ -1,7 +1,7 @@
 import type { MarkdownOptions } from "vitepress";
 import { katex } from "@mdit/plugin-katex";
 
-/** Markdown 配置 **/
+/** Markdown 配置 */
 export const markdown: MarkdownOptions = {
   lineNumbers: true,
   container: {
