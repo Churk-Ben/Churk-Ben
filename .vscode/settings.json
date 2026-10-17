@@ -1,0 +1,9 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml, .node-version, .prettierrc, .prettierignore",
+    "README.md": "CONTRIBUTING.md, LICENSE*",
+    ".env.example": ".env, .env.*"
+  }
+}
