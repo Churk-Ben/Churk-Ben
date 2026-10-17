@@ -40,12 +40,12 @@ docs/
   config.mts                  # VitePress 入口、URL 映射与 env 加载
   configs/
     site.ts                   # 站点标识与文档页文案（数据）
-    nav.ts / social.ts        # 顶栏导航与社交链接（数据）
-    footer.ts                 # 页脚文案（数据）
+    nav.ts / sidebar.ts       # 顶栏与侧栏导航（数据）
+    social.ts / footer.ts     # 社交链接与页脚文案（数据）
     integrations.ts           # 由环境变量解析访客徽章与评论配置
     head.ts / markdown.ts     # head 标签与 Markdown 渲染配置
     theme.ts                  # 组装 buildThemeConfig(env)
-  content/posts.mjs           # 侧栏与文章列表共用的元数据读取逻辑
+  content/posts.mjs           # 文章列表与内容校验共用的元数据读取逻辑
   theme/
     assets/icons.ts           # 跨配置与功能复用的内联 SVG 图标
     components/               # 全部 Vue 组件
@@ -54,6 +54,7 @@ docs/
       posts/                  # 首页文章区、归档、列表
       navigation/             # 导航分组与卡片
       friends/                # 友链展示
+      sidebar/                # 侧栏扩展容器
     composables/              # 外观切换、图片放大、页面标识、最近使用记录
     features/                 # 各功能的数据与类型
       posts/                  # 文章数据、Post 类型、VitePress 加载器 posts.data.ts
@@ -71,7 +72,13 @@ scripts/
   new-post.mjs                # 新建文章脚手架
 ```
 
-配置层为数据驱动：`configs/` 下的数据文件只存放站点标识、导航、社交、页脚等数据，`theme.ts` 的 `buildThemeConfig(env)` 把它们与 `content/posts.mjs` 的文章元数据组装成主题配置，`config.mts` 通过 `loadEnv` 读取环境变量后传入。主题按类型分层：`components/` 存放全部 Vue 组件（`common`、`layout` 为通用组件，`posts`、`navigation`、`friends` 按功能分目录），`composables/` 存放组合式函数，`features/` 存放各功能的数据与类型（`data.ts`、`types.ts`，文章另有 VitePress 加载器 `posts.data.ts`），功能本地资源放在 `features/<name>/assets/`。相对导入保留 `.ts` 扩展名，`.vue`、`.mjs` 与资源文件保留原扩展名。
+配置层为数据驱动：`configs/` 下的数据文件只存放站点标识、导航、社交、页脚等数据，`theme.ts` 的 `buildThemeConfig(env)` 把它们组装成主题配置，`config.mts` 通过 `loadEnv` 读取环境变量后传入。主题按类型分层：`components/` 存放全部 Vue 组件（`common`、`layout` 为通用组件，`posts`、`navigation`、`friends`、`sidebar` 按功能分目录），`composables/` 存放组合式函数，`features/` 存放各功能的数据与类型（`data.ts`、`types.ts`，文章另有 VitePress 加载器 `posts.data.ts`），功能本地资源放在 `features/<name>/assets/`。相对导入保留 `.ts` 扩展名，`.vue`、`.mjs` 与资源文件保留原扩展名。
+
+## 侧栏与顶栏
+
+除首页外，所有页面都显示全局侧栏，条目维护在 `configs/sidebar.ts`（与顶栏同源并补充个人页面，不逐篇列出文章）。顶栏只保留主要内容入口，配置在 `configs/nav.ts`。
+
+需要在侧栏放个人卡片、音乐播放器等组件时，在 `theme/components/layout/MLayout.vue` 的 `#sidebar-nav-before` / `#sidebar-nav-after` 插槽中，把组件放进 `MSidebarWidgets` 容器即可；容器为空时自动隐藏，`MSidebarWidgets` 已预留较高空间。
 
 ## 环境变量
 
