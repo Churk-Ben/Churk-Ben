@@ -126,6 +126,7 @@ export async function createFriendLink() {
       required(value) ??
       (friends.some((friend) => friend.name === value) ? "同名友链已存在，可选择追加链接" : undefined),
   });
+  const desc = await input({ message: "一句话简介（可留空）", initial: "" });
   const avatar = await input({
     message: "头像路径",
     hint: "本地头像先放进 docs/public/links/，再填写 /links/xxx.png；也可填远程 URL",
@@ -133,7 +134,7 @@ export async function createFriendLink() {
   });
   const links = await collectLinks(allLinks(friends));
 
-  friends.push({ avatar, name, links });
+  friends.push({ avatar, name, ...(desc ? { desc } : {}), links });
   writeJson(dataFiles.links, friends);
   console.log(`Added "${name}" to ${show(dataFiles.links)} (${links.length} links)`);
 }

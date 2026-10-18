@@ -39,7 +39,7 @@ pnpm preview
 ```text
 data/                         # 构建时读取的站点数据，不复制到产物
   nav.json                    # 导航站分组与链接
-  links.json                  # 友链名称、头像与多个入口链接
+  links.json                  # 友链名称、简介、头像与多个入口链接
   home.json                   # 首页推荐阅读
   posts.json                  # 归档筛选标签
 docs/
@@ -114,7 +114,7 @@ scripts/
 
 `docs/public/` 只放需要原样发布的静态文件，不放站点数据。`public/` 下的内容会被整目录复制并可通过 URL 直接访问，不参与打包，也不受 TypeScript 与内容校验约束；而导航、友链、首页推荐、归档标签都是构建期数据，应该放在根目录 `data/`，由 `features/*/data.ts` 导入。除非将来要在浏览器运行时 `fetch` 数据，否则不需要把它们放进 `public/`。
 
-导航站图标直接使用各站点的远程 URL，维护在 `data/nav.json`，不再随仓库保存本地副本。浏览器与 CDN 会按响应头缓存，避免重复下载；图标加载失败时 `MNavLink` 会回退为站点名称首字母。友链头像属于静态资源，仍放在 `docs/public/links/`，在 `data/links.json` 中填写 `/links/<文件名>`。每条友链包含 `avatar`、`name` 和 `links` 数组，`links` 里可以放 GitHub、博客、RSS 等多个入口，每项写成 `{ "icon": "github", "url": "https://..." }`。新增导航、友链或首页推荐时优先使用 `pnpm new:nav`、`pnpm new:link`、`pnpm new:home`，脚本会写入对应 JSON 并做重复链接等基础校验；`pnpm new:link` 会在添加完一个链接后询问是否继续，也支持给已有友链追加链接。
+导航站图标直接使用各站点的远程 URL，维护在 `data/nav.json`，不再随仓库保存本地副本。浏览器与 CDN 会按响应头缓存，避免重复下载；图标加载失败时 `MNavLink` 会回退为站点名称首字母。友链头像属于静态资源，仍放在 `docs/public/links/`，在 `data/links.json` 中填写 `/links/<文件名>`。每条友链包含 `avatar`、`name`、可选的 `desc` 和 `links` 数组，`desc` 会显示在卡片名称下方作为一句话简介，`links` 里可以放 GitHub、博客、RSS 等多个入口，每项写成 `{ "icon": "github", "url": "https://..." }`。新增导航、友链或首页推荐时优先使用 `pnpm new:nav`、`pnpm new:link`、`pnpm new:home`，脚本会写入对应 JSON 并做重复链接等基础校验；`pnpm new:link` 会在添加完一个链接后询问是否继续，也支持给已有友链追加链接。
 
 常用内联 SVG 图标统一从 `theme/assets/icons.ts` 导出，包括 GitHub、哔哩哔哩、知乎、QQ、微信、微博、X、YouTube、Discord、Telegram、Gitee、Steam、Mastodon、Reddit、npm、Node、Vue、React、Python、Java、Linux、Apple、Windows、Android、HTML5、CSS3、JavaScript，以及 link、globe、rss、mail、blog、book、code、star、home、user、heart、rocket 等通用图标。`siteIcons` 提供名称到 SVG 的映射，`resolveSiteIcon(name)` 会在名称未知时回退到通用链接图标；友链 `links[].icon` 直接使用这些名称。
 

@@ -14,6 +14,8 @@ export interface FriendLink {
   avatar: string;
   /** 显示名称。 */
   name: string;
+  /** 一句话简介，可留空。 */
+  desc?: string;
   /** 该友链的多个入口。 */
   links: FriendLinkItem[];
 }
