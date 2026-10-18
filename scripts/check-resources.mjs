@@ -5,10 +5,13 @@ import { extname, relative } from "node:path";
 import { filesIn } from "./fs-utils.mjs";
 
 const RESOURCE_PATTERN = /\.(png|jpe?g|svg|gif|webp|avif|ico)$/;
+const RAW_BACKUP_PATTERN = /\.raw\.[^./]+$/i;
 
 /** 确保每个资源都被引用，且没有意外的内容重复副本。 */
 export function checkResources({ root, docs, theme, referenced }) {
-  const resources = [...filesIn(docs), ...filesIn(theme)].filter((file) => RESOURCE_PATTERN.test(extname(file)));
+  const resources = [...filesIn(docs), ...filesIn(theme)].filter(
+    (file) => RESOURCE_PATTERN.test(extname(file)) && !RAW_BACKUP_PATTERN.test(file),
+  );
 
   const hashes = new Map();
   for (const file of resources) {

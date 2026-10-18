@@ -1,13 +1,15 @@
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { optimizeImages } from "./optimize-images.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const CONTENT_PATHS = ["docs", "data"];
 
 const USAGE = `用法：
-  pnpm pub [提交说明] [--no-push]
+  pnpm pub [提交说明] [--no-push] [--no-optimize]
 
 只提交 docs/ 与 data/ 下的内容改动，然后推送到当前分支的上游。
+发布前会自动把超过 300 KB 的内容图片转为 WebP，原图保留为 .raw.<ext>。
 暂存区里存在代码改动时会中止，未暂存的代码改动不会进入本次提交。`;
 
 function git(args, { inherit = false } = {}) {
@@ -43,7 +45,7 @@ function hasUpstream() {
   }
 }
 
-function main() {
+async function main() {
   const args = process.argv.slice(2);
 
   if (args.includes("--help") || args.includes("-h")) {
@@ -52,6 +54,7 @@ function main() {
   }
 
   const noPush = args.includes("--no-push");
+  const noOptimize = args.includes("--no-optimize");
   const message =
     args
       .filter((argument) => !argument.startsWith("-"))
@@ -66,6 +69,8 @@ function main() {
     process.exitCode = 1;
     return;
   }
+
+  if (!noOptimize) await optimizeImages();
 
   git(["add", "-A", "--", ...CONTENT_PATHS]);
   const stagedContent = lines(git(["diff", "--cached", "--name-only"]));
@@ -98,9 +103,7 @@ function main() {
   }
 }
 
-try {
-  main();
-} catch (error) {
+main().catch((error) => {
   const detail = error.stderr?.toString().trim() || error.message;
   fail(detail);
-}
+});

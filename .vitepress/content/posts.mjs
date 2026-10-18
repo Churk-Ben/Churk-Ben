@@ -24,11 +24,19 @@ export function loadPosts() {
         throw new Error(`${file}: tags must be an array of strings`);
       }
 
+      const banner =
+        data.banner === false
+          ? false
+          : typeof data.banner === "string" && data.banner.trim()
+            ? data.banner.trim()
+            : undefined;
+
       return {
         url: `/posts/${name}`,
         title: data.title,
         date: date.toISOString().slice(0, 10),
         tags: [...new Set(data.tags)],
+        ...(banner === undefined ? {} : { banner }),
       };
     })
     .sort((a, b) => b.date.localeCompare(a.date) || a.url.localeCompare(b.url));

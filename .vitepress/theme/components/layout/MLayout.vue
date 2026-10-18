@@ -9,6 +9,7 @@ import {
 import { useAppearance } from "../../composables/useAppearance";
 import { useMediumZoom } from "../../composables/useMediumZoom";
 import MVisitorBadge from "../common/MVisitorBadge.vue";
+import MPostBanner from "../posts/MPostBanner.vue";
 import MPostLicense from "../posts/MPostLicense.vue";
 import MPostPager from "../posts/MPostPager.vue";
 import MSidebarWidgets from "../sidebar/MSidebarWidgets.vue";
@@ -33,6 +34,9 @@ useMediumZoom();
     </template>
     <template #sidebar-nav-after>
       <MSidebarWidgets />
+    </template>
+    <template #doc-top>
+      <MPostBanner />
     </template>
     <template #doc-after>
       <MPostLicense />

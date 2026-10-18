@@ -18,6 +18,7 @@ pnpm new:nav               # 添加导航项，可选择已有分组或新建分
 pnpm new:link              # 添加友链，或给已有友链追加链接
 pnpm new:home              # 添加首页推荐阅读
 pnpm pub [说明]           # 只提交并推送 docs/ 与 data/ 的内容改动
+pnpm optimize              # 手动把内容里超过 300 KB 的图片转为 WebP（pub 会自动执行）
 pnpm format
 pnpm format:check
 pnpm typecheck             # vue-tsc 静态类型检查
@@ -29,7 +30,7 @@ pnpm preview
 
 `pnpm new` 由 `scripts/new.mjs` 统一分发，具体创建逻辑按类型拆在 `new-post.mjs`、`new-nav.mjs`、`new-link.mjs`、`new-home.mjs`，共用路径、JSON 读写与校验放在 `new-utils.mjs`，交互逻辑在 `prompt.mjs`。交互命令需要终端；`pnpm new:post <slug> "标题"` 在传齐参数时不会询问，可直接用于脚本。
 
-`pnpm pub` 由 `scripts/pub.mjs` 提供：只把 `docs/` 与 `data/` 下的内容改动加入暂存区，提交后推送当前分支；暂存区已有代码改动时会中止，未暂存的代码改动不会进入本次提交。可用 `--no-push` 只提交不推送。`pnpm publish` 是 pnpm 自带的 registry 发布命令，所以博客内容发布使用更短的 `pnpm pub`。
+`pnpm pub` 由 `scripts/pub.mjs` 提供：只把 `docs/` 与 `data/` 下的内容改动加入暂存区，提交后推送当前分支；暂存区已有代码改动时会中止，未暂存的代码改动不会进入本次提交。发布前会自动执行图片优化，可用 `--no-optimize` 跳过；`--no-push` 只提交不推送。`pnpm publish` 是 pnpm 自带的 registry 发布命令，所以博客内容发布使用更短的 `pnpm pub`。
 
 工具链使用 VitePress `2.0.0-alpha.20`、Vite 8、Vue 3、TypeScript 5.9、`vue-tsc` 和 Dart Sass Embedded。Vite 8 默认使用 Sass 现代编译器 API，无需再显式配置。VitePress 2 当前属于预发布版本，固定版本号以避免自动跳到其他 alpha；升级时同步调整阅读增强插件的兼容版本。数学插件固定在与 VitePress 内置 MarkdownIt 14 兼容的版本。
 
@@ -95,6 +96,7 @@ scripts/
   new-home.mjs                # 添加首页推荐
   new-utils.mjs               # 新建脚本共用的路径、JSON 读写与校验
   pub.mjs                     # 只提交并推送 docs/ 与 data/ 内容改动
+  optimize-images.mjs         # 大图转 WebP，原图保留为 .raw.<ext>
   prompt.mjs                  # 无依赖的交互式输入与方向键选择
 ```
 
@@ -146,6 +148,10 @@ tags: [学习笔记, C语言]
 文章仍通过 `/posts/<slug>` 访问。`config.mts` 将目录中的 `index.md` 映射到原来的页面路径，因此移动源码不会改变已发布的文章链接。已有稿件的正文与代码示例保持原样。
 
 图片放进同一稿件的 `images/`，使用相对路径。Vite 负责生成带内容哈希的产物，避免源码图片又被 `public` 整目录复制一遍。多个页面共用且必须保持固定 URL 的资源才放进 `docs/public/`；组件专用资源随功能目录保存，并通过 `import` 引入。
+
+文章头图默认从稿件目录的 `banner.*` 或 `cover.*` 自动匹配（`images/` 子目录也可），也可以用 frontmatter `banner: ./images/banner.webp` 指定，`banner: false` 关闭。头图保持图片原始比例，不做裁切。
+
+`pnpm optimize` 会把 `docs/` 与 `data/` 中超过 300 KB 的 PNG / JPEG 转成 WebP，原图重命名为 `<name>.raw.<ext>` 留在原目录，并同步更新 Markdown、frontmatter 与数据文件里的引用。`pnpm pub` 会在提交前自动执行，需要跳过时加 `--no-optimize`。阈值与质量可调，例如 `pnpm optimize --threshold 1mb --quality 80`。`docs/public/` 会被整目录复制，因此不参与转换，避免 `.raw` 备份被一起发布。
 
 新增稿件会进入首页与归档；侧栏在启动或构建时读取同一套元数据，开发时新增文章或修改侧栏标题后重启开发服务器。归档筛选标签维护在 `data/posts.json`，`Post` 类型在 `theme/features/posts/types.ts`。使用 `pnpm new:post` 可交互生成骨架；传齐 `pnpm new:post <slug> "标题"` 时不询问，适合脚本调用。
 

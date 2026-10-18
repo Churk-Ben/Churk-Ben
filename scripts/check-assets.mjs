@@ -9,8 +9,12 @@ const IMPORT_PATTERN = /from\s+['"]([^'"]+\.(?:png|jpe?g|svg|gif|webp|avif|ico))
 const LITERAL_PATTERN = /["'](\/[\w./-]+\.(?:png|jpe?g|svg|gif|webp|avif|ico))["']/g;
 const REMOTE_OR_ANCHOR = /^(?:[a-z]+:|\/\/|#)/i;
 
+/** 与 theme/features/posts/banner.ts 的自动匹配顺序保持一致。 */
+const BANNER_NAMES = ["banner", "cover"];
+const BANNER_EXTENSIONS = ["avif", "webp", "png", "jpg", "jpeg", "gif", "svg"];
+
 /**
- * 校验 Markdown 正文、hero 图与主题源码引用的本地图片都存在，
+ * 校验 Markdown 正文、头图、hero 图与主题源码引用的本地图片都存在，
  * 并返回被引用的资源集合，供 check-resources 判断是否存在孤儿资源。
  */
 export async function checkAssets({ root, docs, theme }) {
@@ -35,11 +39,44 @@ export async function checkAssets({ root, docs, theme }) {
     }
   };
 
+  /** 校验 frontmatter.banner，并把自动匹配到的 banner / cover 计入引用。 */
+  const checkBanner = (data, source) => {
+    if (data.banner === false) return;
+
+    if (typeof data.banner === "string" && data.banner.trim()) {
+      const url = data.banner.trim();
+      if (REMOTE_OR_ANCHOR.test(url)) return;
+
+      const path = decodeURI(url.split(/[?#]/)[0]);
+      const file = path.startsWith("/")
+        ? [join(docs, path), join(docs, "public", path)].find(existsSync)
+        : resolve(dirname(source), path);
+
+      assert(file, `${relative(root, source)}: missing banner ${url}`);
+      referenced.add(file);
+      return;
+    }
+
+    const directory = dirname(source);
+    for (const name of BANNER_NAMES) {
+      for (const folder of ["", "images"]) {
+        for (const extension of BANNER_EXTENSIONS) {
+          const banner = join(directory, folder, `${name}.${extension}`);
+          if (existsSync(banner)) {
+            referenced.add(banner);
+            return;
+          }
+        }
+      }
+    }
+  };
+
   const documents = filesIn(docs).filter((file) => file.endsWith(".md"));
   for (const file of documents) {
     const { content, data } = matter.read(file);
     checkTokens(markdown.parse(content, {}), file);
     checkImage(data.hero?.image?.src, file);
+    checkBanner(data, file);
   }
 
   // 数据文件中的封面、头像等本地资源也要参与引用校验。
