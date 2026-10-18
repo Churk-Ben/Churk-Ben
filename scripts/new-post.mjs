@@ -1,16 +1,18 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadPosts } from "../.vitepress/content/posts.mjs";
-import { input, isInteractive } from "./prompt.mjs";
+import { input, isInteractive, select } from "./prompt.mjs";
 import { fail, required, root, show } from "./new-utils.mjs";
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const PUBLIC_DIR = join(root, "docs/posts");
+const PRIVATE_DIR = join(root, "private/posts");
 const today = new Date().toISOString().slice(0, 10);
 
-function slugError(value) {
+function slugError(value, baseDir) {
   if (!value) return "不能为空";
   if (!SLUG_PATTERN.test(value)) return "请使用小写字母、数字和短横线，例如 my-first-post";
-  if (existsSync(join(root, "docs/posts", value))) return `文章目录已存在：docs/posts/${value}`;
+  if (existsSync(join(baseDir, value))) return `文章目录已存在：${baseDir}/${value}`;
   return undefined;
 }
 
@@ -32,22 +34,50 @@ function parseTags(value) {
   ];
 }
 
-export async function createPost(args) {
+export async function createPost(rawArgs, options = {}) {
+  const args = rawArgs.filter((argument) => argument !== "--private" && argument !== "-p");
   let [slug, ...titleParts] = args;
   let title = titleParts.join(" ").trim();
+  let isPrivate = Boolean(options.private) || rawArgs.includes("--private") || rawArgs.includes("-p");
   const complete = Boolean(slug && title);
 
   if (slug && !SLUG_PATTERN.test(slug)) {
     fail(`Invalid slug "${slug}": use lowercase kebab-case, e.g. my-first-post`);
   }
-  if (slug && existsSync(join(root, "docs/posts", slug))) {
-    fail(`Post already exists: docs/posts/${slug}`);
+  if (slug && existsSync(join(isPrivate ? PRIVATE_DIR : PUBLIC_DIR, slug))) {
+    fail(`Post already exists: ${isPrivate ? "private/posts" : "docs/posts"}/${slug}`);
   }
 
   if (!slug || !title) {
-    if (!isInteractive()) fail('用法: pnpm new:post <slug> "<标题>"');
-    slug = slug || (await input({ message: "文章 slug", hint: "小写字母、数字和短横线", validate: slugError }));
+    if (!isInteractive()) {
+      fail('用法: pnpm new:post <slug> "<标题>" [--private] / pnpm new:private <slug> "<标题>"');
+    }
+
+    if (!isPrivate) {
+      const kind = await select({
+        message: "文章类型",
+        options: [
+          { label: "公开文章", value: "public", hint: "docs/posts/<slug>/index.md" },
+          { label: "隐私文章", value: "private", hint: "private/posts/<slug>/index.md" },
+        ],
+      });
+      isPrivate = kind === "private";
+    }
+
+    const baseDir = isPrivate ? PRIVATE_DIR : PUBLIC_DIR;
+    slug =
+      slug ||
+      (await input({
+        message: "文章 slug",
+        hint: "小写字母、数字和短横线",
+        validate: (value) => slugError(value, baseDir),
+      }));
     title = title || (await input({ message: "文章标题", validate: required }));
+  }
+
+  const baseDir = isPrivate ? PRIVATE_DIR : PUBLIC_DIR;
+  if (slug && existsSync(join(baseDir, slug))) {
+    fail(`Post already exists: ${isPrivate ? "private/posts" : "docs/posts"}/${slug}`);
   }
 
   let date = today;
@@ -65,7 +95,7 @@ export async function createPost(args) {
     );
   }
 
-  const directory = join(root, "docs/posts", slug);
+  const directory = join(baseDir, slug);
   const file = join(directory, "index.md");
   const content = `---
 title: ${JSON.stringify(title)}
@@ -81,5 +111,12 @@ tags: [${tags.map((tag) => JSON.stringify(tag)).join(", ")}]
   mkdirSync(directory, { recursive: true });
   writeFileSync(file, content, "utf8");
   console.log(`Created ${show(file)}`);
-  console.log(`截图请放在 ${show(join(directory, "images"))}/`);
+
+  if (isPrivate) {
+    console.log(
+      "隐私文章源不会被提交。编辑后运行 pnpm private，再提交 docs/private/ 与 docs/public/private/ 下的生成文件。",
+    );
+  } else {
+    console.log(`截图请放在 ${show(join(directory, "images"))}/`);
+  }
 }

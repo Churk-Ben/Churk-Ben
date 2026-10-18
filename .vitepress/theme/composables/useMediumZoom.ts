@@ -13,7 +13,13 @@ export function useMediumZoom() {
     zoom.attach(selector);
   };
 
-  onMounted(refresh);
+  onMounted(() => {
+    refresh();
+    window.addEventListener("private-post:rendered", refresh);
+  });
   onContentUpdated(refresh);
-  onUnmounted(() => zoom.detach());
+  onUnmounted(() => {
+    window.removeEventListener("private-post:rendered", refresh);
+    zoom.detach();
+  });
 }

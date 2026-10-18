@@ -41,6 +41,7 @@ import {
   faHeart,
   faHome,
   faLink,
+  faLock,
   faRss,
   faRocket,
   faStar,
@@ -87,6 +88,7 @@ export const ccSaSvg = toSvg(faCreativeCommonsSa);
 
 /* 通用图标 */
 export const linkSvg = toSvg(faLink);
+export const lockSvg = toSvg(faLock);
 export const globeSvg = toSvg(faGlobe);
 export const rssSvg = toSvg(faRss);
 export const mailSvg = toSvg(faEnvelope);

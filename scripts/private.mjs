@@ -196,45 +196,44 @@ function readPost(data, sourceFile) {
 async function main() {
   loadEnv();
 
-  if (!existsSync(sourceDir)) {
-    console.log(`没有隐私文章源目录：${sourceDir}`);
-    console.log("创建 private/posts/<slug>/index.md 后重新运行。");
-    return;
-  }
-
-  const entries = readdirSync(sourceDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && existsSync(join(sourceDir, entry.name, "index.md")))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const entries = existsSync(sourceDir)
+    ? readdirSync(sourceDir, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory() && existsSync(join(sourceDir, entry.name, "index.md")))
+        .sort((a, b) => a.name.localeCompare(b.name))
+    : [];
 
   if (!entries.length) {
-    console.log("没有隐私文章。");
-    return;
+    console.log("没有隐私文章；将生成空的加密清单。");
   }
 
   const password = process.env.PRIVATE_POST_PASSWORD;
   if (!password) {
     throw new Error("缺少 PRIVATE_POST_PASSWORD，请写入 .env.local 或通过环境变量传入");
   }
-  if (password.length < 8) {
-    console.warn("警告：隐私文章密码短于 8 个字符，建议使用更长的密码。");
+  if (/^[123]{6}$/.test(password)) {
+    console.warn("警告：6 位 1/2/3 密码只有 729 种组合，只能防止随手访问，无法抵御离线暴力破解。");
+  } else if (password.length < 12) {
+    console.warn("警告：隐私文章密码较短，建议使用更长的密码。");
   }
 
   const config = readConfig();
-  const md = await createMarkdownRenderer(docsDir, {
-    lineNumbers: true,
-    container: {
-      tipLabel: "提示",
-      warningLabel: "注意",
-      dangerLabel: "危险",
-      infoLabel: "信息",
-      detailsLabel: "详情",
-    },
-    config(markdown) {
-      markdown.use(katex, {
-        strict: (code) => (code === "unicodeTextInMathMode" ? "ignore" : "warn"),
-      });
-    },
-  });
+  const md = entries.length
+    ? await createMarkdownRenderer(docsDir, {
+        lineNumbers: true,
+        container: {
+          tipLabel: "提示",
+          warningLabel: "注意",
+          dangerLabel: "危险",
+          infoLabel: "信息",
+          detailsLabel: "详情",
+        },
+        config(markdown) {
+          markdown.use(katex, {
+            strict: (code) => (code === "unicodeTextInMathMode" ? "ignore" : "warn"),
+          });
+        },
+      })
+    : null;
 
   mkdirSync(payloadDir, { recursive: true });
   const manifest = [];
@@ -268,21 +267,27 @@ async function main() {
     const targetDir = join(privateDir, slug);
     const targetFile = join(targetDir, "index.md");
     if (existsSync(targetFile) && !readFileSync(targetFile, "utf8").includes(MARKER)) {
-      throw new Error(`${targetFile}: 已存在同名公开文章，拒绝覆盖`);
+      throw new Error(`${targetFile}: 已存在同名隐私文章页面，拒绝覆盖`);
     }
 
     const frontmatter = {
       title: "隐私文章",
       private: true,
-      aside: false,
       comment: false,
+      license: false,
     };
 
     const placeholder = `<!-- ${MARKER}，请勿手动编辑。 -->\n\n<MPrivatePost src="/private/${payloadName}" />\n`;
     mkdirSync(targetDir, { recursive: true });
     writeFileSync(targetFile, matter.stringify(placeholder, frontmatter), "utf8");
 
-    manifest.push({\n      url: `/private/${slug}`,\n      title: meta.title,\n      date: meta.date,\n      tags: meta.tags,\n      ...(banner ? { banner } : {}),\n    });
+    manifest.push({
+      url: `/private/${slug}`,
+      title: meta.title,
+      date: meta.date,
+      tags: meta.tags,
+      ...(banner ? { banner } : {}),
+    });
 
     console.log(`Encrypted ${slug} -> docs/public/private/${payloadName}`);
   }
@@ -293,7 +298,7 @@ async function main() {
   console.log(`Encrypted manifest (${manifest.length} posts) -> docs/public/private/manifest.json`);
 
   console.log("");
-  console.log("完成。请提交 docs/posts/ 与 docs/public/private/ 下的生成文件；private/ 已被忽略。");
+  console.log("完成。请提交 docs/private/ 与 docs/public/private/ 下的生成文件；private/ 已被忽略。");
 }
 
 main().catch((error) => {

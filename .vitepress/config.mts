@@ -34,7 +34,10 @@ const config: UserConfigExport<DefaultTheme.Config> = ({ mode }) =>
     cleanUrls: true,
     lastUpdated: true,
     // Article folders keep their original published URLs.
-    rewrites: { "posts/:slug/index.md": "posts/:slug.md" },
+    rewrites: {
+      "posts/:slug/index.md": "posts/:slug.md",
+      "private/:slug/index.md": "private/:slug.md",
+    },
     head,
     markdown,
     themeConfig: buildThemeConfig(loadEnv(mode, process.cwd(), "")),

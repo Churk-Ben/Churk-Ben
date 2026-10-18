@@ -12,10 +12,13 @@ export const postsPattern = `${postsDirectory.replaceAll("\\", "/")}*/index.md`;
 export function loadPosts() {
   return readdirSync(postsDirectory, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && existsSync(`${postsDirectory}${entry.name}/index.md`))
-    .map(({ name }) => {
+    .flatMap(({ name }) => {
       const file = `${postsDirectory}${name}/index.md`;
       const { data } = matter.read(file);
       const date = new Date(data.date);
+
+      // 隐私文章只在 /private 解锁后展示，不进入公开列表与侧栏。
+      if (data.private === true) return [];
 
       if (typeof data.title !== "string" || !data.title.trim() || !data.date || Number.isNaN(date.getTime())) {
         throw new Error(`${file}: title and a valid date are required`);
@@ -31,13 +34,15 @@ export function loadPosts() {
             ? data.banner.trim()
             : undefined;
 
-      return {
-        url: `/posts/${name}`,
-        title: data.title,
-        date: date.toISOString().slice(0, 10),
-        tags: [...new Set(data.tags)],
-        ...(banner === undefined ? {} : { banner }),
-      };
+      return [
+        {
+          url: `/posts/${name}`,
+          title: data.title,
+          date: date.toISOString().slice(0, 10),
+          tags: [...new Set(data.tags)],
+          ...(banner === undefined ? {} : { banner }),
+        },
+      ];
     })
     .sort((a, b) => b.date.localeCompare(a.date) || a.url.localeCompare(b.url));
 }

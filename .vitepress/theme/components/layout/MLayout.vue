@@ -9,6 +9,9 @@ import {
 import { useAppearance } from "../../composables/useAppearance";
 import { useMediumZoom } from "../../composables/useMediumZoom";
 import MVisitorBadge from "../common/MVisitorBadge.vue";
+import MPrivateOutline from "../private/MPrivateOutline.vue";
+import MPrivatePager from "../private/MPrivatePager.vue";
+import MPrivateSidebar from "../private/MPrivateSidebar.vue";
 import MPostBanner from "../posts/MPostBanner.vue";
 import MPostLicense from "../posts/MPostLicense.vue";
 import MPostPager from "../posts/MPostPager.vue";
@@ -33,7 +36,11 @@ useMediumZoom();
       <MVisitorBadge class="nav-visitor" />
     </template>
     <template #sidebar-nav-after>
+      <MPrivateSidebar />
       <MSidebarWidgets />
+    </template>
+    <template #aside-outline-before>
+      <MPrivateOutline />
     </template>
     <template #doc-top>
       <MPostBanner />
@@ -41,6 +48,7 @@ useMediumZoom();
     <template #doc-after>
       <MPostLicense />
       <MPostPager />
+      <MPrivatePager />
       <MComments />
       <MDocFooter />
     </template>

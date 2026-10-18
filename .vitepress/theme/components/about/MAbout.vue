@@ -1,11 +1,19 @@
-<!-- 关于页内容：个人简介、技术栈与联系方式，右下角是星野的装饰头像。 -->
+﻿<!-- 关于页内容：个人简介、技术栈与联系方式，右下角是星野的装饰头像。 -->
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import MPrivateCode from "../private/MPrivateCode.vue";
+import { usePrivateVault } from "../../features/private/vault.ts";
 
 const email = "churkben0@gmail.com";
 const copied = ref(false);
 const shaking = ref(false);
+const code = ref("111111");
+const vault = usePrivateVault();
+
+function randomCode() {
+  return Array.from({ length: 6 }, () => 1 + Math.floor(Math.random() * 3)).join("");
+}
 
 const stack = [
   { name: "C++", src: "https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white" },
@@ -38,12 +46,31 @@ function shake() {
   shaking.value = true;
   window.setTimeout(() => (shaking.value = false), 600);
 }
+
+function handleStickerDoubleClick() {
+  shake();
+
+  if (vault.visible.value) {
+    vault.lock();
+    return;
+  }
+
+  void vault.unlock(code.value);
+}
+
+onMounted(() => {
+  code.value = randomCode();
+  void vault.init();
+});
 </script>
 
 <template>
   <div class="about">
     <header class="about-hero">
-      <p class="about-eyebrow">About</p>
+      <div class="about-topline">
+        <p class="about-eyebrow">About</p>
+        <MPrivateCode v-model="code" class="about-private-code" />
+      </div>
       <h2>👋 Hello! world~</h2>
       <p class="about-tagline"><em>Aurore est le billet-doux de Polaris.</em></p>
       <p class="about-meta">🔭 独立开发者 · 🏠 Nanjing · 🏢 <a href="https://github.com/JuFireX">JuFire Studio</a></p>
@@ -51,7 +78,7 @@ function shake() {
         <a class="about-pill" href="https://www.churk.top">Blog</a>
         <a class="about-pill" href="https://github.com/Churk-Ben">GitHub</a>
       </div>
-      <div class="about-sticker" :class="{ 'is-shaking': shaking }" @dblclick="shake">
+      <div class="about-sticker" :class="{ 'is-shaking': shaking }" @dblclick="handleStickerDoubleClick">
         <img class="about-sticker-img" src="/shared/icon.png" alt="星野日向" width="144" height="144" loading="lazy" />
       </div>
     </header>
@@ -95,8 +122,19 @@ function shake() {
   overflow: hidden;
 }
 
+.about-topline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.about-private-code {
+  flex-shrink: 0;
+}
+
 .about-eyebrow {
-  margin: 0 0 8px;
+  margin: 0;
   color: var(--vp-c-brand-1);
   font-size: 12px;
   font-weight: 600;
