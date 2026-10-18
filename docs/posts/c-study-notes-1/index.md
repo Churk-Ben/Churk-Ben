@@ -103,7 +103,7 @@ int main()
 
 ### 结果
 
-![](./images/04.png)
+![](./images/04.webp)
 
 <small>_当然是自己运行出来的啦_</small> 🤫
 

@@ -16,11 +16,11 @@ tags: ["博客", "教程", "C语言", "环境", "教程"]
 
 ### 下载安装完成之后，启动
 
-![](./images/02.png)
+![](./images/02.webp)
 
 ### 点击左侧“拓展”图标下载中文拓展
 
-![](./images/03.png)
+![](./images/03.webp)
 
 ### 安装好后重启 别关 留着备用
 
@@ -32,7 +32,7 @@ tags: ["博客", "教程", "C语言", "环境", "教程"]
 
 ### 找到[资源](https://winlibs.com/)下载压缩包
 
-![](./images/04.png)
+![](./images/04.webp)
 
 > 浏览器下载会 比 较 慢
 >
@@ -40,9 +40,9 @@ tags: ["博客", "教程", "C语言", "环境", "教程"]
 >
 > 在右键里复制链接
 >
-> ![](./images/05.png)
+> ![](./images/05.webp)
 >
-> ![](./images/06.png)
+> ![](./images/06.webp)
 
 ### 找到下载的压缩文件，解压到合适的地方
 
@@ -50,25 +50,25 @@ tags: ["博客", "教程", "C语言", "环境", "教程"]
 
 ### 往下找一两层 找到第一个叫`bin`的文件夹 `Ctrl + C`复制地址
 
-![](./images/08.png)
+![](./images/08.webp)
 
 ## 第三步 找到你的电脑设置 打开
 
 ### 打开系统信息
 
-![](./images/09.png)
+![](./images/09.webp)
 
 ### 打开环境变量
 
-![](./images/10.png)
+![](./images/10.webp)
 
 ### 点新建环境变量然后 `Ctrl + V`
 
-![](./images/11.png)
+![](./images/11.webp)
 
 ### 三个确定
 
-![](./images/12.png)
+![](./images/12.webp)
 
 ### 检查是否成功安装
 
@@ -80,7 +80,7 @@ gcc -v
 
 如果出来一堆这种东西就是成功了
 
-![](./images/13.png)
+![](./images/13.webp)
 
 没成功的话环境变量那里再试一次 一般不会有问题的
 
@@ -88,13 +88,13 @@ gcc -v
 
 ### 打开VSCode 寻找拓展 `C/C++ Compile Run`
 
-![](./images/14.png)
+![](./images/14.webp)
 
 > 安装后重启VSCode
 
 ### 试一下helloworld
 
-![](./images/15.png)
+![](./images/15.webp)
 
 ### WIN!
 
