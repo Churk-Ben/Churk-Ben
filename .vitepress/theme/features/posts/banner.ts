@@ -58,7 +58,7 @@ function detectSource(directory: string) {
   return "";
 }
 
-/** 解析文章头图：false 关闭；字符串指定来源；缺省自动匹配目录下的 banner / cover 图片。 */
+/** 解析页面头图：false 关闭；字符串指定来源；缺省自动匹配文章目录下的 banner / cover 图片。 */
 export function getBannerSource(banner: unknown, directory: string) {
   if (banner === false) return "";
   if (typeof banner === "string" && banner.trim()) return resolveSource(banner.trim(), directory);
