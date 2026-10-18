@@ -1,4 +1,4 @@
-<!-- 文章列表：渲染日期、标题与标签，供首页和归档复用。 -->
+<!-- 文章列表：渲染日期、标题、标签与头图，供首页和归档复用。 -->
 
 <script setup lang="ts">
 import { computed } from "vue";
@@ -47,7 +47,8 @@ const items = computed(() =>
 }
 
 .post-link {
-  --post-banner-width: clamp(112px, 24%, 176px);
+  --post-banner-height: 96px;
+  --post-banner-width: calc(var(--post-banner-height) * 3.3);
   position: relative;
   display: grid;
   grid-template-columns: 92px minmax(0, 1fr) 16px;
@@ -59,8 +60,11 @@ const items = computed(() =>
 }
 
 .post-link--banner {
-  min-height: calc(var(--post-banner-width) * 0.5625 + 40px);
+  height: var(--post-banner-height);
+  margin: 0;
+  padding-block: 0;
   align-content: center;
+  isolation: isolate;
 }
 
 .post-link--banner .post-info {
@@ -86,59 +90,54 @@ const items = computed(() =>
 }
 
 .post-arrow {
-  color: var(--vp-c-text-3);
-}
-
-.post-link--banner .post-arrow {
   position: relative;
   z-index: 1;
-  display: grid;
-  place-items: center;
-  align-self: center;
-  justify-self: end;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--vp-c-bg) 66%, transparent);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--vp-c-border) 35%, transparent);
-  color: var(--vp-c-text-1);
-  font-size: 12px;
-  line-height: 1;
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+  color: var(--vp-c-text-3);
 }
 
 .post-banner {
   position: absolute;
-  top: 50%;
+  z-index: 0;
+  top: 0;
   right: 0;
+  display: flex;
+  align-items: center;
   width: var(--post-banner-width);
-  aspect-ratio: 16 / 9;
+  height: var(--post-banner-height);
   overflow: hidden;
-  border-radius: 10px;
   pointer-events: none;
-  transform: translateY(-50%);
+  -webkit-mask-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 1) 30%,
+    rgba(0, 0, 0, 0.7) 40%,
+    rgba(0, 0, 0, 0.3) 55%,
+    rgba(0, 0, 0, 0.1) 75%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 1) 30%,
+    rgba(0, 0, 0, 0.7) 40%,
+    rgba(0, 0, 0, 0.3) 55%,
+    rgba(0, 0, 0, 0.1) 75%,
+    transparent 100%
+  );
 }
 
 .post-banner img {
   display: block;
-  width: 100%;
-  height: 100%;
+  margin: 0;
   object-fit: cover;
-  -webkit-mask-image: linear-gradient(to left, #000 58%, transparent 100%);
-  mask-image: linear-gradient(to left, #000 58%, transparent 100%);
+  filter: blur(1px);
+  transform: scale(1.01);
+  transition:
+    filter 0.3s ease,
+    transform 0.3s ease;
 }
 
-/* 左侧叠加由右至左渐强的模糊，与图片自身的淡出叠合。 */
-.post-banner::after {
-  position: absolute;
-  inset: 0;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  -webkit-mask-image: linear-gradient(to left, transparent 35%, #000 100%);
-  mask-image: linear-gradient(to left, transparent 35%, #000 100%);
-  pointer-events: none;
-  content: "";
+.post-link:hover .post-banner img {
+  filter: blur(0);
+  transform: scale(1);
 }
 
 .post-link:hover .post-title,
@@ -146,20 +145,17 @@ const items = computed(() =>
   color: var(--vp-c-brand-1);
 }
 
+@media (max-width: 899px) {
+  .post-link {
+    --post-banner-height: 80px;
+  }
+}
+
 @media (max-width: 479px) {
   .post-link {
-    --post-banner-width: 104px;
     grid-template-columns: minmax(0, 1fr) 16px;
     gap: 4px 12px;
     padding: 16px 0;
-  }
-
-  .post-link--banner {
-    min-height: calc(var(--post-banner-width) * 0.5625 + 32px);
-  }
-
-  .post-banner {
-    border-radius: 8px;
   }
 
   .post-date {
@@ -173,6 +169,51 @@ const items = computed(() =>
   .post-arrow {
     grid-column: 2;
     grid-row: 2;
+  }
+}
+
+/* 窄屏下头图铺满整条，文字直接叠在图片上方。 */
+@media (max-width: 639px) {
+  .post-link--banner {
+    grid-template-columns: minmax(0, 1fr) 16px;
+    gap: 4px 12px;
+    height: auto;
+    aspect-ratio: 3.3 / 1;
+    padding: 12px 0;
+  }
+
+  .post-link--banner .post-info {
+    padding-right: 0;
+  }
+
+  .post-banner {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    margin: 0;
+  }
+
+  .post-date,
+  .post-info {
+    position: relative;
+    z-index: 1;
+  }
+
+  .post-date {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .post-info {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .post-arrow {
+    grid-column: 2;
+    grid-row: 1;
   }
 }
 </style>

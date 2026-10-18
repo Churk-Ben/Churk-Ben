@@ -143,7 +143,7 @@ async function copyAttribution() {
 
 .m-license-foot {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   gap: 10px 24px;
@@ -156,6 +156,7 @@ async function copyAttribution() {
   margin: 0;
   color: var(--vp-c-text-3);
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .m-license-actions {
@@ -219,8 +220,7 @@ async function copyAttribution() {
   }
 
   .m-license-foot {
-    flex-direction: column;
-    align-items: flex-start;
+    gap: 8px 12px;
   }
 }
 

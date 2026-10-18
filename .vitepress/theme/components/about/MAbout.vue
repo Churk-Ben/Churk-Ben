@@ -52,7 +52,7 @@ function shake() {
         <a class="about-pill" href="https://github.com/Churk-Ben">GitHub</a>
       </div>
       <div class="about-sticker" :class="{ 'is-shaking': shaking }" @dblclick="shake">
-        <img src="/shared/icon.png" alt="星野日向" width="144" height="144" loading="lazy" />
+        <img class="about-sticker-img" src="/shared/icon.png" alt="星野日向" width="144" height="144" loading="lazy" />
       </div>
     </header>
 
