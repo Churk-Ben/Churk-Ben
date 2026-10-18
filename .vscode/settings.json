@@ -4,6 +4,8 @@
   "explorer.fileNesting.patterns": {
     "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml, .node-version, .prettierrc, .prettierignore",
     "README.md": "CONTRIBUTING.md, LICENSE*",
-    ".env.example": ".env, .env.*"
+    ".env.example": ".env, .env.*",
+    ".gitignore": ".gitattributes, .gitmodules",
+    "tsconfig.json": "tsconfig.*.json, env.d.ts, env.*.d.ts, tsconfig.*.d.ts"
   }
 }
