@@ -277,7 +277,7 @@ async function main() {
       license: false,
     };
 
-    const placeholder = `<!-- ${MARKER}，请勿手动编辑。 -->\n\n<MPrivatePost src="/private/${payloadName}" />\n`;
+    const placeholder = `\n<!-- ${MARKER}，请勿手动编辑。 -->\n\n<MPrivatePost src="/private/${payloadName}" />\n`;
     mkdirSync(targetDir, { recursive: true });
     writeFileSync(targetFile, matter.stringify(placeholder, frontmatter), "utf8");
 
