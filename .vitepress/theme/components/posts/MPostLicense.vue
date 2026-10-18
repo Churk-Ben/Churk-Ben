@@ -130,6 +130,7 @@ async function copyAttribution() {
   font-size: 20px;
   font-weight: 500;
   line-height: 1.5;
+  white-space: nowrap;
 }
 
 .m-license-copy {
@@ -159,7 +160,7 @@ async function copyAttribution() {
 
 .m-license-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 8px 18px;
 }
@@ -169,6 +170,7 @@ async function copyAttribution() {
   color: var(--vp-c-text-2);
   font-size: 12px;
   text-decoration: none;
+  white-space: nowrap;
   background: none;
   transition: color 0.2s;
 }
@@ -213,7 +215,6 @@ async function copyAttribution() {
   }
 
   .m-license-title {
-    flex-basis: 100%;
     font-size: 18px;
   }
 
