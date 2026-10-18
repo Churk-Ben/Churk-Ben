@@ -16,6 +16,9 @@ dist
 # Private post sources (only encrypted artifacts are committed)
 /private/
 
+# Raw note exports (publish through docs/ or private/ only)
+/import/
+
 # Logs
 logs
 *.log

@@ -25,6 +25,7 @@
     "new:link": "node scripts/new.mjs link",
     "new:home": "node scripts/new.mjs home",
     "private": "node scripts/private.mjs",
+    "mi:notes": "node scripts/export-mi-notes.mjs",
     "pub": "node scripts/pub.mjs",
     "optimize": "node scripts/optimize-images.mjs",
     "typecheck": "vue-tsc --noEmit",
