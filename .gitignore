@@ -13,6 +13,9 @@ dist
 .env.*
 !.env.example
 
+# Private post sources (only encrypted artifacts are committed)
+/private/
+
 # Logs
 logs
 *.log
