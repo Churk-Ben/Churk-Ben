@@ -18,8 +18,11 @@ pnpm new:private [slug] ["标题"]          # 新建隐私文章骨架
 pnpm new:nav               # 添加导航项，可选择已有分组或新建分组
 pnpm new:link              # 添加友链，或给已有友链追加链接
 pnpm new:home              # 添加首页推荐阅读
-pnpm private               # 加密 private/posts 下的隐私文章，生成公开入口与密文
-pnpm mi:notes              # 从小米云便签导出 Markdown（需 private/mi-cookie.txt）
+pnpm private               # 加密 private/posts（同 private:build）
+pnpm private:build         # 加密隐私文章，复用未变化文章的密文并清理失效生成物
+pnpm private:clean         # 只清理已从 private/posts 删除的文章生成物
+pnpm export                # 交互选择要导出的内容
+pnpm export:mi-notes        # 从小米云便签导出 Markdown（需 private/mi-cookie.txt）
 pnpm pub [说明]           # 只提交并推送 docs/ 与 data/ 的内容改动
 pnpm optimize              # 手动把内容里超过 300 KB 的图片转为 WebP（pub 会自动执行）
 pnpm format
@@ -31,11 +34,11 @@ pnpm preview
 
 `pnpm check` 由 `scripts/check.mjs` 编排：`check-assets` 校验文章、主题源码与 `data/` 数据里引用的本地图片，`check-resources` 校验未引用或重复的资源，`check-styles` 校验 Vue 组件不使用内联样式，`check-posts` 校验文章元数据与 slug 命名。`resources` 依赖 `assets` 收集的引用集合，单独运行时入口会自动先执行 `assets`。`pnpm typecheck` 依据根目录 `tsconfig.json` 用 `vue-tsc` 检查 `.vitepress/**` 的 TypeScript 与 Vue 组件。`pnpm build` 同时检查站内页面链接。CI 在构建前会执行 `pnpm check`、`pnpm format:check` 与 `pnpm typecheck`。
 
-`pnpm new` 由 `scripts/new.mjs` 统一分发，具体创建逻辑按类型拆在 `new-post.mjs`、`new-nav.mjs`、`new-link.mjs`、`new-home.mjs`，共用路径、JSON 读写与校验放在 `new-utils.mjs`，交互逻辑在 `prompt.mjs`。交互命令需要终端；`pnpm new:post <slug> "标题"` 在传齐参数时不会询问，可直接用于脚本。`pnpm new:post <slug> "标题" --private` 和 `pnpm new:private <slug> "标题"` 会把源写到 `private/posts/`。
+`pnpm new` 由 `scripts/new.mjs` 统一分发，具体创建逻辑按类型拆在 `new-post.mjs`、`new-nav.mjs`、`new-link.mjs`、`new-home.mjs`，共用路径、JSON 读写与校验放在 `utils-new.mjs`，交互逻辑在 `utils-prompt.mjs`。交互命令需要终端；`pnpm new:post <slug> "标题"` 在传齐参数时不会询问，可直接用于脚本。`pnpm new:post <slug> "标题" --private` 和 `pnpm new:private <slug> "标题"` 会把源写到 `private/posts/`。
 
 `pnpm pub` 由 `scripts/pub.mjs` 提供：只把 `docs/` 与 `data/` 下的内容改动加入暂存区，提交后推送当前分支；暂存区已有代码改动时会中止，未暂存的代码改动不会进入本次提交。发布前会自动执行图片优化，可用 `--no-optimize` 跳过；`--no-push` 只提交不推送。`pnpm publish` 是 pnpm 自带的 registry 发布命令，所以博客内容发布使用更短的 `pnpm pub`。
 
-`pnpm mi:notes` 由 `scripts/export-mi-notes.mjs` 提供：登录 i.mi.com 后把请求头里的 Cookie 存到 `private/mi-cookie.txt`（已被忽略）或环境变量 `MI_COOKIE`，脚本会分页拉取便签、转换成 Markdown 并下载图片。默认先列出便签（带分类）再交互选择；`--folders` 查看分类及数量，`--folder <名称>` 只看某个分类，`--all`、`--limit <数量>`、`--search <关键词>` 可用于非交互筛选。输出默认在 `import/notes/`（已被忽略），每篇一个目录，包含 `index.md` 与 `images/`；用 `--out private/posts` 可直接写入隐私文章源目录，再运行 `pnpm private` 加密。
+`pnpm export` 由 `scripts/export.mjs` 统一分发，目前提供 `export:mi-notes`：登录 i.mi.com 后把请求头里的 Cookie 存到 `private/mi-cookie.txt`（已被忽略）或环境变量 `MI_COOKIE`，脚本会分页拉取便签、转换成 Markdown 并下载图片。默认列出便签后用与 `pnpm new` 相同的方向键列表多选；`--folders` 查看分类及数量，`--folder <名称>` 只看某个分类，`--all`、`--limit <数量>`、`--search <关键词>` 可用于非交互筛选。输出默认在 `import/notes/`（已被忽略），每篇一个目录，包含 `index.md` 与 `images/`；用 `--out private/posts` 可直接写入隐私文章源目录，再运行 `pnpm private:build` 加密。
 
 工具链使用 VitePress `2.0.0-alpha.20`、Vite 8、Vue 3、TypeScript 5.9、`vue-tsc` 和 Dart Sass Embedded。Vite 8 默认使用 Sass 现代编译器 API，无需再显式配置。VitePress 2 当前属于预发布版本，固定版本号以避免自动跳到其他 alpha；升级时同步调整阅读增强插件的兼容版本。数学插件固定在与 VitePress 内置 MarkdownIt 14 兼容的版本。
 
@@ -56,7 +59,7 @@ docs/
       images/                 # 该稿件专用的截图
   private/
     index.md                  # 隐私文章归档页，解锁后展示
-    <slug>/index.md           # pnpm private 生成的隐私文章入口
+    <slug>/index.md           # pnpm private:build 生成的隐私文章入口
   drafts/                     # 可选草稿目录，不参与站点构建
   public/shared/icon.png      # 多页共用：favicon、首页 hero、关于页
   public/links/               # 友链页头像
@@ -101,18 +104,24 @@ scripts/
   check-resources.mjs         # 未引用 / 重复资源校验
   check-styles.mjs            # Vue 内联样式校验
   check-posts.mjs             # 文章元数据、URL 唯一性与 slug 校验
+  export.mjs                  # 导出统一入口（可交互选择）
   export-mi-notes.mjs         # 从小米云便签导出 Markdown
-  fs-utils.mjs                # 递归列文件等公共工具
   new.mjs                     # 新建内容统一入口
   new-post.mjs                # 新建文章
   new-nav.mjs                 # 添加导航项
   new-link.mjs                # 添加友链或追加链接
   new-home.mjs                # 添加首页推荐
-  new-utils.mjs               # 新建脚本共用的路径、JSON 读写与校验
+  optimize.mjs                # 大图转 WebP，原图保留为 .raw.<ext>
+  private.mjs                 # 隐私文章统一入口（build / clean）
+  private-build.mjs           # 加密隐私文章，生成入口页与密文载荷
+  private-clean.mjs           # 清理已删除文章的生成物并同步清单
   pub.mjs                     # 只提交并推送 docs/ 与 data/ 内容改动
-  optimize-images.mjs         # 大图转 WebP，原图保留为 .raw.<ext>
-  private.mjs                 # 加密隐私文章，生成入口页与密文载荷
-  prompt.mjs                  # 无依赖的交互式输入与方向键选择
+  utils-cli.mjs               # 分发、帮助、错误处理与路径展示
+  utils-export.mjs            # 导出共用的文本清洗与格式化
+  utils-fs.mjs                # 递归列文件等公共工具
+  utils-new.mjs               # 新建脚本共用的路径、JSON 读写与校验
+  utils-private.mjs           # 隐私脚本共用的路径、加解密与清单读写
+  utils-prompt.mjs            # 交互式输入、单选与多选
 ```
 
 配置层为数据驱动：`configs/` 下的数据文件只存放站点标识、导航、社交、页脚等数据，`theme.ts` 的 `buildThemeConfig(env)` 把它们组装成主题配置，`config.mts` 通过 `loadEnv` 读取环境变量后传入。需要经常增删的列表型内容放在根目录 `data/`，由 `features/<name>/data.ts` 导入并补上类型；JSON 属于构建期数据，不会被复制到站点产物。主题按类型分层：`components/` 存放全部 Vue 组件（`common`、`layout` 为通用组件，`home`、`posts`、`private`、`nav`、`links`、`sidebar` 按页面/功能分目录），`composables/` 存放组合式函数，`features/` 存放各功能的类型与数据适配（`data.ts`、`types.ts`，文章另有 VitePress 加载器 `posts.data.ts`），功能本地资源放在 `features/<name>/assets/`。相对导入保留 `.ts` 扩展名，`.vue`、`.mjs` 与资源文件保留原扩展名。
@@ -139,7 +148,7 @@ scripts/
 
 - `VISITOR_BADGE_ID`：访问统计徽章，填入即启用。
 - `GISCUS_REPO`、`GISCUS_REPO_ID`、`GISCUS_CATEGORY`、`GISCUS_CATEGORY_ID`：四项齐全才启用评论。
-- `PRIVATE_POST_PASSWORD`：隐私文章的全站密码，只在本地 `pnpm private` 加密时使用，不要提交。若要使用关于页的六位圆点解锁，请设置为六位 `1/2/3`。
+- `PRIVATE_POST_PASSWORD`：隐私文章的全站密码，只在本地 `pnpm private:build` 加密时使用，不要提交。若要使用关于页的六位圆点解锁，请设置为六位 `1/2/3`。
 
 集成变量会写入站点产物，属于公开信息，不要放置密钥。CI 构建同样通过环境变量注入，仓库不保存真实值。`PRIVATE_POST_PASSWORD` 只写入 `.env.local`（已被忽略），不会进入产物。
 
@@ -201,12 +210,12 @@ tags: [学习笔记, C语言]
    ```
 
 2. 在 `.env.local` 写入全站密码：`PRIVATE_POST_PASSWORD=...`。密码必须是六位 `1/2/3`，因为关于页和 `/private/` 都只通过六个圆点输入；密码不要提交，也不要写进 `.env.example`。
-3. 运行 `pnpm private`。脚本会读取 `private/posts/`，生成：
+3. 运行 `pnpm private:build`（或 `pnpm private`）。脚本会读取 `private/posts/`，生成：
    - `docs/private/<slug>/index.md`：标题为“隐私文章”的公开入口页，只包含解密组件；
    - `docs/public/private/<slug>.<hash>.json`：加密后的标题、正文、头图与插图；
    - `docs/public/private/manifest.json`：加密的隐私文章清单，供 `/private/` 归档与侧栏使用。
 4. 提交生成的文件即可。`private/` 与 `.env.local` 不提交；CI 构建只读取已提交的密文，不需要密码。
-5. 修改明文后重新运行 `pnpm private`。修改密码后需要对所有隐私文章重新生成密文。删除隐私文章时，同时删除 `docs/private/<slug>/` 和对应的 `docs/public/private/<slug>.*.json`。
+5. 修改明文后重新运行 `pnpm private:build`；正文没变的文章会直接复用旧密文和文件名，不会因为随机 IV 产生无意义的 diff。修改密码后需要对所有隐私文章重新生成密文。删除隐私文章只需删掉 `private/posts/<slug>/` 再运行 `pnpm private:build`；也可以先运行 `pnpm private:clean` 立即清理页面、密文和清单，无需重新加密其他文章。
 
 隐私文章走 `/private/` 归档和 `/private/<slug>` 文章页；`config.mts` 的 rewrite 与 posts 路由对应。文章页会显示加密头图、正文、右侧目录和前后篇翻页；评论和协议卡片关闭。侧栏“隐私”区块由 `MPrivateSidebar` 渲染，放在 `MLayout.vue` 的 `#sidebar-nav-after` 插槽；不想要这个入口时移除该组件即可，`/private/` 地址仍然可用。
 
