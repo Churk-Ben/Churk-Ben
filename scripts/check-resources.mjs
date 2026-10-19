@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { extname, relative } from "node:path";
-import { filesIn } from "./fs-utils.mjs";
+import { filesIn } from "./utils-fs.mjs";
 
 const RESOURCE_PATTERN = /\.(png|jpe?g|svg|gif|webp|avif|ico)$/;
 const RAW_BACKUP_PATTERN = /\.raw\.[^./]+$/i;

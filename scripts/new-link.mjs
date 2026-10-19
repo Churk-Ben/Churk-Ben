@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { input, select } from "./prompt.mjs";
+import { input, select } from "./utils-prompt.mjs";
 import {
   dataFiles,
   fail,
@@ -11,7 +11,7 @@ import {
   show,
   urlError,
   writeJson,
-} from "./new-utils.mjs";
+} from "./utils-new.mjs";
 
 const IMAGE_PATTERN = /\.(png|jpe?g|gif|webp|avif|svg|ico)$/i;
 const LINK_ICON_OPTIONS = [
@@ -116,7 +116,7 @@ export async function createFriendLink() {
 
     friend.links.push(...added);
     writeJson(dataFiles.links, friends);
-    console.log(`Added ${added.length} link(s) to "${friend.name}" in ${show(dataFiles.links)}`);
+    console.log(`已添加 ${added.length} 个链接到 "${friend.name}"（${show(dataFiles.links)}）`);
     return;
   }
 
@@ -136,5 +136,5 @@ export async function createFriendLink() {
 
   friends.push({ avatar, name, ...(desc ? { desc } : {}), links });
   writeJson(dataFiles.links, friends);
-  console.log(`Added "${name}" to ${show(dataFiles.links)} (${links.length} links)`);
+  console.log(`已添加 "${name}" 到 ${show(dataFiles.links)}（共 ${links.length} 个链接）`);
 }

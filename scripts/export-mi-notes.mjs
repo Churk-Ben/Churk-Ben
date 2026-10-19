@@ -1,10 +1,21 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
-import { stdin, stdout } from "node:process";
-import { createInterface } from "node:readline/promises";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { fail, root, runMain, show } from "./utils-cli.mjs";
+import {
+  decodeEntities,
+  displayWidth,
+  escapeRegExp,
+  formatDate,
+  imageExtension,
+  padDisplay,
+  plainText,
+  sleep,
+  slugify,
+  truncate,
+} from "./utils-export.mjs";
+import { isInteractive, multiSelect } from "./utils-prompt.mjs";
 
-const root = fileURLToPath(new URL("../", import.meta.url));
 const DEFAULT_OUT = join(root, "import/notes");
 const COOKIE_FILE = join(root, "private/mi-cookie.txt");
 const PAGE_LIMIT = 200;
@@ -12,9 +23,9 @@ const MAX_PAGES = 100;
 const DETAIL_DELAY = 120;
 
 const USAGE = `用法：
-  pnpm mi:notes [选项]
+  pnpm export:mi-notes [选项]
 
-从小米云便签（i.mi.com）导出笔记为 Markdown。默认先列出全部便签，
+从小米云便签（i.mi.com）导出笔记为 Markdown。默认列出全部便签，
 再交互式选择要导出的条目。
 
 选项：
@@ -46,84 +57,6 @@ const HEADING_TAGS = [
   { tag: "mid-size", prefix: "##" },
   { tag: "h3-size", prefix: "###" },
 ];
-const IMAGE_EXTENSIONS = {
-  "image/avif": "avif",
-  "image/gif": "gif",
-  "image/heic": "heic",
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/svg+xml": "svg",
-  "image/webp": "webp",
-};
-
-function fail(message) {
-  throw new Error(message);
-}
-
-function sleep(ms) {
-  return new Promise((done) => setTimeout(done, ms));
-}
-
-function isInteractive() {
-  return Boolean(stdin.isTTY && stdout.isTTY);
-}
-
-function show(file) {
-  const path = relative(root, file);
-  return (path && !path.startsWith("..") ? path : file).replaceAll("\\", "/");
-}
-
-function escapeRegExp(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function truncate(text, max) {
-  const characters = [...text];
-  return characters.length > max ? `${characters.slice(0, max - 1).join("")}…` : text;
-}
-
-function displayWidth(text) {
-  let width = 0;
-  for (const character of text) {
-    width += /[\u1100-\u115f\u2e80-\ua4cf\uac00-\ud7a3\uf900-\ufaff\ufe30-\ufe4f\uff00-\uff60\uffe0-\uffe6]/.test(
-      character,
-    )
-      ? 2
-      : 1;
-  }
-  return width;
-}
-
-function padDisplay(text, width) {
-  return `${text}${" ".repeat(Math.max(0, width - displayWidth(text)))}`;
-}
-
-function formatDate(value, withTime = false) {
-  const date = new Date(Number(value) || Date.now());
-  const pad = (number) => String(number).padStart(2, "0");
-  const day = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-  return withTime ? `${day} ${pad(date.getHours())}:${pad(date.getMinutes())}` : day;
-}
-
-function decodeEntities(text) {
-  const named = { amp: "&", apos: "'", nbsp: " ", quot: '"' };
-  return text.replace(/&(#x?[\da-f]+|amp|apos|nbsp|quot);/gi, (match, code) => {
-    const key = code.toLowerCase();
-    if (key.startsWith("#x")) return numericEntity(match, Number.parseInt(key.slice(2), 16));
-    if (key.startsWith("#")) return numericEntity(match, Number.parseInt(key.slice(1), 10));
-    return named[key] ?? match;
-  });
-}
-
-/** 尖括号保持实体形式，避免正文里的 &lt;script&gt; 变成真的 HTML 标签。 */
-function numericEntity(match, codePoint) {
-  if (!Number.isInteger(codePoint) || codePoint === 60 || codePoint === 62) return match;
-  try {
-    return String.fromCodePoint(codePoint);
-  } catch {
-    return match;
-  }
-}
 
 function convertInline(input) {
   let text = String(input);
@@ -381,12 +314,6 @@ function parseExtraInfo(entry) {
   }
 }
 
-function plainText(value) {
-  return decodeEntities(String(value).replace(/<[^>]+>/g, " "))
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
 function folderName(folders, folderId) {
   const id = String(folderId ?? "");
   if (!id || id === "0") return "未分类";
@@ -405,25 +332,6 @@ function noteTitle(entry, fallback) {
   return `便签 ${formatDate(entry?.createDate)}`;
 }
 
-function slugify(title, id, date) {
-  const words = String(title)
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .split("-")
-    .filter(Boolean)
-    .slice(0, 6)
-    .join("-");
-  const suffix = String(id)
-    .replace(/[^a-z0-9]/gi, "")
-    .slice(-8)
-    .toLowerCase();
-
-  return `${date}-${words || suffix || "note"}`;
-}
-
 function noteFiles(entry) {
   const files = entry?.setting?.data ?? entry?.files ?? [];
   if (!Array.isArray(files)) return [];
@@ -439,10 +347,6 @@ function noteFiles(entry) {
       };
     })
     .filter((file) => file.rawId && file.mime.startsWith("image/"));
-}
-
-function imageExtension(mime) {
-  return IMAGE_EXTENSIONS[mime.split(";")[0].trim().toLowerCase()] ?? "jpg";
 }
 
 async function downloadImage(cookie, fileId, target) {
@@ -570,42 +474,6 @@ async function exportNote(cookie, entry, options, folders, usedSlugs) {
   return { slug, directory, images: images.saved, imageTotal: images.total };
 }
 
-function parseSelection(value, total) {
-  if (/^(?:all|\*)$/i.test(value)) return Array.from({ length: total }, (_, index) => index);
-
-  const picked = new Set();
-  for (const part of value.split(/[,，\s]+/).filter(Boolean)) {
-    const range = part.match(/^(\d+)(?:-(\d+))?$/);
-    if (!range) throw new Error(`无法识别“${part}”，请输入序号或范围，例如 1,3-5`);
-
-    const start = Number(range[1]);
-    const end = Number(range[2] ?? range[1]);
-    if (start < 1 || end > total || start > end) throw new Error(`序号超出范围：${part}`);
-
-    for (let number = start; number <= end; number += 1) picked.add(number - 1);
-  }
-
-  return [...picked].sort((a, b) => a - b);
-}
-
-function printNotes(notes, folders) {
-  console.log(`\n找到 ${notes.length} 条便签（按创建时间倒序，方括号内为分类）：`);
-  const width = String(notes.length).length;
-
-  for (const [index, entry] of notes.entries()) {
-    const title = noteTitle(entry);
-    const snippet = plainText(entry.snippet ?? "");
-    const folder = folderName(folders, entry.folderId);
-    console.log(
-      `  ${String(index + 1).padStart(width)}. ${formatDate(entry.createDate, true)}  ${padDisplay(
-        `[${truncate(folder, 10)}]`,
-        12,
-      )} ${padDisplay(truncate(title, 30), 30)} ${truncate(snippet, 40)}`,
-    );
-  }
-  console.log("");
-}
-
 function folderCounts(entries, folders) {
   const counts = new Map();
 
@@ -633,30 +501,18 @@ function printFolders(entries, folders) {
   for (const [name, count] of rows) {
     console.log(`  ${padDisplay(name, width)}  ${String(count).padStart(4)} 条`);
   }
-  console.log("\n用 --folder <名称> 只看某个分类，例如：pnpm mi:notes --folder 随笔");
+  console.log("\n用 --folder <名称> 只看某个分类，例如：pnpm export:mi-notes --folder 随笔");
 }
 
 async function chooseNotes(notes, folders) {
-  printNotes(notes, folders);
-
-  const rl = createInterface({ input: stdin, output: stdout });
-  try {
-    while (true) {
-      const answer = (await rl.question("选择要导出的便签 [序号/范围，all 全部，q 取消]: ")).trim();
-      if (!answer) continue;
-      if (/^(?:q|quit)$/i.test(answer)) return [];
-
-      try {
-        const picked = parseSelection(answer, notes.length);
-        if (picked.length) return picked;
-        console.log("请至少选择一条便签。");
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-  } finally {
-    rl.close();
-  }
+  return multiSelect({
+    message: `选择要导出的便签（共 ${notes.length} 条）`,
+    options: notes.map((entry, index) => ({
+      label: truncate(noteTitle(entry), 40),
+      hint: `${formatDate(entry.createDate, true)} · ${folderName(folders, entry.folderId)}`,
+      value: index,
+    })),
+  });
 }
 
 function requireValue(argv, index, flag) {
@@ -719,15 +575,15 @@ function parseArgs(argv) {
         options.folders = true;
         break;
       default:
-        fail(`未知参数：${argument}。运行 pnpm mi:notes --help 查看用法。`);
+        fail(`未知参数：${argument}。运行 pnpm export:mi-notes --help 查看用法。`);
     }
   }
 
   return options;
 }
 
-async function main() {
-  const options = parseArgs(process.argv.slice(2));
+export async function exportMiNotes(argv = process.argv.slice(2)) {
+  const options = parseArgs(argv);
   if (options.help) {
     console.log(USAGE);
     return;
@@ -818,15 +674,10 @@ async function main() {
   );
   if (exported) {
     console.log(`输出目录：${show(options.outDir)}`);
-    console.log("发布到博客：把需要的目录复制到 private/posts/，再运行 pnpm private 加密。");
+    console.log("发布到博客：把需要的目录复制到 private/posts/，再运行 pnpm private:build 加密。");
   }
 }
 
 const runningDirectly = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
-if (runningDirectly) {
-  main().catch((error) => {
-    console.error(`\x1b[31m${error.message}\x1b[0m`);
-    process.exitCode = 1;
-  });
-}
+if (runningDirectly) runMain(() => exportMiNotes());

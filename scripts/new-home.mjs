@@ -1,6 +1,6 @@
 import { loadPosts } from "../.vitepress/content/posts.mjs";
-import { input, select } from "./prompt.mjs";
-import { dataFiles, fail, readJson, requireInteractive, required, show, urlError, writeJson } from "./new-utils.mjs";
+import { input, select } from "./utils-prompt.mjs";
+import { dataFiles, fail, readJson, requireInteractive, required, show, urlError, writeJson } from "./utils-new.mjs";
 
 function linkOrPathError(value) {
   return value.startsWith("/") ? undefined : urlError(value);
@@ -39,5 +39,5 @@ export async function createRecommendation() {
     url,
   });
   writeJson(dataFiles.home, recommendations);
-  console.log(`Added "${title}" to ${show(dataFiles.home)}`);
+  console.log(`已添加 "${title}" 到 ${show(dataFiles.home)}`);
 }

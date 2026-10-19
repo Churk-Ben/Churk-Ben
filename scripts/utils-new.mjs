@@ -1,9 +1,10 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
-import { fileURLToPath } from "node:url";
-import { isInteractive } from "./prompt.mjs";
+import { dirname, join } from "node:path";
+import { fail, root, show } from "./utils-cli.mjs";
+import { isInteractive } from "./utils-prompt.mjs";
 
-export const root = fileURLToPath(new URL("../", import.meta.url));
+export { fail, root, show };
+
 export const dataDirectory = join(root, "data");
 export const dataFiles = {
   nav: join(dataDirectory, "nav.json"),
@@ -18,14 +19,6 @@ export function readJson(file) {
 export function writeJson(file, value) {
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
-}
-
-export function show(file) {
-  return relative(root, file).replaceAll("\\", "/");
-}
-
-export function fail(message) {
-  throw new Error(message);
 }
 
 export function requireInteractive(name) {

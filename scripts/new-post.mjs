@@ -1,8 +1,8 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadPosts } from "../.vitepress/content/posts.mjs";
-import { input, isInteractive, select } from "./prompt.mjs";
-import { fail, required, root, show } from "./new-utils.mjs";
+import { input, isInteractive, select } from "./utils-prompt.mjs";
+import { fail, required, root, show } from "./utils-new.mjs";
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const PUBLIC_DIR = join(root, "docs/posts");
@@ -42,15 +42,15 @@ export async function createPost(rawArgs, options = {}) {
   const complete = Boolean(slug && title);
 
   if (slug && !SLUG_PATTERN.test(slug)) {
-    fail(`Invalid slug "${slug}": use lowercase kebab-case, e.g. my-first-post`);
+    fail(`无效的 slug "${slug}"：请使用小写 kebab-case，例如 my-first-post`);
   }
   if (slug && existsSync(join(isPrivate ? PRIVATE_DIR : PUBLIC_DIR, slug))) {
-    fail(`Post already exists: ${isPrivate ? "private/posts" : "docs/posts"}/${slug}`);
+    fail(`文章已存在：${isPrivate ? "private/posts" : "docs/posts"}/${slug}`);
   }
 
   if (!slug || !title) {
     if (!isInteractive()) {
-      fail('用法: pnpm new:post <slug> "<标题>" [--private] / pnpm new:private <slug> "<标题>"');
+      fail('用法：pnpm new:post <slug> "<标题>" [--private] / pnpm new:private <slug> "<标题>"');
     }
 
     if (!isPrivate) {
@@ -77,7 +77,7 @@ export async function createPost(rawArgs, options = {}) {
 
   const baseDir = isPrivate ? PRIVATE_DIR : PUBLIC_DIR;
   if (slug && existsSync(join(baseDir, slug))) {
-    fail(`Post already exists: ${isPrivate ? "private/posts" : "docs/posts"}/${slug}`);
+    fail(`文章已存在：${isPrivate ? "private/posts" : "docs/posts"}/${slug}`);
   }
 
   let date = today;
@@ -110,11 +110,11 @@ tags: [${tags.map((tag) => JSON.stringify(tag)).join(", ")}]
 
   mkdirSync(directory, { recursive: true });
   writeFileSync(file, content, "utf8");
-  console.log(`Created ${show(file)}`);
+  console.log(`已创建 ${show(file)}`);
 
   if (isPrivate) {
     console.log(
-      "隐私文章源不会被提交。编辑后运行 pnpm private，再提交 docs/private/ 与 docs/public/private/ 下的生成文件。",
+      "隐私文章源不会被提交。编辑后运行 pnpm private:build，再提交 docs/private/ 与 docs/public/private/ 下的生成文件。",
     );
   } else {
     console.log(`截图请放在 ${show(join(directory, "images"))}/`);

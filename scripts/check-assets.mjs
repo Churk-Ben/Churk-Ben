@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import matter from "gray-matter";
 import { createMarkdownRenderer } from "vitepress";
-import { filesIn } from "./fs-utils.mjs";
+import { filesIn } from "./utils-fs.mjs";
 
 const IMPORT_PATTERN = /from\s+['"]([^'"]+\.(?:png|jpe?g|svg|gif|webp|avif|ico))['"]/g;
 const LITERAL_PATTERN = /["'](\/[\w./-]+\.(?:png|jpe?g|svg|gif|webp|avif|ico))["']/g;

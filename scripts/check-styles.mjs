@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { relative } from "node:path";
-import { filesIn } from "./fs-utils.mjs";
+import { filesIn } from "./utils-fs.mjs";
 
 /** 禁用内联样式，要求 Vue 组件使用类名与 Vue 状态。 */
 export function checkStyles({ root, theme }) {

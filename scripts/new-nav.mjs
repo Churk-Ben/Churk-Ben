@@ -1,5 +1,5 @@
-import { input, select } from "./prompt.mjs";
-import { dataFiles, fail, readJson, requireInteractive, required, show, urlError, writeJson } from "./new-utils.mjs";
+import { input, select } from "./utils-prompt.mjs";
+import { dataFiles, fail, readJson, requireInteractive, required, show, urlError, writeJson } from "./utils-new.mjs";
 
 function optionalUrlError(value) {
   return value ? urlError(value) : undefined;
@@ -56,5 +56,5 @@ export async function createNavLink() {
   });
 
   writeJson(dataFiles.nav, groups);
-  console.log(`Added "${title}" to ${show(dataFiles.nav)} (分组: ${group.title})`);
+  console.log(`已添加 "${title}" 到 ${show(dataFiles.nav)}（分组：${group.title}）`);
 }

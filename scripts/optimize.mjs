@@ -2,9 +2,8 @@ import { existsSync, readFileSync, renameSync, rmSync, statSync, writeFileSync }
 import { dirname, extname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
-import { filesIn } from "./fs-utils.mjs";
-
-const projectRoot = fileURLToPath(new URL("../", import.meta.url));
+import { fail, root as projectRoot, runMain } from "./utils-cli.mjs";
+import { filesIn } from "./utils-fs.mjs";
 
 const CONVERTIBLE = /\.(?:png|jpe?g)$/i;
 const RAW_BACKUP = /\.raw\.(?:png|jpe?g)$/i;
@@ -30,11 +29,6 @@ const USAGE = `用法：
 
 默认阈值 300 KB，JPEG 使用有损 WebP，PNG 使用无损 WebP。
 转换后如果没有变小，会放弃转换并保留原图。`;
-
-function fail(message) {
-  console.error(message);
-  process.exit(1);
-}
 
 function formatSize(bytes) {
   if (bytes >= 1024 * 1024) return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
@@ -248,5 +242,5 @@ async function main() {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  main().catch((error) => fail(error.message));
+  runMain(main);
 }

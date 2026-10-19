@@ -1,11 +1,10 @@
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { checkAssets } from "./check-assets.mjs";
 import { checkPosts } from "./check-posts.mjs";
 import { checkResources } from "./check-resources.mjs";
 import { checkStyles } from "./check-styles.mjs";
+import { isHelp, root, runMain, usageError } from "./utils-cli.mjs";
 
-const root = fileURLToPath(new URL("../", import.meta.url));
 const context = { root, docs: join(root, "docs"), theme: join(root, ".vitepress/theme") };
 
 const checks = {
@@ -15,7 +14,7 @@ const checks = {
       const { referenced, documents, sources } = await checkAssets(ctx);
       return {
         referenced,
-        summary: `assets ok (${documents.length} Markdown, ${sources.length} sources)`,
+        summary: `assets（${documents.length} 篇 Markdown，${sources.length} 个源码文件）`,
       };
     },
   },
@@ -24,19 +23,19 @@ const checks = {
     requires: ["assets"],
     run(ctx, results) {
       const count = checkResources({ ...ctx, referenced: results.assets.referenced });
-      return { summary: `resources ok (${count} files)` };
+      return { summary: `resources（${count} 个文件）` };
     },
   },
   styles: {
     description: "Vue 组件中的内联样式",
     run(ctx) {
-      return { summary: `styles ok (${checkStyles(ctx)} Vue components)` };
+      return { summary: `styles（${checkStyles(ctx)} 个 Vue 组件）` };
     },
   },
   posts: {
     description: "文章元数据、URL 唯一性与 slug",
     run() {
-      return { summary: `posts ok (${checkPosts()} articles)` };
+      return { summary: `posts（${checkPosts()} 篇文章）` };
     },
   },
 };
@@ -53,24 +52,21 @@ ${NAMES.map((name) => `  ${name.padEnd(10)} ${checks[name].description}`).join("
 async function main() {
   const args = process.argv.slice(2);
 
-  if (args.includes("--help") || args.includes("-h")) {
+  if (isHelp(args[0])) {
     console.log(USAGE);
     return;
   }
 
   const flags = args.filter((name) => name.startsWith("-"));
   if (flags.length) {
-    console.error(`未知参数：${flags.join(", ")}`);
-    console.error(USAGE);
-    process.exitCode = 1;
+    usageError(`未知参数：${flags.join(", ")}`, USAGE);
     return;
   }
 
   const requested = [...new Set(args.length ? args : NAMES)];
   const unknown = requested.filter((name) => !checks[name]);
   if (unknown.length) {
-    console.error(`Unknown check(s): ${unknown.join(", ")}. Available: ${NAMES.join(", ")}`);
-    process.exitCode = 1;
+    usageError(`未知检查：${unknown.join(", ")}。可用检查：${NAMES.join(", ")}`, USAGE);
     return;
   }
 
@@ -83,10 +79,7 @@ async function main() {
     results[name] = await check.run(context, results);
   }
 
-  console.log(`Content checks passed: ${requested.map((name) => results[name].summary).join("; ")}`);
+  console.log(`检查通过：${requested.map((name) => results[name].summary).join("；")}`);
 }
 
-main().catch((error) => {
-  console.error(`\x1b[31m${error.message}\x1b[0m`);
-  process.exit(1);
-});
+runMain(main);
