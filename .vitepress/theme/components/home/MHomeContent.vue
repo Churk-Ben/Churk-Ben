@@ -1,4 +1,4 @@
-<!-- 首页文章区：展示最近 4 篇文章与“从这里开始”的阅读路径。 -->
+<!-- 首页文章区：展示最近 4 篇文章与推荐阅读。 -->
 
 <script setup lang="ts">
 import { withBase } from "vitepress";
@@ -19,12 +19,14 @@ import MPostList from "../posts/MPostList.vue";
       <MPostList :posts="posts.slice(0, 4)" />
     </section>
 
-    <section class="reading-paths" aria-labelledby="reading-paths">
-      <h2 id="reading-paths">从这里开始</h2>
-      <p class="section-note">沿着一个主题，慢慢读。</p>
-      <a v-for="item in recommendations" :key="item.url" class="series-link" :href="withBase(item.url)">
-        <span class="series-title">{{ item.title }} <span aria-hidden="true">→</span></span>
-        <span class="series-desc">{{ item.desc }}</span>
+    <section class="recommendations" aria-labelledby="recommendations">
+      <h2 id="recommendations">推荐</h2>
+      <a v-for="item in recommendations" :key="item.url" class="recommendation-link" :href="withBase(item.url)">
+        <span class="recommendation-info">
+          <span class="recommendation-title">{{ item.title }}</span>
+          <span class="recommendation-desc">{{ item.desc }}</span>
+        </span>
+        <span class="recommendation-arrow" aria-hidden="true">↗</span>
       </a>
     </section>
   </div>
@@ -58,38 +60,39 @@ import MPostList from "../posts/MPostList.vue";
   text-decoration: none;
 }
 
-.home-content .section-note {
-  margin: 8px 0 20px;
-  color: var(--vp-c-text-2);
-}
-
-.series-link {
+.recommendation-link {
   display: grid;
-  gap: 6px;
-  padding: 16px 0;
+  grid-template-columns: minmax(0, 1fr) 16px;
+  align-items: baseline;
+  gap: 16px;
+  padding: 20px 0;
   color: var(--vp-c-text-1);
   text-decoration: none;
 }
 
-.series-link + .series-link {
+.recommendation-link + .recommendation-link {
   border-top: 1px solid var(--vp-c-divider);
 }
 
-.series-title {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
+.recommendation-info {
+  display: grid;
+  gap: 4px;
 }
 
-.series-title > span {
+.recommendation-title {
+  overflow-wrap: anywhere;
+}
+
+.recommendation-arrow {
   color: var(--vp-c-text-3);
 }
 
-.series-link:hover .series-title {
+.recommendation-link:hover .recommendation-title,
+.recommendation-link:hover .recommendation-arrow {
   color: var(--vp-c-brand-1);
 }
 
-.series-desc {
+.recommendation-desc {
   color: var(--vp-c-text-2);
 }
 
@@ -100,9 +103,15 @@ import MPostList from "../posts/MPostList.vue";
     padding-top: 40px;
   }
 
-  .reading-paths {
+  .recommendations {
     border-left: 1px solid var(--vp-c-divider);
     padding-left: 40px;
+  }
+}
+
+@media (max-width: 479px) {
+  .recommendation-link {
+    padding: 16px 0;
   }
 }
 </style>
