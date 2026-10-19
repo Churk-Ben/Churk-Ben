@@ -52,7 +52,9 @@ export async function dispatch({
     } else if (isInteractive()) {
       command = await select({
         message: selectMessage,
-        options: Object.entries(commands).map(([value, { label, hint }]) => ({ label, hint, value })),
+        options: Object.entries(commands)
+          .filter(([, { hidden }]) => !hidden)
+          .map(([value, { label, hint }]) => ({ label, hint, value })),
       });
     } else {
       usageError(null, usage);

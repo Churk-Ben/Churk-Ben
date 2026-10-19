@@ -5,11 +5,11 @@ import { createRecommendation } from "./new-home.mjs";
 import { dispatch, runMain } from "./utils-cli.mjs";
 
 const USAGE = `用法：
-  pnpm new                        交互选择要创建的内容
+  pnpm new                        交互选择要创建的内容（文章 / 导航 / 友链 / 推荐）
   pnpm new:post [slug] ["标题"] [--private]
-                                  新建文章；--private 写入 private/posts
+                                  新建文章；交互时会询问公开或隐私
   pnpm new:private [slug] ["标题"]
-                                  新建隐私文章
+                                  直接新建隐私文章
   pnpm new:nav                    添加导航项（交互）
   pnpm new:link                   添加友链（交互）
   pnpm new:home                   添加首页推荐（交互）
@@ -24,6 +24,7 @@ const commands = {
   private: {
     label: "隐私文章",
     hint: "private/posts/<slug>/index.md",
+    hidden: true,
     run: (args) => createPost(args, { private: true }),
   },
   nav: {
