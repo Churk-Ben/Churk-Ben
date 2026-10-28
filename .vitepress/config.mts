@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from "vitepress";
 import type { DefaultTheme, UserConfigExport } from "vitepress";
 import { head } from "./configs/head.ts";
+import { imagePlaceholderPlugin } from "./configs/image-placeholder.ts";
 import { markdown } from "./configs/markdown.ts";
 import { site } from "./configs/site.ts";
 import { buildThemeConfig } from "./configs/theme.ts";
@@ -42,6 +43,7 @@ const config: UserConfigExport<DefaultTheme.Config> = ({ mode }) =>
     markdown,
     themeConfig: buildThemeConfig(loadEnv(mode, process.cwd(), "")),
     vite: {
+      plugins: [imagePlaceholderPlugin()],
       css: {
         postcss: { plugins: [stripRemoteFonts()] },
       },

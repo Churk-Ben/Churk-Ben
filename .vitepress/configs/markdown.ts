@@ -1,5 +1,6 @@
 import type { MarkdownOptions } from "vitepress";
 import { katex } from "@mdit/plugin-katex";
+import { imageBlurPlugin } from "./image-blur.ts";
 
 /** Markdown 配置 */
 export const markdown: MarkdownOptions = {
@@ -15,5 +16,6 @@ export const markdown: MarkdownOptions = {
     md.use(katex, {
       strict: (code: string) => (code === "unicodeTextInMathMode" ? "ignore" : "warn"),
     });
+    md.use(imageBlurPlugin);
   },
 };

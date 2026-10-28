@@ -7,6 +7,7 @@ import {
   NolebaseEnhancedReadabilitiesScreenMenu,
 } from "@nolebase/vitepress-plugin-enhanced-readabilities/client";
 import { useAppearance } from "../../composables/useAppearance";
+import { useBlurUpImages } from "../../composables/useBlurUpImages";
 import { useMediumZoom } from "../../composables/useMediumZoom";
 import MVisitorBadge from "../common/MVisitorBadge.vue";
 import MPrivateOutline from "../private/MPrivateOutline.vue";
@@ -21,6 +22,7 @@ import MComments from "./MComments.vue";
 
 const { Layout } = DefaultTheme;
 useAppearance();
+useBlurUpImages();
 useMediumZoom();
 </script>
 
