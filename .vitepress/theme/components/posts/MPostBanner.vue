@@ -1,11 +1,12 @@
 <!-- 页面头图：读取 frontmatter.banner；false 关闭，文章缺省时自动匹配目录下的 banner / cover 图片。 -->
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { useLayout } from "vitepress/theme";
 import { data as posts } from "../../features/posts/posts.data.ts";
 import { getBannerSource } from "../../features/posts/banner.ts";
+import { preloadImage } from "../../features/cache/images.ts";
 import { usePageId } from "../../composables/usePageId";
 
 const pageId = usePageId();
@@ -17,13 +18,46 @@ const directory = computed(() => post.value?.url.replace(/^\//, "") ?? "");
 
 // 文章页按目录自动匹配头图；非文章页没有目录，只认 frontmatter.banner 的显式路径。
 const source = computed(() => getBannerSource(frontmatter.value.banner, directory.value));
+
+// 首屏直接使用服务端渲染的地址；站内切换时先隐藏旧图，等新图解码完再淡入，
+// 避免旧头图占位到新图加载完成，出现“脏图”残留。
+const displayed = ref(source.value);
+const ready = ref(true);
+let request = 0;
+
+watch(source, async (value) => {
+  const current = ++request;
+
+  if (!value) {
+    displayed.value = "";
+    ready.value = false;
+    return;
+  }
+
+  if (value === displayed.value) return;
+
+  ready.value = false;
+
+  try {
+    await preloadImage(value);
+  } catch {
+    return;
+  }
+
+  if (current !== request) return;
+
+  displayed.value = value;
+  ready.value = true;
+});
 </script>
 
 <template>
   <div v-if="source" class="m-post-banner" :class="{ 'm-post-banner--aside': hasAside }">
     <figure class="m-post-banner-frame">
       <img
-        :src="source"
+        :key="displayed"
+        :src="displayed"
+        :class="{ 'is-ready': ready }"
         :alt="post ? `${post.title} 头图` : '页面头图'"
         loading="eager"
         decoding="async"
@@ -51,6 +85,18 @@ const source = computed(() => getBannerSource(frontmatter.value.banner, director
   display: block;
   width: 100%;
   height: auto;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.m-post-banner img.is-ready {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m-post-banner img {
+    transition: none;
+  }
 }
 
 /* 宽屏下右侧目录是 fixed 定位，给卡片留出目录宽度避免遮挡。 */

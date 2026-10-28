@@ -8,6 +8,7 @@ import MLayout from "./components/layout/MLayout.vue";
 import MPageIntro from "./components/common/MPageIntro.vue";
 import MPrivateArchive from "./components/private/MPrivateArchive.vue";
 import MPrivatePost from "./components/private/MPrivatePost.vue";
+import { registerServiceWorker } from "./features/cache/serviceWorker.ts";
 import "./custom.scss";
 
 const components = {
@@ -25,6 +26,8 @@ export default {
   extends: DefaultTheme,
   Layout: MLayout,
   enhanceApp({ app }: EnhanceAppContext) {
+    registerServiceWorker();
+
     for (const [name, component] of Object.entries(components)) {
       app.component(name, component);
     }

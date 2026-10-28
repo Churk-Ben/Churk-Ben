@@ -34,3 +34,7 @@
 | `pnpm format:check`                         | 只检查格式，不写入文件。                                                                                  |
 
 交互命令需要终端；`pnpm new` 的一级菜单只列出文章、导航、友链、推荐四项。`pnpm publish` 是 pnpm 自带命令，发布博客内容请使用 `pnpm pub`。
+
+## 缓存
+
+生产环境会在浏览器注册 `docs/public/sw.js`，缓存哈希资源、图片与字体，并对页面使用 network-first。修改缓存策略时请同步更新该文件的 `VERSION`；开发环境不会注册 Service Worker。

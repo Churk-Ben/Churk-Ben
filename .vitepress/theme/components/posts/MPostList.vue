@@ -4,6 +4,7 @@
 import { computed } from "vue";
 import { withBase } from "vitepress";
 import { getBannerSource } from "../../features/posts/banner.ts";
+import { warmImage } from "../../features/cache/images.ts";
 import type { Post } from "../../features/posts/types.ts";
 
 const props = defineProps<{ posts: Post[] }>();
@@ -19,7 +20,13 @@ const items = computed(() =>
 <template>
   <ul class="post-list">
     <li v-for="post in items" :key="post.url" class="post-item">
-      <a class="post-link" :class="{ 'post-link--banner': post.bannerUrl }" :href="withBase(post.url)">
+      <a
+        class="post-link"
+        :class="{ 'post-link--banner': post.bannerUrl }"
+        :href="withBase(post.url)"
+        @pointerenter="warmImage(post.bannerUrl)"
+        @focus="warmImage(post.bannerUrl)"
+      >
         <time class="post-date" :datetime="post.date">{{ post.date }}</time>
         <span class="post-info">
           <span class="post-title">{{ post.title }}</span>

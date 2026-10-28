@@ -4,6 +4,8 @@
 import { computed } from "vue";
 import { withBase } from "vitepress";
 import { data as posts } from "../../features/posts/posts.data.ts";
+import { getBannerSource } from "../../features/posts/banner.ts";
+import { warmImage } from "../../features/cache/images.ts";
 import { usePageId } from "../../composables/usePageId";
 
 const pageId = usePageId();
@@ -11,6 +13,10 @@ const pageId = usePageId();
 const index = computed(() => posts.findIndex((post) => post.url === pageId.value));
 const previous = computed(() => (index.value > 0 ? posts[index.value - 1] : undefined));
 const next = computed(() => (index.value >= 0 ? posts[index.value + 1] : undefined));
+
+function bannerOf(post?: (typeof posts)[number]) {
+  return post ? getBannerSource(post.banner, post.url.replace(/^\//, "")) : "";
+}
 </script>
 
 <template>
@@ -20,11 +26,23 @@ const next = computed(() => (index.value >= 0 ? posts[index.value + 1] : undefin
     :class="{ 'm-post-pager--next-only': next && !previous }"
     aria-label="文章翻页"
   >
-    <a v-if="previous" class="m-post-pager-link" :href="withBase(previous.url)">
+    <a
+      v-if="previous"
+      class="m-post-pager-link"
+      :href="withBase(previous.url)"
+      @pointerenter="warmImage(bannerOf(previous))"
+      @focus="warmImage(bannerOf(previous))"
+    >
       <span class="m-post-pager-label">上一篇</span>
       <span class="m-post-pager-title">{{ previous.title }}</span>
     </a>
-    <a v-if="next" class="m-post-pager-link m-post-pager-link--next" :href="withBase(next.url)">
+    <a
+      v-if="next"
+      class="m-post-pager-link m-post-pager-link--next"
+      :href="withBase(next.url)"
+      @pointerenter="warmImage(bannerOf(next))"
+      @focus="warmImage(bannerOf(next))"
+    >
       <span class="m-post-pager-label">下一篇</span>
       <span class="m-post-pager-title">{{ next.title }}</span>
     </a>
