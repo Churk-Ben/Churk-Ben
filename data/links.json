@@ -31,5 +31,16 @@
         "url": "https://www.dustella.net/"
       }
     ]
+  },
+  {
+    "avatar": "https://avatars.githubusercontent.com/u/187851111?v=4",
+    "name": "hh",
+    "desc": "他说晚上做个博客让我挂友链",
+    "links": [
+      {
+        "icon": "github",
+        "url": "https://github.com/haha-ha-cuo"
+      }
+    ]
   }
 ]
