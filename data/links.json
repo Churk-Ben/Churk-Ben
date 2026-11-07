@@ -75,5 +75,27 @@
         "url": "https://pinpe.top"
       }
     ]
+  },
+  {
+    "avatar": "https://tblog.mmzhiku.xyz/assets/images/aut-master.webp",
+    "name": "MmzMing的知识库",
+    "desc": "哈基米，南北绿豆",
+    "links": [
+      {
+        "icon": "blog",
+        "url": "https://tblog.mmzhiku.xyz"
+      }
+    ]
+  },
+  {
+    "avatar": "https://api-avatar.acofork.com/avatars/1.webp",
+    "name": "二叉树树",
+    "desc": "Protect What You Love.",
+    "links": [
+      {
+        "icon": "link",
+        "url": "https://2x.nz/"
+      }
+    ]
   }
 ]
