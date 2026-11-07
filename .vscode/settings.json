@@ -3,7 +3,7 @@
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
     "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml, .node-version, .prettierrc, .prettierignore",
-    "README.md": "CONTRIBUTING.md, LICENSE*",
+    "README.md": "CONTRIBUTING.md, LICENSE*, CHANGELOG.md, RELEASE.md, RELEASE_NOTES.md, AGENTS.md",
     ".env.example": ".env, .env.*",
     ".gitignore": ".gitattributes, .gitmodules",
     "tsconfig.json": "tsconfig.*.json, env.d.ts, env.*.d.ts, tsconfig.*.d.ts"

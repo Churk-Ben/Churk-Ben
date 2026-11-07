@@ -1,38 +1,45 @@
-# 👋 Hello! world~
+# 👋 Churk Here~
 
-> _Aurore est le billet-doux de Polaris._
+_Aurore est le billet-doux de Polaris._
 
-🔭 独立开发者 | 🏠 Nanjing | 🏢 [JuFire Studio](https://github.com/JuFireX)
-
-[![Blog](https://img.shields.io/badge/Blog-www.churk.top-blue?style=flat-square)](https://www.churk.top)
-[![GitHub Followers](https://img.shields.io/github/followers/Churk-Ben?style=flat-square&logo=github)](https://github.com/Churk-Ben)
-
-### 🛠 Tech Stack
-
-![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white)
-![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
-![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![Vue](https://img.shields.io/badge/-Vue.js-4FC08D?style=flat-square&logo=vue.js&logoColor=white)
-![Qt](https://img.shields.io/badge/-Qt-41CD52?style=flat-square&logo=qt&logoColor=white)
-![Java](https://img.shields.io/badge/-Java-007396?style=flat-square&logo=java&logoColor=white)
-
-### 📊 GitHub Stats
-
-[![GitHub Stats](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent&hide_title=true)](https://github-stats-extended.vercel.app/api?username=Churk-Ben&show_icons=true&theme=transparent)
-
-[![Top Langs](https://github-stats-extended.vercel.app/api/top-langs/?username=Churk-Ben&layout=compact&theme=transparent)](https://github-stats-extended.vercel.app/api/top-langs/?username=Churk-Ben&layout=compact&theme=transparent)
-
-### 📫 Contact
-
-<img align="right" src="docs/public/shared/icon.png" width="200" />
-
-- Blog: [www.churk.top](https://www.churk.top)
-- GitHub: [@Churk-Ben](https://github.com/Churk-Ben)
-- Email: [churkben0@gmail.com](mailto:churkben0@gmail.com)
+<a href="https://ghfind.com/u/churk-ben?ref=badge">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://ghfind.com/api/card/mini/churk-ben?variant=radar&theme=dark&lang=zh" />
+    <img src="https://ghfind.com/api/card/mini/churk-ben?variant=radar&theme=light&lang=zh" alt="GitHub Roast 评分卡" width="440" />
+  </picture>
+</a>
 
 <br clear="both" />
 
-## 博客维护
+[![JuFireX Studio](https://img.shields.io/badge/JuFireX-Studio-black)](https://github.com/JuFireX)
+[![Churk's Blog](https://img.shields.io/badge/Blog-churk.top-blue)](https://churk.top)
+[![GitHub Followers](https://img.shields.io/github/followers/Churk-Ben?logo=github)](https://github.com/Churk-Ben)
 
-目录组织、稿件与图片的存放约定、组件复用和开发命令见 [维护指南](CONTRIBUTING.md)。
+### Tech Stack
+
+[![GitHub Stats](https://github-stats-extended.vercel.app/api/top-langs?username=Churk-Ben&layout=donut-vertical&hide_title=true&langs_count=6&hide_values=true&theme=dark_github)](https://github-stats-extended.vercel.app/api/top-langs?username=Churk-Ben&layout=donut-vertical&hide_title=true&langs_count=6&hide_values=true&theme=dark_github)
+
+<br clear="both" />
+
+![C++](https://img.shields.io/badge/-C++-00599C?logo=c%2B%2B&logoColor=white)
+![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white)
+![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white)
+![Vue](https://img.shields.io/badge/-Vue.js-4FC08D?logo=vue.js&logoColor=white)
+![Qt](https://img.shields.io/badge/-Qt-41CD52?logo=qt&logoColor=white)
+![Java](https://img.shields.io/badge/-Java-007396?logo=java&logoColor=white)
+
+### GitHub Stats
+
+[![GitHub Stats](https://github-stats-extended.vercel.app/api?username=Churk-Ben&rank_icon=percentile&show_icons=true&include_all_commits=true&theme=dark_github)](https://github-stats-extended.vercel.app/api?username=Churk-Ben&rank_icon=percentile&show_icons=true&include_all_commits=true&theme=dark_github)
+
+### Contact
+
+<img align="right" src="docs/public/shared/icon.png" width="200" />
+
+- Blog: [churk.top](https://churk.top)
+- GitHub: [@Churk-Ben](https://github.com/Churk-Ben)
+- Mail: [churkben0@gmail.com](mailto:churkben0@gmail.com)
+- Mail: [churk_ben@163.com](mailto:churk_ben@163.com)
+
+<br clear="both" />
