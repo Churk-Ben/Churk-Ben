@@ -53,5 +53,27 @@
         "url": "https://billow-css.github.io/"
       }
     ]
+  },
+  {
+    "avatar": "https://blog.vull.top/img/avatar.webp",
+    "name": "Vullfin's Blog",
+    "desc": "欢迎来到Vullfin的个人博客",
+    "links": [
+      {
+        "icon": "blog",
+        "url": "https://blog.vull.top/"
+      }
+    ]
+  },
+  {
+    "avatar": "https://pinpe.top/head.jpg",
+    "name": "Pinpe 的云端",
+    "desc": "一片属于自己的云朵。",
+    "links": [
+      {
+        "icon": "blog",
+        "url": "https://pinpe.top"
+      }
+    ]
   }
 ]
