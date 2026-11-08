@@ -826,5 +826,16 @@
         "link": "https://www.pixiv.net"
       }
     ]
+  },
+  {
+    "title": "文档站",
+    "items": [
+      {
+        "title": "Windows 文档",
+        "desc": "Windows 发布相关的文档站",
+        "link": "https://learn.microsoft.com/en-us/windows-insider/about/",
+        "badge": "Microsoft"
+      }
+    ]
   }
 ]
